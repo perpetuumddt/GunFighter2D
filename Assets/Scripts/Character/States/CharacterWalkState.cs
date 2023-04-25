@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace StateMachine
@@ -8,29 +9,45 @@ namespace StateMachine
     {
         private string _animParameter = "isMove";
 
+        private float _velocity = 5f;
+
         public CharacterWalkState(CharacterController data, StateMachine<CharacterController> stateMachine) : base(data, stateMachine)
         {
-            stateMachine.CurrentState.Data.CharacterInputHandler.OnMove += (isMoving) => SwitchState(isMoving, stateMachine);
+            
         }
 
-        public override void Execute(StateMachine<CharacterController> stateMachine)
+        public override void Execute()
         {
-            base.Execute(stateMachine);
-            //stateMachine.CurrentState.Data.CharacterMovementController.SetVelocity(0f, 0f);
-            //вызвать корутину
-            stateMachine.CurrentState.Data.CharacterAnimationController.SetActiveBoolAnim(true, _animParameter);
+            base.Execute();
+            Movement(StateMachine.CurrentState.Data.CharacterInputHandler as PlayerInputHandler);
+            StateMachine.CurrentState.Data.CharacterAnimationController.SetActiveBoolAnim(true, _animParameter);
+        }
+        public override void Initialize(params object[] param)
+        {
+            StateMachine.CurrentState.Data.CharacterInputHandler.OnMove += (isMoving) => SwitchState(isMoving);
         }
 
-        private void SwitchState(bool isMove, StateMachine<CharacterController> stateMachine)
+        private void SwitchState(bool isMove)
         {
             if (!isMove)
             {
-                stateMachine.CurrentState = new CharacterIdleState(stateMachine.CurrentState.Data, stateMachine);
-                stateMachine.CurrentState.Execute(stateMachine);
+                IsExecuted = false;
+                StateMachine.CurrentState = new CharacterIdleState(StateMachine.CurrentState.Data, StateMachine);
+                StateMachine.CurrentState.Initialize();
+                StateMachine.CurrentState.Execute();
             }
-
+            else
+            {
+                Execute();
+            }
         }
 
-        //создать корутину в которой будет вызываться метод setvelocity в которой будет передаваться значение из метода inputhandler
+        private  void Movement(PlayerInputHandler inputHandler)
+        {
+                StateMachine.CurrentState.Data.CharacterMovementController.SetVelocity(inputHandler.MovementInput.x * _velocity, inputHandler.MovementInput.y * _velocity);
+                Debug.Log(inputHandler.MovementInput.x + " " + inputHandler.MovementInput.y);
+
+            
+        }
     }
 }

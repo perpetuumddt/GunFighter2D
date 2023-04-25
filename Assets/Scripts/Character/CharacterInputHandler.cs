@@ -11,13 +11,13 @@ public class CharacterInputHandler : MonoBehaviour
     public event Action<bool> OnReload;
     public event Action<bool> OnShoot;
 
-    public Vector2 MovementInput { get; private set; }
+    public Vector2 MovementInput { get; protected set; }
 
-    public bool RollInput { get; private set; }
+    public bool RollInput { get; protected set; }
 
-    public bool ShootInput { get; private set; }
+    public bool ShootInput { get; protected set; }
 
-    public bool ReloadInput { get; private set; }
+    public bool ReloadInput { get; protected set; }
 
     public void OnMoveInput(InputAction.CallbackContext context)
     {
@@ -57,15 +57,18 @@ public class CharacterInputHandler : MonoBehaviour
         }
     }
 
-    private void Update()
+    protected virtual void Update()
     {
+        Debug.Log(MovementInput.magnitude);
         //MOVEMENT
-        if (MovementInput.magnitude >= 0)
+        if (MovementInput.magnitude > 0)
         {
+            Debug.Log("true");
             OnMove?.Invoke(true);
         }
         else
         {
+            Debug.Log("false");
             OnMove?.Invoke(false);
         }
         //RELOAD

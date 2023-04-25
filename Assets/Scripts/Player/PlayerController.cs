@@ -2,6 +2,8 @@ using StateMachine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using static UnityEditor.VersionControl.Asset;
+using UnityEngine.TextCore.Text;
 
 public class PlayerController : CharacterController
 {
@@ -9,6 +11,10 @@ public class PlayerController : CharacterController
 
     private void Awake()
     {
-        _stateMachine = new StateMachine<CharacterController>(new CharacterIdleState(this,_stateMachine));
+    
+
+        _stateMachine = new StateMachine<CharacterController>();
+        _stateMachine.CurrentState = new CharacterIdleState(this, _stateMachine);
+        _stateMachine.CurrentState.Initialize();
     }
 }

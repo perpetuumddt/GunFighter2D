@@ -10,23 +10,32 @@ namespace StateMachine
 
         public CharacterIdleState(CharacterController data, StateMachine<CharacterController> stateMachine) : base(data, stateMachine)
         {
-            stateMachine.CurrentState.Data.CharacterInputHandler.OnMove += (isMoving) => SwitchState(isMoving, stateMachine);
+            
         }
 
-        public override void Execute(StateMachine<CharacterController> stateMachine)
+        public override void Initialize(params object[] param)
         {
-            base.Execute(stateMachine);
-            stateMachine.CurrentState.Data.CharacterMovementController.SetVelocity(0f, 0f);
-            stateMachine.CurrentState.Data.CharacterAnimationController.SetActiveBoolAnim(true,_animParameter);
+            StateMachine.CurrentState.Data.CharacterInputHandler.OnMove += (isMoving) => SwitchState(isMoving);
         }
 
-        private void SwitchState(bool isMove, StateMachine<CharacterController> stateMachine)
+        public override void Execute()
         {
-            if(isMove)
+            base.Execute();
+            StateMachine.CurrentState.Data.CharacterMovementController.SetVelocity(0f, 0f);
+            StateMachine.CurrentState.Data.CharacterAnimationController.SetActiveBoolAnim(true,_animParameter);
+        }
+
+        private void SwitchState(bool isMove)
+        {
+            if (isMove)
             {
-                stateMachine.CurrentState = new CharacterWalkState(stateMachine.CurrentState.Data, stateMachine);
-                stateMachine.CurrentState.Execute(stateMachine);
+                IsExecuted = false;
+                StateMachine.CurrentState = new CharacterWalkState(StateMachine.CurrentState.Data, StateMachine);
+                StateMachine.CurrentState.Initialize();
+                StateMachine.CurrentState.Execute();
+                
             }
+            //ROLL CAN`T BE PERFOMED IN IDLE STATE BECAUSE ROLL NEEDS DIRECTION
         }
     }
 }
