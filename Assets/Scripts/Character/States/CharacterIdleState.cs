@@ -15,7 +15,7 @@ namespace StateMachine
 
         public override void Initialize(params object[] param)
         {
-            StateMachine.CurrentState.Data.CharacterInputHandler.OnMove += (isMoving) => SwitchState(isMoving);
+            StateMachine.CurrentState.Data.CharacterInputHandler.OnMove += SwitchState;
         }
 
         public override void Execute()
@@ -27,13 +27,17 @@ namespace StateMachine
 
         private void SwitchState(bool isMove)
         {
-            if (isMove)
+            if (isMove && IsExecuted)
             {
+                StateMachine.CurrentState.Data.CharacterInputHandler.OnMove -= SwitchState;
                 IsExecuted = false;
                 StateMachine.CurrentState = new CharacterWalkState(StateMachine.CurrentState.Data, StateMachine);
                 StateMachine.CurrentState.Initialize();
                 StateMachine.CurrentState.Execute();
-                
+            }
+            else
+            {
+                Execute();
             }
             //ROLL CAN`T BE PERFOMED IN IDLE STATE BECAUSE ROLL NEEDS DIRECTION
         }

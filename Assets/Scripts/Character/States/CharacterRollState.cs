@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -8,15 +8,17 @@ namespace StateMachine
     {
         private string _animParameter = "isRoll";
 
+        private float _velocity = 8f; //TODO: перенести в PlayerData
+
         public CharacterRollState(CharacterController data, StateMachine<CharacterController> stateMachine) : base(data, stateMachine)
         {
-            stateMachine.CurrentState.Data.CharacterInputHandler.OnMove += (isMoving) => SwitchState(isMoving);
+            
         }
 
         public override void Execute()
         {
             base.Execute();
-            //stateMachine.CurrentState.Data.CharacterMovementController.SetVelocity(ROLL_VELOCITY*DIRECTION);
+            Roll(StateMachine.CurrentState.Data.CharacterInputHandler as PlayerInputHandler);
             StateMachine.CurrentState.Data.CharacterAnimationController.SetActiveBoolAnim(true, _animParameter);
         }
 
@@ -27,16 +29,23 @@ namespace StateMachine
 
         private void SwitchState(bool isMove)
         {
-            if(isMove) 
-            {
-                //CONTINUE MOVING
-            }
-            else //GO IDLE
+            if(isMove) //Continue moving
             {
                 StateMachine.CurrentState = new CharacterIdleState(StateMachine.CurrentState.Data, StateMachine);
                 StateMachine.CurrentState.Initialize();
                 StateMachine.CurrentState.Execute();
             }
+            else //Go idle
+            {
+                StateMachine.CurrentState = new CharacterIdleState(StateMachine.CurrentState.Data, StateMachine);
+                StateMachine.CurrentState.Initialize();
+                StateMachine.CurrentState.Execute();
+            }
+        }
+
+        private void Roll(PlayerInputHandler inputHandler)
+        {
+            StateMachine.CurrentState.Data.CharacterMovementController.SetVelocity(inputHandler.movementInputVector.x * _velocity, inputHandler.movementInputVector.y * _velocity);
         }
     }
 }

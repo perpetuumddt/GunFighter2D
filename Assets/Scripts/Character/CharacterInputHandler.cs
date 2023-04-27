@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,7 +12,11 @@ public class CharacterInputHandler : MonoBehaviour
     public event Action<bool> OnReload;
     public event Action<bool> OnShoot;
 
-    public Vector2 MovementInput { get; protected set; }
+
+    PlayerInputAction playerInputAction; //"Player Input Action" is a name of Input Action Asset
+    
+    public Vector2 movementInputVector { get; private set; }
+    public bool onMove;
 
     public bool RollInput { get; protected set; }
 
@@ -19,9 +24,29 @@ public class CharacterInputHandler : MonoBehaviour
 
     public bool ReloadInput { get; protected set; }
 
-    public void OnMoveInput(InputAction.CallbackContext context)
+    
+
+    private void OnEnable()
     {
-        MovementInput = context.ReadValue<Vector2>();
+        playerInputAction = new PlayerInputAction(); //Creates instance of Input Action Asset
+        playerInputAction.Gameplay.Enable(); //Enables Gameplay Action Map
+
+        playerInputAction.Gameplay.Movement.performed += SetMovementVector;
+        playerInputAction.Gameplay.Movement.canceled += SetMovementVector;
+    }
+
+    private void OnDisable()
+    {
+        playerInputAction.Gameplay.Movement.performed -= SetMovementVector;
+        playerInputAction.Gameplay.Movement.canceled -= SetMovementVector;
+        
+        playerInputAction.Gameplay.Disable(); //Disables Gameplay Action Map 
+        //(any time after enabling smth or subscribing to using C# events it`s important to disable them/unsubscribe)
+    }
+
+    public void SetMovementVector(InputAction.CallbackContext context)
+    {
+        movementInputVector = context.ReadValue<Vector2>();
     }
 
     public void OnRollInput(InputAction.CallbackContext context)
@@ -59,16 +84,14 @@ public class CharacterInputHandler : MonoBehaviour
 
     protected virtual void Update()
     {
-        Debug.Log(MovementInput.magnitude);
         //MOVEMENT
-        if (MovementInput.magnitude > 0)
+        Debug.Log(movementInputVector);
+        if (movementInputVector.magnitude > 0)
         {
-            Debug.Log("true");
             OnMove?.Invoke(true);
         }
         else
         {
-            Debug.Log("false");
             OnMove?.Invoke(false);
         }
         //RELOAD

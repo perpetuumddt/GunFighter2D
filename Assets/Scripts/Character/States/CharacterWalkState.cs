@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace StateMachine
@@ -9,7 +10,7 @@ namespace StateMachine
     {
         private string _animParameter = "isMove";
 
-        private float _velocity = 5f;
+        private float _velocity = 4f; //TODO: перенести в PlayerData
 
         public CharacterWalkState(CharacterController data, StateMachine<CharacterController> stateMachine) : base(data, stateMachine)
         {
@@ -24,13 +25,14 @@ namespace StateMachine
         }
         public override void Initialize(params object[] param)
         {
-            StateMachine.CurrentState.Data.CharacterInputHandler.OnMove += (isMoving) => SwitchState(isMoving);
+             StateMachine.CurrentState.Data.CharacterInputHandler.OnMove += SwitchState;
         }
 
         private void SwitchState(bool isMove)
         {
-            if (!isMove)
+            if (!isMove && IsExecuted)
             {
+                StateMachine.CurrentState.Data.CharacterInputHandler.OnMove -= SwitchState;
                 IsExecuted = false;
                 StateMachine.CurrentState = new CharacterIdleState(StateMachine.CurrentState.Data, StateMachine);
                 StateMachine.CurrentState.Initialize();
@@ -44,10 +46,8 @@ namespace StateMachine
 
         private  void Movement(PlayerInputHandler inputHandler)
         {
-                StateMachine.CurrentState.Data.CharacterMovementController.SetVelocity(inputHandler.MovementInput.x * _velocity, inputHandler.MovementInput.y * _velocity);
-                Debug.Log(inputHandler.MovementInput.x + " " + inputHandler.MovementInput.y);
-
-            
+            StateMachine.CurrentState.Data.CharacterMovementController.SetVelocity(inputHandler.movementInputVector.x * _velocity, inputHandler.movementInputVector.y * _velocity);
         }
+
     }
 }

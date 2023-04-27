@@ -9,6 +9,6 @@ public class CharacterAnimationController : MonoBehaviour
 
     public void SetActiveBoolAnim(bool isActive,string parameter)
     {
-        _animator.SetBool(parameter,isActive);
+        //_animator.SetBool(parameter,isActive);
     }
 }
