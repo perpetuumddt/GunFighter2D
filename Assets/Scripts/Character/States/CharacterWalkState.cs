@@ -14,7 +14,7 @@ namespace StateMachine
 
         public CharacterWalkState(CharacterController data, StateMachine<CharacterController> stateMachine) : base(data, stateMachine)
         {
-            
+
         }
 
         public override void Execute()
@@ -50,13 +50,13 @@ namespace StateMachine
             StateMachine.CurrentState = new CharacterRollState(StateMachine.CurrentState.Data, StateMachine);
             StateMachine.CurrentState.Initialize();
             StateMachine.CurrentState.Execute();
-            
+
         }
 
-        private void StopExecution()
+        public override void StopExecution()
         {
+            base.StopExecution();
             StateMachine.CurrentState.Data.CharacterInputHandler.OnMove -= SwichStateIdle;
-            IsExecuted = false;
         }
 
         private  void Movement(PlayerInputHandler inputHandler)

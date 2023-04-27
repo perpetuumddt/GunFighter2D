@@ -23,7 +23,11 @@ namespace StateMachine
         {
             IsExecuted = true;
         }
-
+        public virtual void StopExecution()
+        {
+            
+            IsExecuted = false;
+        }
         public virtual void Initialize(params object[] param)
         {
             
