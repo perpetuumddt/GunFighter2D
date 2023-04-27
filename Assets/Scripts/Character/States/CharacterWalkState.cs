@@ -25,15 +25,15 @@ namespace StateMachine
         }
         public override void Initialize(params object[] param)
         {
-             StateMachine.CurrentState.Data.CharacterInputHandler.OnMove += SwitchState;
+            StateMachine.CurrentState.Data.CharacterInputHandler.OnRoll += SwichStateRoll;
+            StateMachine.CurrentState.Data.CharacterInputHandler.OnMove += SwichStateIdle;
         }
 
-        private void SwitchState(bool isMove)
+        private void SwichStateIdle(bool isMove)
         {
             if (!isMove && IsExecuted)
             {
-                StateMachine.CurrentState.Data.CharacterInputHandler.OnMove -= SwitchState;
-                IsExecuted = false;
+                StopExecution();
                 StateMachine.CurrentState = new CharacterIdleState(StateMachine.CurrentState.Data, StateMachine);
                 StateMachine.CurrentState.Initialize();
                 StateMachine.CurrentState.Execute();
@@ -42,6 +42,21 @@ namespace StateMachine
             {
                 Execute();
             }
+        }
+        private void SwichStateRoll()
+        {
+            StopExecution();
+            StateMachine.CurrentState.Data.CharacterInputHandler.OnRoll -= SwichStateRoll;
+            StateMachine.CurrentState = new CharacterRollState(StateMachine.CurrentState.Data, StateMachine);
+            StateMachine.CurrentState.Initialize();
+            StateMachine.CurrentState.Execute();
+            
+        }
+
+        private void StopExecution()
+        {
+            StateMachine.CurrentState.Data.CharacterInputHandler.OnMove -= SwichStateIdle;
+            IsExecuted = false;
         }
 
         private  void Movement(PlayerInputHandler inputHandler)

@@ -1,5 +1,6 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace StateMachine 
@@ -27,6 +28,8 @@ namespace StateMachine
         {
             
         }
+
+        //Сюда вынести SttopExecution
     }
 }
 

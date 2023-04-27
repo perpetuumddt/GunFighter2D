@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 
 namespace StateMachine
@@ -9,6 +10,7 @@ namespace StateMachine
         private string _animParameter = "isRoll";
 
         private float _velocity = 8f; //TODO: перенести в PlayerData
+        private float _duration = 1f;
 
         public CharacterRollState(CharacterController data, StateMachine<CharacterController> stateMachine) : base(data, stateMachine)
         {
@@ -24,28 +26,30 @@ namespace StateMachine
 
         public override void Initialize(params object[] param)
         {
-            StateMachine.CurrentState.Data.CharacterInputHandler.OnMove += (isMoving) => SwitchState(isMoving);
+
         }
 
-        private void SwitchState(bool isMove)
+        private void SwichState()
         {
-            if(isMove) //Continue moving
+           if(IsExecuted)
             {
-                StateMachine.CurrentState = new CharacterIdleState(StateMachine.CurrentState.Data, StateMachine);
-                StateMachine.CurrentState.Initialize();
-                StateMachine.CurrentState.Execute();
-            }
-            else //Go idle
-            {
+                IsExecuted = false;
                 StateMachine.CurrentState = new CharacterIdleState(StateMachine.CurrentState.Data, StateMachine);
                 StateMachine.CurrentState.Initialize();
                 StateMachine.CurrentState.Execute();
             }
         }
 
-        private void Roll(PlayerInputHandler inputHandler)
+        private async void Roll(PlayerInputHandler inputHandler)
         {
-            StateMachine.CurrentState.Data.CharacterMovementController.SetVelocity(inputHandler.movementInputVector.x * _velocity, inputHandler.movementInputVector.y * _velocity);
+            var rollDirection = inputHandler.movementInputVector;
+            while(_duration > 0f)
+            {
+                StateMachine.CurrentState.Data.CharacterMovementController.SetVelocity(rollDirection.x * _velocity, rollDirection.y * _velocity);
+                _duration -= Time.deltaTime;
+                await Task.Delay(1);
+            }
+            SwichState();
         }
     }
 }
