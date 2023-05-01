@@ -7,8 +7,8 @@ public class CharacterAnimationController : MonoBehaviour
     [SerializeField]
     private Animator _animator;
 
-    public void SetActiveBoolAnim(bool isActive,string parameter)
+    public void SetActiveBoolAnim(string parameter, bool isActive)
     {
-        //_animator.SetBool(parameter,isActive);
+        _animator.SetBool(parameter, isActive);
     }
 }

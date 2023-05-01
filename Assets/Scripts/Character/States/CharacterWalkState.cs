@@ -8,7 +8,7 @@ namespace StateMachine
 {
     public class CharacterWalkState : State<CharacterController>
     {
-        private string _animParameter = "isMove";
+        private string _animParameter = "isWalk";
 
         private float _velocity = 4f; //TODO: перенести в PlayerData
 
@@ -21,7 +21,7 @@ namespace StateMachine
         {
             base.Execute();
             Movement(StateMachine.CurrentState.Data.CharacterInputHandler as PlayerInputHandler);
-            StateMachine.CurrentState.Data.CharacterAnimationController.SetActiveBoolAnim(true, _animParameter);
+            StateMachine.CurrentState.Data.CharacterAnimationController.SetActiveBoolAnim(_animParameter, true);
         }
         public override void Initialize(params object[] param)
         {
@@ -46,7 +46,6 @@ namespace StateMachine
         private void SwichStateRoll()
         {
             StopExecution();
-            StateMachine.CurrentState.Data.CharacterInputHandler.OnRoll -= SwichStateRoll;
             StateMachine.CurrentState = new CharacterRollState(StateMachine.CurrentState.Data, StateMachine);
             StateMachine.CurrentState.Initialize();
             StateMachine.CurrentState.Execute();
@@ -56,7 +55,9 @@ namespace StateMachine
         public override void StopExecution()
         {
             base.StopExecution();
+            StateMachine.CurrentState.Data.CharacterAnimationController.SetActiveBoolAnim(_animParameter, false);
             StateMachine.CurrentState.Data.CharacterInputHandler.OnMove -= SwichStateIdle;
+            StateMachine.CurrentState.Data.CharacterInputHandler.OnRoll -= SwichStateRoll;
         }
 
         private  void Movement(PlayerInputHandler inputHandler)

@@ -25,15 +25,12 @@ namespace StateMachine
         }
         public virtual void StopExecution()
         {
-            
             IsExecuted = false;
         }
         public virtual void Initialize(params object[] param)
         {
             
         }
-
-        //Сюда вынести SttopExecution
     }
 }
 

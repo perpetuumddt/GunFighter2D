@@ -9,8 +9,8 @@ namespace StateMachine
     {
         private string _animParameter = "isRoll";
 
-        private float _velocity = 8f; //TODO: перенести в PlayerData
-        private float _duration = 1f;
+        private float _velocity = 6f; //TODO: перенести в PlayerData
+        private float _duration = 0.4f;
 
         public CharacterRollState(CharacterController data, StateMachine<CharacterController> stateMachine) : base(data, stateMachine)
         {
@@ -21,7 +21,14 @@ namespace StateMachine
         {
             base.Execute();
             Roll(StateMachine.CurrentState.Data.CharacterInputHandler as PlayerInputHandler);
-            StateMachine.CurrentState.Data.CharacterAnimationController.SetActiveBoolAnim(true, _animParameter);
+            
+            StateMachine.CurrentState.Data.CharacterAnimationController.SetActiveBoolAnim(_animParameter, true);
+        }
+
+        public override void StopExecution()
+        {
+            StateMachine.CurrentState.Data.CharacterAnimationController.SetActiveBoolAnim(_animParameter, false);
+            base.StopExecution();
         }
 
         public override void Initialize(params object[] param)
@@ -33,7 +40,7 @@ namespace StateMachine
         {
            if(IsExecuted)
             {
-                IsExecuted = false;
+                StopExecution();
                 StateMachine.CurrentState = new CharacterIdleState(StateMachine.CurrentState.Data, StateMachine);
                 StateMachine.CurrentState.Initialize();
                 StateMachine.CurrentState.Execute();

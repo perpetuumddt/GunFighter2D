@@ -15,9 +15,4 @@ public class PlayerController : CharacterController
         _stateMachine.CurrentState = new CharacterIdleState(this, _stateMachine);
         _stateMachine.CurrentState.Initialize();
     }
-
-    private void Update()
-    {
-        Debug.Log(_stateMachine.CurrentState.ToString());
-    }
 }
