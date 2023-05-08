@@ -10,8 +10,8 @@ public class CharacterInputHandler : MonoBehaviour
     public event Action<bool> OnMove;
     public event Action OnRoll;
     public event Action OnReload;
-    public event Action OnAttack;
-    public event Action OnChangeWeapon;
+    public event Action<bool> OnAttack;
+    public event Action OnSwitchWeapon;
 
     protected void InvokeOnRoll()
     {
@@ -25,5 +25,25 @@ public class CharacterInputHandler : MonoBehaviour
     protected void UnInvokeOnMove()
     {
         OnMove?.Invoke(false);
+    }
+
+    protected void InvokeOnAttack()
+    {
+        OnAttack?.Invoke(true);
+    }
+
+    protected void UnInvokeOnAttack()
+    {
+        OnAttack?.Invoke(false);
+    }
+
+    protected void InvokeOnReload()
+    {
+        OnReload?.Invoke();
+    }
+
+    protected void InvokeOnSwitchWeapon()
+    {
+        OnSwitchWeapon?.Invoke();
     }
 }

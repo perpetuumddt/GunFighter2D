@@ -5,15 +5,13 @@ using UnityEngine.InputSystem;
 
 public class PlayerInputHandler : CharacterInputHandler
 {
-
-
     PlayerInputAction playerInputAction; //"Player Input Action" is a name of Input Action Asset
 
     public Vector2 movementInputVector { get; private set; }
 
     public bool RollInput { get; protected set; }
 
-    public bool ShootInput { get; protected set; }
+    public bool AttackInput { get; protected set; }
 
     public bool ReloadInput { get; protected set; }
 
@@ -28,6 +26,13 @@ public class PlayerInputHandler : CharacterInputHandler
         playerInputAction.Gameplay.Movement.canceled += SetMovementVector;
 
         playerInputAction.Gameplay.Roll.started += OnRollInput;
+
+        playerInputAction.Gameplay.Attack.performed += OnAttackInput;
+        playerInputAction.Gameplay.Attack.canceled += OnAttackInput;
+
+        playerInputAction.Gameplay.Reload.started += OnReloadInput;
+
+        playerInputAction.Gameplay.SwitchWeapon.started += OnSwitchWeaponInput;
     }
 
     private void OnDisable()
@@ -37,13 +42,15 @@ public class PlayerInputHandler : CharacterInputHandler
 
         playerInputAction.Gameplay.Roll.started -= OnRollInput;
 
+        playerInputAction.Gameplay.Attack.performed-= OnAttackInput;
+        playerInputAction.Gameplay.Attack.canceled-= OnAttackInput;
+
+        playerInputAction.Gameplay.Reload.started -= OnReloadInput;
+
+        playerInputAction.Gameplay.SwitchWeapon.started -= OnSwitchWeaponInput;
+
         playerInputAction.Gameplay.Disable(); //Disables Gameplay Action Map 
         //(any time after enabling smth or subscribing to using C# events it`s important to disable them/unsubscribe)
-    }
-
-    public void SetMovementVector(InputAction.CallbackContext context)
-    {
-        movementInputVector = context.ReadValue<Vector2>();
     }
 
     public void OnRollInput(InputAction.CallbackContext context)
@@ -62,28 +69,42 @@ public class PlayerInputHandler : CharacterInputHandler
         if (context.started)
         {
             ReloadInput = true;
+            InvokeOnReload();
         }
     }
 
-    public void UseReloadInput() => ReloadInput = false;
+    //public void UseReloadInput() => ReloadInput = false;
 
-    public void OnShootInput(InputAction.CallbackContext context)
+    public void OnAttackInput(InputAction.CallbackContext context)
     {
         if (context.started)
         {
-            ShootInput = true;
+            AttackInput = true;
+            InvokeOnAttack();
         }
 
         if (context.canceled)
         {
-            ShootInput = false;
+            AttackInput = false;
+            UnInvokeOnAttack();
         }
+    }
+
+    public void OnSwitchWeaponInput(InputAction.CallbackContext context)
+    {
+        if(context.started) 
+        {
+            InvokeOnSwitchWeapon();
+        }
+    }
+
+    public void SetMovementVector(InputAction.CallbackContext context)
+    {
+        movementInputVector = context.ReadValue<Vector2>();
     }
 
     protected virtual void Update()
     {
-        //MOVEMENT
-        //Debug.Log(RollInput);
         if (movementInputVector.magnitude > 0)
         {
             InvokeOnMove();
@@ -93,5 +114,4 @@ public class PlayerInputHandler : CharacterInputHandler
             UnInvokeOnMove();
         }
     }
-    //Подвязать инпуты сюда.
 }

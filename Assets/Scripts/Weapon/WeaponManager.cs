@@ -7,6 +7,9 @@ public class WeaponManager : MonoBehaviour
     [SerializeField]
     private Weapon[] _weapons;
 
+    [SerializeField]
+    private SpriteRenderer _spriteRenderer;
+
     private Weapon _currentWeapon;
 
     public Weapon CurrentWeapon => _currentWeapon;
@@ -17,7 +20,9 @@ public class WeaponManager : MonoBehaviour
         {
             if(weapon.WeaponData == weaponData)
             {
+                _currentWeapon = weapon;
                 weapon.gameObject.SetActive(true);
+                weapon.Initialize(_spriteRenderer);
             }
             else
             {

@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class BulletDestroy : MonoBehaviour
 {
-    [SerializeField]
-    private ParticleSystem bulletDestroy;
+    //[SerializeField]
+    //private ParticleSystem bulletDestroy;
     private void Start()
     {
-        bulletDestroy.Play();
+        //bulletDestroy.Play();
         Destroy(gameObject, 0.1f);
     }
 }

@@ -11,14 +11,18 @@ public class CharacterAttackController : MonoBehaviour
     [SerializeField]
     protected WeaponData _currentWeaponData;
 
+    private void Awake()
+    {
+        Initialize();
+        }
     public virtual void Initialize()
     {
         _weaponManager.SetupWeapon(_currentWeaponData);
     }
 
-    public virtual void DoAttack()
+    public virtual void DoAttack(AttackType attackType)
     {
-
+        _weaponManager.CurrentWeapon.DoAttack(attackType);
     }
 
     public virtual void Reload()

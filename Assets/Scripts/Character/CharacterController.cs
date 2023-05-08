@@ -20,8 +20,11 @@ public class CharacterController : MonoBehaviour
     private CharacterAttackController _characterAttackController;
     public CharacterAttackController CharacterAttackController => _characterAttackController;
 
-    //Change to CharacterRotationController
     [SerializeField]
-    private PlayerRotationController _rotationController;
-    public PlayerRotationController PlayerRotationController => _rotationController;
+    private CharacterRotationController _characterRotationController;
+    public CharacterRotationController CharacterRotationController => _characterRotationController;
+
+    [SerializeField]
+    private CharacterHealthController _characterHealthController;
+    public CharacterHealthController CharacterHealthController => _characterHealthController;
 }

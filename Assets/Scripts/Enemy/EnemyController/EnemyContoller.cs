@@ -11,7 +11,8 @@ public class EnemyContoller : CharacterController
     private void Awake()
     {
         _stateMachine = new StateMachine<CharacterController>();
-        _stateMachine.CurrentState = new CharacterIdleState(this, _stateMachine);
+        _stateMachine.CurrentState = new EnemyWalkState(this, _stateMachine);
         _stateMachine.CurrentState.Initialize();
+        _stateMachine.CurrentState.Execute();
     }
 }

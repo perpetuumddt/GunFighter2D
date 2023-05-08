@@ -12,7 +12,7 @@ public class PlayerController : CharacterController
     private void Awake()
     {
         _stateMachine = new StateMachine<CharacterController>();
-        _stateMachine.CurrentState = new CharacterIdleState(this, _stateMachine);
+        _stateMachine.CurrentState = new PlayerIdleState(this, _stateMachine);
         _stateMachine.CurrentState.Initialize();
     }
 }

@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyNavMesh : MonoBehaviour
+public class EnemyMovementController : CharacterMovementController
 {
     [SerializeField]
     private Transform targetPositionTransform;
 
     private NavMeshAgent agent;
 
+    private bool _isMoving;
     private void Start()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -19,6 +20,15 @@ public class EnemyNavMesh : MonoBehaviour
 
     private void Update()
     {
-        agent.destination = targetPositionTransform.position;
+        Debug.Log(_isMoving);
+        if(_isMoving)
+        {
+            agent.destination = targetPositionTransform.position;
+        }
+    }
+
+    public override void DoMove(params object[] param)
+    {
+        _isMoving = (bool)param[0];
     }
 }

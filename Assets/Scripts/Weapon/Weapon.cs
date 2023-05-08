@@ -6,7 +6,17 @@ public class Weapon : MonoBehaviour
 {
     [SerializeField]
     private WeaponData _weaponData;
-    public float Damage => _weaponData.Damage;
 
+    public float Damage => _weaponData.Damage;
     public WeaponData WeaponData => _weaponData;
+
+    public virtual void DoAttack(AttackType attackType)
+    {
+
+    }
+
+    public virtual void Initialize(SpriteRenderer spriteRenderer)
+    {
+        spriteRenderer.sprite = WeaponData.Sprite;
+    }
 }
