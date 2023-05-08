@@ -25,6 +25,10 @@ public class EnemyMovementController : CharacterMovementController
         {
             agent.destination = targetPositionTransform.position;
         }
+        else
+        {
+            agent.Stop();
+        }
     }
 
     public override void DoMove(params object[] param)

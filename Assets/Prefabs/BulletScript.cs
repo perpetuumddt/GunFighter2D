@@ -25,7 +25,7 @@ public class BulletScript : MonoBehaviour
     {
         if(collision.collider.CompareTag("Enemy"))
         {
-            //enemy take damage
+            collision.transform.GetComponent<IDamageable>().TakeDamage(bulletDamage);
             Destroy(gameObject);
             //particles
         }

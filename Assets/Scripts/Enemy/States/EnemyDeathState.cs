@@ -9,10 +9,14 @@ public class EnemyDeathState : CharacterDeathState
     {
     }
 
+    public override void Initialize(params object[] param)
+    {
+        base.Initialize(param);
+    }
     public override void Execute()
     {
         base.Execute();
-        StopMovement();
+        StateMachine.CurrentState.Data.CharacterMovementController.DoMove(false);
     }
 
     public override void StopExecution()
@@ -20,13 +24,5 @@ public class EnemyDeathState : CharacterDeathState
         base.StopExecution();
     }
 
-    public override void Initialize(params object[] param)
-    {
-        base.Initialize(param);
-    }
 
-    private void StopMovement()
-    {
-        StateMachine.CurrentState.Data.CharacterMovementController.DoMove(false);
-    }
 }

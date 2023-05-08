@@ -31,6 +31,8 @@ public class EnemyWalkState : CharacterWalkState
         {
             StopExecution();
             StateMachine.CurrentState = new EnemyDeathState(StateMachine.CurrentState.Data, StateMachine);
+            StateMachine.CurrentState.Initialize();
+            StateMachine.CurrentState.Execute();
         }
         else
         {
