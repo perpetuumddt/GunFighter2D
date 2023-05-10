@@ -5,6 +5,10 @@ using UnityEngine;
 public class WeaponData : ScriptableObject
 {
     [SerializeField]
+    private string _name;
+    public string Name => _name;
+
+    [SerializeField]
     private float _damage;
     public float Damage => _damage;
 
@@ -14,6 +18,5 @@ public class WeaponData : ScriptableObject
 
     [SerializeField]
     private Sprite _sprite;
-
     public Sprite Sprite => _sprite;
 }

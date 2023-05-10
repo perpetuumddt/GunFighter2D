@@ -450,7 +450,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _weapons:
   - {fileID: 1080182223}
-  - {fileID: 491926904}
+  - {fileID: 603603214}
   _spriteRenderer: {fileID: 1151649052}
 --- !u!114 &102438077
 MonoBehaviour:
@@ -821,7 +821,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3ca9650d393c6e347b9ec97ec032d5ed, type: 3}
   m_Name: 
@@ -938,6 +938,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 603603213}
+  - component: {fileID: 603603214}
   m_Layer: 7
   m_Name: Sawed-off
   m_TagString: Untagged
@@ -960,6 +961,21 @@ Transform:
   m_Father: {fileID: 738013273}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &603603214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 603603212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dec5ba53fe702974eb145637f45986c1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _weaponData: {fileID: 11400000, guid: 5de93cd69cc91d64e87cfc04e2d09bff, type: 2}
+  _bulletPrefab: {fileID: 3074082345170130955, guid: efe771e9e7557fc4192c7c7d201583d4, type: 3}
+  _shotPoint: {fileID: 2057889918}
 --- !u!1 &738013272
 GameObject:
   m_ObjectHideFlags: 0
@@ -5949,6 +5965,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _weaponManager: {fileID: 102438076}
   _currentWeaponData: {fileID: 11400000, guid: 4b77e2824edd28248b54eab0ee6632e1, type: 2}
+  _spareWeaponData: {fileID: 11400000, guid: 5de93cd69cc91d64e87cfc04e2d09bff, type: 2}
 --- !u!114 &2009276181
 MonoBehaviour:
   m_ObjectHideFlags: 0

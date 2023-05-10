@@ -20,7 +20,6 @@ public class EnemyMovementController : CharacterMovementController
 
     private void Update()
     {
-        Debug.Log(_isMoving);
         if(_isMoving)
         {
             agent.destination = targetPositionTransform.position;

@@ -35,7 +35,6 @@ public class WeaponRotation : MonoBehaviour
 
     private void WeaponFlip()
     {
-        //_shotPoint.transform.Rotate(0, 180, 0);
         _weaponSprite.transform.Rotate(180, 0, 0);
     }
 }

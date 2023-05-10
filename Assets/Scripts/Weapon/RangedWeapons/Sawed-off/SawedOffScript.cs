@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class RustyRevolverScript : Weapon
+public class SawedOffScript : Weapon
 {
     [SerializeField]
     private GameObject _bulletPrefab;
@@ -10,12 +10,14 @@ public class RustyRevolverScript : Weapon
     [SerializeField]
     private Transform _shotPoint;
 
-    private Coroutine _shotCoroutine;
+    private Coroutine _shootCoroutine;
+
+    private Coroutine _reloadCoroutine;
 
     private void Start()
     {
         WeaponData weaponData = new WeaponData();
-        _shotPoint.rotation = Quaternion.Euler(0,0,90);
+        _shotPoint.rotation = Quaternion.Euler(0, 0, 90);
     }
 
     private IEnumerator Shoot(WeaponData weaponData)
@@ -27,10 +29,10 @@ public class RustyRevolverScript : Weapon
     public override void DoAttack(AttackType attackType)
     {
         base.DoAttack(attackType);
-        if(_shotCoroutine != null) 
+        if(_shootCoroutine != null) 
         {
-            StopCoroutine(_shotCoroutine);
+            StopCoroutine(_shootCoroutine);
         }
-        _shotCoroutine = StartCoroutine(Shoot(WeaponData));
+        _shootCoroutine = StartCoroutine(Shoot(WeaponData));
     }
 }

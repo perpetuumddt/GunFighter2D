@@ -10,24 +10,56 @@ public class WeaponManager : MonoBehaviour
     [SerializeField]
     private SpriteRenderer _spriteRenderer;
 
+    [SerializeField]
+    protected WeaponData _currentWeaponData;
+    [SerializeField]
+    protected WeaponData _spareWeaponData;
+
+    [SerializeField]
     private Weapon _currentWeapon;
 
-    public Weapon CurrentWeapon => _currentWeapon;
+    [SerializeField]
+    private Weapon _spareWeapon;
 
-    public virtual void SetupWeapon(WeaponData weaponData)
+    public Weapon CurrentWeapon => _currentWeapon;
+    public Weapon SpareWeapon => _spareWeapon;
+
+    private void Awake()
     {
-        foreach (var weapon in _weapons) 
+        SetupCurrentWeapon(_currentWeaponData);
+        SetupSpareWeapon(_spareWeaponData);
+    }
+
+    private void SetupWeapon(Weapon weapon, WeaponData weaponData)
+    {
+        foreach (var curWeapon in _weapons) 
         {
-            if(weapon.WeaponData == weaponData)
+            if(curWeapon.WeaponData == weaponData)
             {
-                _currentWeapon = weapon;
-                weapon.gameObject.SetActive(true);
-                weapon.Initialize(_spriteRenderer);
+                weapon = curWeapon;
+                curWeapon.gameObject.SetActive(true);
+                curWeapon.Initialize(_spriteRenderer);
             }
             else
             {
-                weapon.gameObject.SetActive(false);
+                curWeapon.gameObject.SetActive(false);
             }
         }
+    }
+    public virtual void SetupCurrentWeapon(WeaponData weaponData)
+    {
+        SetupWeapon(_currentWeapon, weaponData);
+    }
+
+    public virtual void SetupSpareWeapon(WeaponData weaponData)
+    {
+        SetupWeapon(_spareWeapon, weaponData);
+    }
+
+    public virtual void SwapWeapon()
+    {
+        Weapon buffWeapon = _currentWeapon;
+        _currentWeapon = _spareWeapon;
+        _spareWeapon = buffWeapon;
     }
 }

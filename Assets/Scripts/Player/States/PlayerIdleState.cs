@@ -14,6 +14,7 @@ public class PlayerIdleState : CharacterIdleState
         base.Initialize(param);
         StateMachine.CurrentState.Data.CharacterInputHandler.OnMove += SwitchState;
         StateMachine.CurrentState.Data.CharacterInputHandler.OnAttack += Attack;
+        StateMachine.CurrentState.Data.CharacterInputHandler.OnSwitchWeapon += SwapWeapon;
     }
 
     public override void Execute()
@@ -28,11 +29,12 @@ public class PlayerIdleState : CharacterIdleState
         base.StopExecution();
         StateMachine.CurrentState.Data.CharacterInputHandler.OnMove -= SwitchState;
         StateMachine.CurrentState.Data.CharacterInputHandler.OnAttack -= Attack;
+        StateMachine.CurrentState.Data.CharacterInputHandler.OnSwitchWeapon -= SwapWeapon;
     }
 
     public void Attack(bool isAttacking)
     {
-        StateMachine.CurrentState.Data.CharacterAttackController.DoAttack(AttackType.Single);
+        StateMachine.CurrentState.Data.CharacterAttackController.DoAttack(AttackType.Continious);
     }
 
     public void Reload()
@@ -58,5 +60,10 @@ public class PlayerIdleState : CharacterIdleState
         {
             Execute();
         }
+    }
+
+    private void SwapWeapon()
+    {
+        StateMachine.CurrentState.Data.CharacterAttackController.SwapWeapon();
     }
 }

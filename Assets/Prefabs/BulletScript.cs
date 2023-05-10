@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -25,7 +25,7 @@ public class BulletScript : MonoBehaviour
     {
         if(collision.collider.CompareTag("Enemy"))
         {
-            collision.transform.GetComponent<IDamageable>().TakeDamage(bulletDamage);
+            collision.transform.GetComponent<IDamageable>().TakeDamage(bulletDamage); //принцип подстановски лискофф
             Destroy(gameObject);
             //particles
         }

@@ -4,25 +4,19 @@ using UnityEngine;
 
 public class CharacterAttackController : MonoBehaviour
 {
-
-    [SerializeField]
-    protected WeaponManager _weaponManager;
-
-    [SerializeField]
-    protected WeaponData _currentWeaponData;
-
     private void Awake()
     {
         Initialize();
-        }
+    }
+
     public virtual void Initialize()
     {
-        _weaponManager.SetupWeapon(_currentWeaponData);
+        
     }
 
     public virtual void DoAttack(AttackType attackType)
     {
-        _weaponManager.CurrentWeapon.DoAttack(attackType);
+        
     }
 
     public virtual void Reload()
@@ -31,6 +25,11 @@ public class CharacterAttackController : MonoBehaviour
     }
 
     public virtual void ChangeWeapon()
+    {
+        
+    }
+
+    public virtual void SwapWeapon()
     {
         
     }

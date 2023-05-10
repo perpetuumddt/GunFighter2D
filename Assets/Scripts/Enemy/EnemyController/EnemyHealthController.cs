@@ -18,16 +18,16 @@ namespace Assets.Scripts.Enemy.EnemyController
 
         public override void UpdateHealth(float _currentHealth)
         {
-            if(_currentHealth <= 0) 
-            {
-                InvokeOnHealthZero();
-            }
             base.UpdateHealth(_currentHealth);
         }
 
         public void TakeDamage(float damage)
         {
             _currentHealth -= damage;
+            if (_currentHealth <= 0)
+            {
+                InvokeOnHealthZero();
+            }
             UpdateHealth(_currentHealth);
         }
     }
