@@ -23,6 +23,7 @@ public class PlayerWalkState : CharacterWalkState
         StateMachine.CurrentState.Data.CharacterInputHandler.OnMove -= SwichStateIdle;
         StateMachine.CurrentState.Data.CharacterInputHandler.OnRoll -= SwichStateRoll;
         StateMachine.CurrentState.Data.CharacterInputHandler.OnAttack -= Attack;
+        StateMachine.CurrentState.Data.CharacterInputHandler.OnSwapWeapon -= SwapWeapon;
     }
 
     public override void Initialize(params object[] param)
@@ -31,6 +32,7 @@ public class PlayerWalkState : CharacterWalkState
         StateMachine.CurrentState.Data.CharacterInputHandler.OnRoll += SwichStateRoll;
         StateMachine.CurrentState.Data.CharacterInputHandler.OnMove += SwichStateIdle;
         StateMachine.CurrentState.Data.CharacterInputHandler.OnAttack += Attack;
+        StateMachine.CurrentState.Data.CharacterInputHandler.OnSwapWeapon += SwapWeapon;
     }
 
     private void SwichStateIdle(bool isMove)
@@ -75,5 +77,10 @@ public class PlayerWalkState : CharacterWalkState
     public void ChangeWeapon()
     {
         StateMachine.CurrentState.Data.CharacterAttackController.ChangeWeapon();
+    }
+
+    private void SwapWeapon()
+    {
+        StateMachine.CurrentState.Data.CharacterAttackController.SwapWeapon();
     }
 }

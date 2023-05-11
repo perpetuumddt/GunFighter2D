@@ -14,13 +14,14 @@ public class PlayerIdleState : CharacterIdleState
         base.Initialize(param);
         StateMachine.CurrentState.Data.CharacterInputHandler.OnMove += SwitchState;
         StateMachine.CurrentState.Data.CharacterInputHandler.OnAttack += Attack;
-        StateMachine.CurrentState.Data.CharacterInputHandler.OnSwitchWeapon += SwapWeapon;
+        StateMachine.CurrentState.Data.CharacterInputHandler.OnSwapWeapon += SwapWeapon;
     }
 
     public override void Execute()
     {
         base.Execute();
         StateMachine.CurrentState.Data.CharacterRotationController.CheckMovementDirection();
+        StateMachine.CurrentState.Data.CharacterRotationController.CheckLookingDirection();
         StateMachine.CurrentState.Data.CharacterMovementController.DoMove(0f, 0f);
     }
 
@@ -29,12 +30,12 @@ public class PlayerIdleState : CharacterIdleState
         base.StopExecution();
         StateMachine.CurrentState.Data.CharacterInputHandler.OnMove -= SwitchState;
         StateMachine.CurrentState.Data.CharacterInputHandler.OnAttack -= Attack;
-        StateMachine.CurrentState.Data.CharacterInputHandler.OnSwitchWeapon -= SwapWeapon;
+        StateMachine.CurrentState.Data.CharacterInputHandler.OnSwapWeapon -= SwapWeapon;
     }
 
     public void Attack(bool isAttacking)
     {
-        StateMachine.CurrentState.Data.CharacterAttackController.DoAttack(AttackType.Continious);
+        StateMachine.CurrentState.Data.CharacterAttackController.DoAttack(AttackType.Single);
     }
 
     public void Reload()

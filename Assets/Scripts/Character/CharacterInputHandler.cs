@@ -11,7 +11,7 @@ public class CharacterInputHandler : MonoBehaviour
     public event Action OnRoll;
     public event Action OnReload;
     public event Action<bool> OnAttack;
-    public event Action OnSwitchWeapon;
+    public event Action OnSwapWeapon;
 
     protected void InvokeOnRoll()
     {
@@ -42,8 +42,8 @@ public class CharacterInputHandler : MonoBehaviour
         OnReload?.Invoke();
     }
 
-    protected void InvokeOnSwitchWeapon()
+    protected void InvokeOnSwapWeapon()
     {
-        OnSwitchWeapon?.Invoke();
+        OnSwapWeapon?.Invoke();
     }
 }

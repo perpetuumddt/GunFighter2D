@@ -11,8 +11,6 @@ public class PlayerAttackController : CharacterAttackController
     public override void Initialize()
     {
         base.Initialize();
-        //_weaponManager.SetupCurrentWeapon(_currentWeaponData);
-        //_weaponManager.SetupSpareWeapon(_spareWeaponData);
     }
     public override void DoAttack(AttackType attackType)
     {

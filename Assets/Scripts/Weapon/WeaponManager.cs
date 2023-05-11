@@ -11,23 +11,23 @@ public class WeaponManager : MonoBehaviour
     private SpriteRenderer _spriteRenderer;
 
     [SerializeField]
-    protected WeaponData _currentWeaponData;
-    [SerializeField]
-    protected WeaponData _spareWeaponData;
-
-    [SerializeField]
     private Weapon _currentWeapon;
+    [SerializeField]
+    protected WeaponData _currentWeaponData;
 
     [SerializeField]
     private Weapon _spareWeapon;
+    [SerializeField]
+    protected WeaponData _spareWeaponData;
+
 
     public Weapon CurrentWeapon => _currentWeapon;
     public Weapon SpareWeapon => _spareWeapon;
 
     private void Awake()
     {
-        SetupCurrentWeapon(_currentWeaponData);
         SetupSpareWeapon(_spareWeaponData);
+        SetupCurrentWeapon(_currentWeaponData);
     }
 
     private void SetupWeapon(Weapon weapon, WeaponData weaponData)
@@ -59,7 +59,14 @@ public class WeaponManager : MonoBehaviour
     public virtual void SwapWeapon()
     {
         Weapon buffWeapon = _currentWeapon;
+        WeaponData buffData = _currentWeaponData;
+
         _currentWeapon = _spareWeapon;
+        _currentWeaponData = _spareWeaponData;
+
+        SetupWeapon(_currentWeapon, _currentWeaponData);
+
         _spareWeapon = buffWeapon;
+        _spareWeaponData = buffData;
     }
 }

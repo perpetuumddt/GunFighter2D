@@ -14,25 +14,34 @@ public class SawedOffScript : Weapon
 
     private Coroutine _reloadCoroutine;
 
+    private bool _canShoot = true;
+
     private void Start()
     {
-        WeaponData weaponData = new WeaponData();
         _shotPoint.rotation = Quaternion.Euler(0, 0, 90);
     }
 
     private IEnumerator Shoot(WeaponData weaponData)
     {
-        GameObject bulletClone = Instantiate(_bulletPrefab, _shotPoint.position, _shotPoint.rotation);
+        _canShoot = false;
+        for(int i=0;  i<3; i++)
+        {
+            GameObject bulletClone = Instantiate(_bulletPrefab, _shotPoint.position, _shotPoint.rotation);
+        }
         yield return new WaitForSeconds(weaponData.AttackSpeed);
+        _canShoot = true;
     }
 
     public override void DoAttack(AttackType attackType)
     {
-        base.DoAttack(attackType);
-        if(_shootCoroutine != null) 
+        if(_canShoot) 
         {
-            StopCoroutine(_shootCoroutine);
+            base.DoAttack(attackType);
+            if (_shootCoroutine != null)
+            {
+                StopCoroutine(_shootCoroutine);
+            }
+            _shootCoroutine = StartCoroutine(Shoot(_weaponData));
         }
-        _shootCoroutine = StartCoroutine(Shoot(WeaponData));
     }
 }

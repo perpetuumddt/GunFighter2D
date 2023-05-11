@@ -27,7 +27,7 @@ public class PlayerInputHandler : CharacterInputHandler
 
         playerInputAction.Gameplay.Roll.started += OnRollInput;
 
-        playerInputAction.Gameplay.Attack.performed += OnAttackInput;
+        playerInputAction.Gameplay.Attack.started += OnAttackInput;
         playerInputAction.Gameplay.Attack.canceled += OnAttackInput;    
 
         playerInputAction.Gameplay.Reload.started += OnReloadInput;
@@ -42,7 +42,7 @@ public class PlayerInputHandler : CharacterInputHandler
 
         playerInputAction.Gameplay.Roll.started -= OnRollInput;
 
-        playerInputAction.Gameplay.Attack.performed -= OnAttackInput;
+        playerInputAction.Gameplay.Attack.started -= OnAttackInput;
         playerInputAction.Gameplay.Attack.canceled-= OnAttackInput;
 
         playerInputAction.Gameplay.Reload.started -= OnReloadInput;
@@ -77,7 +77,7 @@ public class PlayerInputHandler : CharacterInputHandler
 
     public void OnAttackInput(InputAction.CallbackContext context)
     {
-        if (context.performed)
+        if (context.started)
         {
             AttackInput = true;
             InvokeOnAttack();
@@ -94,7 +94,7 @@ public class PlayerInputHandler : CharacterInputHandler
     {
         if(context.started) 
         {
-            InvokeOnSwitchWeapon();
+            InvokeOnSwapWeapon();
         }
     }
 
