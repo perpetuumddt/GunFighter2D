@@ -15,6 +15,11 @@ public class CharacterHealthController : MonoBehaviour
 
     }
 
+    public virtual void DestroyOnDeath()
+    {
+
+    }
+
     protected void InvokeOnHealthZero()
     {
         OnHealthZero?.Invoke(true);

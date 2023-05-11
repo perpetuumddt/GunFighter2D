@@ -30,5 +30,11 @@ namespace Assets.Scripts.Enemy.EnemyController
             }
             UpdateHealth(_currentHealth);
         }
+
+        public override void DestroyOnDeath()
+        {
+            base.DestroyOnDeath();
+            Destroy(gameObject, 1f);
+        }
     }
 }

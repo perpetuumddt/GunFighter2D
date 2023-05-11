@@ -10,10 +10,18 @@ public class RustyRevolverScript : Weapon
     [SerializeField]
     private Transform _shotPoint;
 
-    private bool _canShoot = true;
+    [SerializeField]
+    ParticleSystem _shootPs;
+
+    private bool _canShoot;
     private Coroutine _shootCoroutine;
 
     private Coroutine _reloadCoroutine;
+
+    private void OnEnable()
+    {
+        _canShoot = true;
+    }
 
     private void Start()
     {
@@ -37,6 +45,7 @@ public class RustyRevolverScript : Weapon
             {
                 StopCoroutine(_shootCoroutine);
             }
+            _shootPs.Play();
             _shootCoroutine = StartCoroutine(Shoot(_weaponData));
         }
     }

@@ -27,5 +27,4 @@ public class CharacterDeathState : State<CharacterController>
     {
         base.Initialize(param);
     }
-
 }

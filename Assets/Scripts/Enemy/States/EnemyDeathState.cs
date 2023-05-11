@@ -18,6 +18,7 @@ public class EnemyDeathState : CharacterDeathState
         base.Execute();
         StateMachine.CurrentState.Data.CharacterMovementController.DoMove(false);
         StateMachine.CurrentState.Data.GetComponent<Rigidbody2D>().isKinematic = true;
+        StateMachine.CurrentState.Data.CharacterHealthController.DestroyOnDeath();
     }
 
     public override void StopExecution()

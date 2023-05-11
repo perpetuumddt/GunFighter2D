@@ -8,10 +8,8 @@ public class BulletScript : MonoBehaviour
     
     private float bulletDamage = 1f;
 
-    private bool isColliding;
-
-    //[SerializeField]
-    //private GameObject BulletDestroying;
+    [SerializeField]
+    private GameObject _bulletDestroy;
 
     private void FixedUpdate()
     {
@@ -26,14 +24,18 @@ public class BulletScript : MonoBehaviour
         if(collision.collider.CompareTag("Enemy"))
         {
             collision.transform.GetComponent<IDamageable>().TakeDamage(bulletDamage); //принцип подстановски лискофф
-            Destroy(gameObject);
-            //particles
+            DestroyBullet();
         }
         if(collision.collider.CompareTag("Obstacle"))
         {
-            //Instantiate(BulletDestroying, transform.position, Quaternion.identity);
             //damage obstacle if damageable
-            Destroy(gameObject);
+            DestroyBullet();
         }
+    }
+
+    private void DestroyBullet()
+    {
+        GameObject bulletDestroy = Instantiate(_bulletDestroy, transform.position, transform.rotation);
+        Destroy(gameObject);
     }
 }
