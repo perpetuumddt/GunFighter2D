@@ -27,4 +27,8 @@ public class CharacterController : MonoBehaviour
     [SerializeField]
     private CharacterHealthController _characterHealthController;
     public CharacterHealthController CharacterHealthController => _characterHealthController;
+
+    [SerializeField]
+    private CharacterDropController _characterDropController;
+    public CharacterDropController CharacterDropController => _characterDropController;
 }

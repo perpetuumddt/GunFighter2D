@@ -23,7 +23,8 @@ public class BulletScript : MonoBehaviour
     {
         if(collision.collider.CompareTag("Enemy"))
         {
-            collision.transform.GetComponent<IDamageable>().TakeDamage(bulletDamage); //принцип подстановски лискофф
+            collision.transform.GetComponent<IDamageable>().TakeDamage(bulletDamage); 
+            
             DestroyBullet();
         }
         if(collision.collider.CompareTag("Obstacle"))
