@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -69,4 +69,6 @@ public class WeaponManager : MonoBehaviour
         _spareWeapon = buffWeapon;
         _spareWeaponData = buffData;
     }
+
+    //при подборе оружия, текущее оружие Intantiate as WeaponWorldViewController
 }

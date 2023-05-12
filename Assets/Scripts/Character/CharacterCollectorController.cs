@@ -1,4 +1,4 @@
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,4 +22,7 @@ public class CharacterCollectorController : MonoBehaviour, ICollector
     {
         
     }
+    //продублировать как CharacterInteractorController
+    //в он тригер ентер ActivateInteraction
+    //в он ексит DeactivateInteraction
 }
