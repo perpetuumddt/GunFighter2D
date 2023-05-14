@@ -34,7 +34,6 @@ public class SawedOffScript : Weapon
         _canShoot = false;
         for(int i=0;  i<8; i++)
         {
-            Debug.Log(_shotPoint.rotation);
             GameObject bulletClone = Instantiate(_bulletPrefab, _shotPoint.position, _shotPoint.rotation);
         }
         _shootPs.Play();

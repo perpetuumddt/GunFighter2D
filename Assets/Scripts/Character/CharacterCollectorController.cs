@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterCollectorController : MonoBehaviour, ICollector
+public class CharacterCollectorController : MonoBehaviour ,ICollector
 {
     public void Collect(ICollectable collectable)
     {

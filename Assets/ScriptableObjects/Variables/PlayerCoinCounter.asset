@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 932394a1eecad014bae7b2aa89979f1b, type: 3}
   m_Name: PlayerCoinCounter
   m_EditorClassIdentifier: 
-  _variable: 0
+  _variable: 4

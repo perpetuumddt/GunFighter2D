@@ -4,23 +4,52 @@ using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class CoinController : MonoBehaviour, ICollectable
+public class CoinController : MonoBehaviour, IDetectable, ICollectable
 {
     [SerializeField]
     private ScriptableObjectIntVariable _playerCoinCounter; 
 
     [SerializeField]
-    private ScriptableObjectIntVariable _coinAmount; //value of 1 coin = 1
+    private ScriptableObjectIntVariable _coinAmount;
 
     [SerializeField]
     private SpriteRenderer _spriteRenderer;
+
+    [SerializeField]
+    private ParticleSystem _collectedPS;
+
+    public event ObjectDetectedHandler OnObjectDetectedEvent;
+    public event ObjectDetectedHandler OnObjectDetectedReleasedEvent;
+
+
+    public void Detected(GameObject detectionSource)
+    {
+        StartCoroutine(MoveTowardsDetector(detectionSource.transform.position));
+    }
+
+    public void DetectionReleased(GameObject detectionSource)
+    {
+        StopAllCoroutines();
+    }
+
     public async void DoCollect()
     {
-        _playerCoinCounter.ChangeVariable(_playerCoinCounter.Variable+_coinAmount.Variable);
-        //Sprite renderer set active false
-        //await Task.Delay(1000);
-        //Play PS
-        //await Task.Delay(1000);
+        _playerCoinCounter.IncreaseVariable(_playerCoinCounter.Variable,_coinAmount.Variable);
+        _spriteRenderer.enabled = false;
+        _collectedPS.Play();
+        await Task.Delay(1000);
         Destroy(gameObject);
+    }
+
+    private IEnumerator MoveTowardsDetector(Vector3 moveDestination)
+    {
+        float elapsedTime = 0f;
+        float travelTime = 5f;
+        while(elapsedTime < travelTime) 
+        {
+            transform.position = Vector3.Lerp(transform.position, moveDestination, elapsedTime/travelTime);
+            elapsedTime += Time.deltaTime;
+            yield return null;
+        }
     }
 }
