@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 932394a1eecad014bae7b2aa89979f1b, type: 3}
-  m_Name: PlayerCoinCounter
+  m_Script: {fileID: 11500000, guid: 7e19017612c2cd44a968df2030d9878d, type: 3}
+  m_Name: isPause
   m_EditorClassIdentifier: 
-  _variable: 12
-  _valueName: Coins
+  _variable: 0
