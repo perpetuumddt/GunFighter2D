@@ -8,14 +8,14 @@ public class PlayerHealthController : CharacterHealthController, IDamageable
     private int _currentHealth;
 
     [SerializeField]
-    private PlayerStats _playerStats;
+    private PlayerData _playerData;
 
     [SerializeField]
     private HealthBarController _healthBarController;
 
     private void Start()
     {
-        _currentHealth = _playerStats.GetMaxHealth();
+        _currentHealth = (int)_playerData.Health;
         UpdateHealth(_currentHealth);
     }
 

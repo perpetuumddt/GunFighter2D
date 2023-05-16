@@ -8,6 +8,9 @@ public class EnemyMovementController : CharacterMovementController
     [SerializeField]
     private Transform targetPositionTransform;
 
+    [SerializeField]
+    private EnemyData _enemyData;
+
     private NavMeshAgent agent;
 
     private bool _isMoving;
@@ -22,11 +25,12 @@ public class EnemyMovementController : CharacterMovementController
     {
         if(_isMoving)
         {
+            agent.speed = _enemyData.MovementSpeed;
             agent.destination = targetPositionTransform.position;
         }
         else
         {
-            agent.Stop();
+            agent.isStopped = true;
         }
     }
 

@@ -73,7 +73,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Interact/PickUp"",
+                    ""name"": ""Interact"",
                     ""type"": ""Button"",
                     ""id"": ""80910c4e-c6f2-432c-911c-221e3eb4bc1a"",
                     ""expectedControlType"": ""Button"",
@@ -185,11 +185,11 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""1f4ff66c-c2c5-4097-852a-9ceb6a85bf71"",
-                    ""path"": ""<Keyboard>/f"",
+                    ""path"": ""<Keyboard>/e"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Interact/PickUp"",
+                    ""action"": ""Interact"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -222,7 +222,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         m_Gameplay_Reload = m_Gameplay.FindAction("Reload", throwIfNotFound: true);
         m_Gameplay_Attack = m_Gameplay.FindAction("Attack", throwIfNotFound: true);
         m_Gameplay_SwitchWeapon = m_Gameplay.FindAction("Switch Weapon", throwIfNotFound: true);
-        m_Gameplay_InteractPickUp = m_Gameplay.FindAction("Interact/PickUp", throwIfNotFound: true);
+        m_Gameplay_Interact = m_Gameplay.FindAction("Interact", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -289,7 +289,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_Gameplay_Reload;
     private readonly InputAction m_Gameplay_Attack;
     private readonly InputAction m_Gameplay_SwitchWeapon;
-    private readonly InputAction m_Gameplay_InteractPickUp;
+    private readonly InputAction m_Gameplay_Interact;
     public struct GameplayActions
     {
         private @PlayerInputAction m_Wrapper;
@@ -299,7 +299,7 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         public InputAction @Reload => m_Wrapper.m_Gameplay_Reload;
         public InputAction @Attack => m_Wrapper.m_Gameplay_Attack;
         public InputAction @SwitchWeapon => m_Wrapper.m_Gameplay_SwitchWeapon;
-        public InputAction @InteractPickUp => m_Wrapper.m_Gameplay_InteractPickUp;
+        public InputAction @Interact => m_Wrapper.m_Gameplay_Interact;
         public InputActionMap Get() { return m_Wrapper.m_Gameplay; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -324,9 +324,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @SwitchWeapon.started += instance.OnSwitchWeapon;
             @SwitchWeapon.performed += instance.OnSwitchWeapon;
             @SwitchWeapon.canceled += instance.OnSwitchWeapon;
-            @InteractPickUp.started += instance.OnInteractPickUp;
-            @InteractPickUp.performed += instance.OnInteractPickUp;
-            @InteractPickUp.canceled += instance.OnInteractPickUp;
+            @Interact.started += instance.OnInteract;
+            @Interact.performed += instance.OnInteract;
+            @Interact.canceled += instance.OnInteract;
         }
 
         private void UnregisterCallbacks(IGameplayActions instance)
@@ -346,9 +346,9 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
             @SwitchWeapon.started -= instance.OnSwitchWeapon;
             @SwitchWeapon.performed -= instance.OnSwitchWeapon;
             @SwitchWeapon.canceled -= instance.OnSwitchWeapon;
-            @InteractPickUp.started -= instance.OnInteractPickUp;
-            @InteractPickUp.performed -= instance.OnInteractPickUp;
-            @InteractPickUp.canceled -= instance.OnInteractPickUp;
+            @Interact.started -= instance.OnInteract;
+            @Interact.performed -= instance.OnInteract;
+            @Interact.canceled -= instance.OnInteract;
         }
 
         public void RemoveCallbacks(IGameplayActions instance)
@@ -382,6 +382,6 @@ public partial class @PlayerInputAction: IInputActionCollection2, IDisposable
         void OnReload(InputAction.CallbackContext context);
         void OnAttack(InputAction.CallbackContext context);
         void OnSwitchWeapon(InputAction.CallbackContext context);
-        void OnInteractPickUp(InputAction.CallbackContext context);
+        void OnInteract(InputAction.CallbackContext context);
     }
 }

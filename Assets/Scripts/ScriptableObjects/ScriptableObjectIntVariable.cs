@@ -11,7 +11,9 @@ public class ScriptableObjectIntVariable : ScriptableObject
     public event Action<int> OnVariableChanged;
 
     [SerializeField]
-    private int _variable;  
+    private int _variable;
+    [SerializeField]
+    private string _valueName;
 
     public int Variable => _variable;
 
@@ -19,17 +21,23 @@ public class ScriptableObjectIntVariable : ScriptableObject
     {
         _variable = variable;
         OnVariableChanged?.Invoke(variable);
+        PlayerPrefs.SetInt(_valueName, variable);
     }
 
-    public void IncreaseVariable(int variable,int value)
+    public void IncreaseVariable(int value)
     {
-        _variable += value;
-        OnVariableChanged?.Invoke(variable);
+        ChangeVariable(_variable+value);
+        OnVariableChanged?.Invoke(_variable);
     }
 
-    public void DecreaseVariable(int variable,int value) 
+    public void DecreaseVariable(int value) 
     {
-        _variable -= value;
-        OnVariableChanged?.Invoke(variable);
+        ChangeVariable(_variable - value);
+        OnVariableChanged?.Invoke(_variable);
+    }
+
+    public void RestoreValue()
+    {
+        _variable = PlayerPrefs.GetInt(_valueName);
     }
 }

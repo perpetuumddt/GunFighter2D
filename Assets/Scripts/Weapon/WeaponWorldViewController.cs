@@ -2,15 +2,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponWorldViewController : MonoBehaviour, IInteractable
+public class WeaponWorldViewController : Weapon, IInteractable,IDetectable
 {
     [SerializeField]
-    private WeaponData _weaponData;
-
-    public WeaponData WeaponData => _weaponData;
-
-    [SerializeField]
     private SpriptableObjectWeaponEvent _weaponEvent;
+
+    public event ObjectDetectedHandler OnObjectDetectedEvent;
+    public event ObjectDetectedHandler OnObjectDetectedReleasedEvent;
+
     public void ActivateInteraction()
     {
         _weaponEvent.SetActivePickupWeapon(true, this);
@@ -23,6 +22,16 @@ public class WeaponWorldViewController : MonoBehaviour, IInteractable
 
     public void DoInteract()
     {
-     //Destroy
+        Destroy(gameObject);
+    }
+
+    public void Detected(GameObject detectionSource)
+    {
+        ActivateInteraction();
+    }
+
+    public void DetectionReleased(GameObject detectionSource)
+    {
+        DeactivateInteraction();
     }
 }

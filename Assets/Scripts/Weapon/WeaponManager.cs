@@ -67,8 +67,13 @@ public class WeaponManager : MonoBehaviour
         SetupWeapon(_currentWeapon, _currentWeaponData);
 
         _spareWeapon = buffWeapon;
-        _spareWeaponData = buffData;
+        _spareWeaponData = buffData;    
     }
 
-    //при подборе оружия, текущее оружие Intantiate as WeaponWorldViewController
+    public void ChangeWeapon(Weapon weapon, WeaponData weaponData)
+    {
+        _currentWeapon = weapon;
+        _currentWeaponData = weaponData;
+        SetupWeapon(_currentWeapon, _currentWeaponData);
+    }
 }

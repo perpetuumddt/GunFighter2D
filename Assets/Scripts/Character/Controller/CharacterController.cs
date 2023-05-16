@@ -32,5 +32,7 @@ public class CharacterController : MonoBehaviour
     private CharacterDropController _characterDropController;
     public CharacterDropController CharacterDropController => _characterDropController;
 
-    
+    [SerializeField]
+    private CharacterCollectorController _characterCollectorController;
+    public CharacterCollectorController CharacterCollectorController => _characterCollectorController;
 }

@@ -33,6 +33,8 @@ public class PlayerInputHandler : CharacterInputHandler
         playerInputAction.Gameplay.Reload.started += OnReloadInput;
 
         playerInputAction.Gameplay.SwitchWeapon.started += OnSwitchWeaponInput;
+
+        playerInputAction.Gameplay.Interact.started += OnInteractInput;
     }
 
     private void OnDisable()
@@ -48,6 +50,8 @@ public class PlayerInputHandler : CharacterInputHandler
         playerInputAction.Gameplay.Reload.started -= OnReloadInput;
 
         playerInputAction.Gameplay.SwitchWeapon.started -= OnSwitchWeaponInput;
+
+        playerInputAction.Gameplay.Interact.started -= OnInteractInput;
 
         playerInputAction.Gameplay.Disable(); //Disables Gameplay Action Map 
         //(any time after enabling smth or subscribing to using C# events it`s important to disable them/unsubscribe)
@@ -95,6 +99,14 @@ public class PlayerInputHandler : CharacterInputHandler
         if(context.started) 
         {
             InvokeOnSwapWeapon();
+        }
+    }
+
+    public void OnInteractInput(InputAction.CallbackContext context)
+    {
+       if(context.started)
+        {
+            InvokeOnInteract();
         }
     }
 

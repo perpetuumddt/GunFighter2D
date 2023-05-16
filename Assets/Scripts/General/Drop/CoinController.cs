@@ -34,7 +34,7 @@ public class CoinController : MonoBehaviour, IDetectable, ICollectable
 
     public async void DoCollect()
     {
-        _playerCoinCounter.IncreaseVariable(_playerCoinCounter.Variable,_coinAmount.Variable);
+        _playerCoinCounter.IncreaseVariable(_coinAmount.Variable);
         _spriteRenderer.enabled = false;
         _collectedPS.Play();
         await Task.Delay(1000);

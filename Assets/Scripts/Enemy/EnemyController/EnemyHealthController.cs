@@ -6,13 +6,13 @@ namespace Assets.Scripts.Enemy.EnemyController
     public class EnemyHealthController : CharacterHealthController, IDamageable
     {
         [SerializeField]
-        private EnemyStats _enemyStats;
+        private EnemyData _enemyData;
 
         private float _currentHealth;
 
         private void Start()
         {
-            _currentHealth = _enemyStats.GetMaxHealth();
+            _currentHealth = _enemyData.Health;
             UpdateHealth(_currentHealth);
         }
 

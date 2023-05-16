@@ -11,6 +11,11 @@ public class PlayerAttackController : CharacterAttackController
     [SerializeField]
     private SpriptableObjectWeaponEvent _weaponEvent;
 
+    [SerializeField]
+    private CharacterInputHandler _inputHandler;
+
+    private WeaponWorldViewController _weaponWorldViewController;
+
     public override void Initialize()
     {
         base.Initialize();
@@ -39,6 +44,7 @@ public class PlayerAttackController : CharacterAttackController
     public override void ChangeWeapon()
     {
         base.ChangeWeapon();
+        
     }
 
     public override void SwapWeapon()
@@ -51,12 +57,17 @@ public class PlayerAttackController : CharacterAttackController
     {
         if(isActive)
         {
-            //подписать на ивент о подборе оружия. если подбор успешен, забирать у weaponworldviewcontr дату и пробрасывать в метод SetActiveCurrentWeapon
-            //_weaponManager.SetActiveCurrentWeapon
+            _weaponWorldViewController = weaponWorldViewController;
+            _inputHandler.OnInteract += PickUpWeapon;
         }
         else
         {
-            //отписка от ивента о подборе оружия ChangeWeapon
+            _inputHandler.OnInteract -= PickUpWeapon;
+            _weaponWorldViewController = null;
         }
+    }
+    private void PickUpWeapon()
+    {
+        _weaponManager.SetupCurrentWeapon(_weaponWorldViewController.WeaponData);
     }
 }
