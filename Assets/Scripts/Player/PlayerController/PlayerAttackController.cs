@@ -9,6 +9,9 @@ public class PlayerAttackController : CharacterAttackController
     protected WeaponManager _weaponManager;
 
     [SerializeField]
+    protected WeaponController _weaponController;
+
+    [SerializeField]
     private SpriptableObjectWeaponEvent _weaponEvent;
 
     [SerializeField]
@@ -33,7 +36,7 @@ public class PlayerAttackController : CharacterAttackController
     public override void DoAttack(AttackType attackType)
     {
         base.DoAttack(attackType);
-        _weaponManager.CurrentWeapon.DoAttack(attackType);
+        _weaponController.CurrentWeapon.DoAttack(attackType);
     }
 
     public override void Reload()
@@ -44,7 +47,7 @@ public class PlayerAttackController : CharacterAttackController
     public override void ChangeWeapon()
     {
         base.ChangeWeapon();
-        
+        _weaponManager.ChangeWeapon(_weaponWorldViewController.GetWeapon(),_weaponWorldViewController.GetWeaponData());
     }
 
     public override void SwapWeapon()
@@ -58,16 +61,12 @@ public class PlayerAttackController : CharacterAttackController
         if(isActive)
         {
             _weaponWorldViewController = weaponWorldViewController;
-            _inputHandler.OnInteract += PickUpWeapon;
+            _inputHandler.OnInteract += ChangeWeapon;
         }
         else
         {
-            _inputHandler.OnInteract -= PickUpWeapon;
+            _inputHandler.OnInteract -= ChangeWeapon;
             _weaponWorldViewController = null;
         }
-    }
-    private void PickUpWeapon()
-    {
-        _weaponManager.SetupCurrentWeapon(_weaponWorldViewController.WeaponData);
     }
 }

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class CoinController : MonoBehaviour, IDetectable, ICollectable
+public class CoinController : MonoBehaviour, IDetectable, ICollectable, IDrop
 {
     [SerializeField]
     private ScriptableObjectIntVariable _playerCoinCounter; 
@@ -21,15 +21,14 @@ public class CoinController : MonoBehaviour, IDetectable, ICollectable
     public event ObjectDetectedHandler OnObjectDetectedEvent;
     public event ObjectDetectedHandler OnObjectDetectedReleasedEvent;
 
-
     public void Detected(GameObject detectionSource)
     {
-        StartCoroutine(MoveTowardsDetector(detectionSource.transform.position));
+        PlayerCollectorController.OnPlayerPositionUpdate += MoveTowardsDetector;
     }
 
     public void DetectionReleased(GameObject detectionSource)
     {
-        StopAllCoroutines();
+        PlayerCollectorController.OnPlayerPositionUpdate -= MoveTowardsDetector;
     }
 
     public async void DoCollect()
@@ -41,15 +40,13 @@ public class CoinController : MonoBehaviour, IDetectable, ICollectable
         Destroy(gameObject);
     }
 
-    private IEnumerator MoveTowardsDetector(Vector3 moveDestination)
+    void OnDestroy()
     {
-        float elapsedTime = 0f;
-        float travelTime = 5f;
-        while(elapsedTime < travelTime) 
-        {
-            transform.position = Vector3.Lerp(transform.position, moveDestination, elapsedTime/travelTime);
-            elapsedTime += Time.deltaTime;
-            yield return null;
-        }
+        PlayerCollectorController.OnPlayerPositionUpdate -= MoveTowardsDetector;
+    }
+
+    private void MoveTowardsDetector(Vector2 moveDestination)
+    {
+        transform.position = Vector2.MoveTowards(transform.position, moveDestination, 8 * Time.deltaTime);
     }
 }

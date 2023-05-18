@@ -4,32 +4,35 @@ using UnityEngine;
 
 public class WeaponManager : MonoBehaviour
 {
+    [Header("Weapon Controller")]
     [SerializeField]
-    private Weapon[] _weapons;
+    private WeaponController _weaponController;
 
-    [SerializeField]
-    private SpriteRenderer _spriteRenderer;
-
+    [Header("Current Weapon")]
     [SerializeField]
     private Weapon _currentWeapon;
     [SerializeField]
     protected WeaponData _currentWeaponData;
 
+    [Header("Spare Weapon")]
     [SerializeField]
     private Weapon _spareWeapon;
     [SerializeField]
     protected WeaponData _spareWeaponData;
 
+    [Header("Weapons")]
+    [SerializeField]
+    private Weapon[] _weapons;
 
     public Weapon CurrentWeapon => _currentWeapon;
     public Weapon SpareWeapon => _spareWeapon;
 
     private void Awake()
     {
-        SetupSpareWeapon(_spareWeaponData);
-        SetupCurrentWeapon(_currentWeaponData);
+        _weaponController.SetupWeapon(_currentWeapon,_currentWeaponData);
     }
 
+    /*
     private void SetupWeapon(Weapon weapon, WeaponData weaponData)
     {
         foreach (var curWeapon in _weapons) 
@@ -46,15 +49,7 @@ public class WeaponManager : MonoBehaviour
             }
         }
     }
-    public virtual void SetupCurrentWeapon(WeaponData weaponData)
-    {
-        SetupWeapon(_currentWeapon, weaponData);
-    }
-
-    public virtual void SetupSpareWeapon(WeaponData weaponData)
-    {
-        SetupWeapon(_spareWeapon, weaponData);
-    }
+    */
 
     public virtual void SwapWeapon()
     {
@@ -64,16 +59,16 @@ public class WeaponManager : MonoBehaviour
         _currentWeapon = _spareWeapon;
         _currentWeaponData = _spareWeaponData;
 
-        SetupWeapon(_currentWeapon, _currentWeaponData);
+        _weaponController.SetupWeapon(_currentWeapon, _currentWeaponData);
 
         _spareWeapon = buffWeapon;
         _spareWeaponData = buffData;    
     }
 
-    public void ChangeWeapon(Weapon weapon, WeaponData weaponData)
+    public void ChangeWeapon(Weapon weapon,WeaponData weaponData)
     {
         _currentWeapon = weapon;
         _currentWeaponData = weaponData;
-        SetupWeapon(_currentWeapon, _currentWeaponData);
+        _weaponController.SetupWeapon(_currentWeapon, _currentWeaponData);
     }
 }

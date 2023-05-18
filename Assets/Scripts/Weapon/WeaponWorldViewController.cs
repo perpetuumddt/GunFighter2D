@@ -2,10 +2,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WeaponWorldViewController : Weapon, IInteractable,IDetectable
+public class WeaponWorldViewController : MonoBehaviour, IInteractable, IDetectable
 {
     [SerializeField]
     private SpriptableObjectWeaponEvent _weaponEvent;
+
+    [SerializeField]
+    private Weapon _weapon;
+    [SerializeField]
+    private WeaponData _weaponData;
 
     public event ObjectDetectedHandler OnObjectDetectedEvent;
     public event ObjectDetectedHandler OnObjectDetectedReleasedEvent;
@@ -33,5 +38,15 @@ public class WeaponWorldViewController : Weapon, IInteractable,IDetectable
     public void DetectionReleased(GameObject detectionSource)
     {
         DeactivateInteraction();
+    }
+
+    public Weapon GetWeapon() 
+    {
+        return _weapon;
+    }
+
+    public WeaponData GetWeaponData() 
+    {
+        return _weaponData;
     }
 }
