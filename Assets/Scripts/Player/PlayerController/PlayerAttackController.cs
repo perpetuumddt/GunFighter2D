@@ -36,7 +36,13 @@ public class PlayerAttackController : CharacterAttackController
         _weaponController.CurrentWeapon.DoAttack(attackType);
     }
 
-    
+    public override void Reload()
+    {
+        base.Reload();
+        if(_weaponController.CurrentWeapon is WeaponRanged)
+            ((WeaponRanged)_weaponController.CurrentWeapon).HandleReload(manual:true);
+    }
+
 
     public override void ChangeWeapon()
     {

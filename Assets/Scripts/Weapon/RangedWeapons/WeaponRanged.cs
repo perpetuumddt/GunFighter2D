@@ -23,21 +23,37 @@ public class WeaponRanged : Weapon
 
     private PoolMono<BulletScript> pool;
 
-    protected bool _canShoot;
-
-    private void OnEnable()
-    {
-        _canShoot = true;
-    }
+    protected bool CanShoot => !_reloading && !_isOnShootingCooldown && _ammoLeftInClip > 0;
+    protected bool _reloading;
+    protected bool _isOnShootingCooldown;
+    [SerializeField]
+    protected int _ammoLeftInClip;
+    protected WeaponRangedData _weaponRangedData;
 
     public void Start()
     {
         _shotPoint.rotation = Quaternion.Euler(0, 0, 90);
-
+        print("start");
         this.pool = new PoolMono<BulletScript>(this.bulletPrefab, this.poolCount, this.transform);
         this.pool.autoExpand = this.autoExpand;
+        this._weaponRangedData = (WeaponRangedData)_weaponData;
+        this._ammoLeftInClip = _weaponRangedData.AmmoCountInClip;
     }
-    
+
+    public override void Initialize(SpriteRenderer spriteRenderer)
+    {
+        base.Initialize(spriteRenderer);
+    }
+
+    public override void Finilize()
+    {
+        base.Finilize();
+        
+        if (_reloadCoroutine != null)
+            StopCoroutine(_reloadCoroutine);
+        _reloading = false;
+    }
+
     public virtual void CreateBullet(int angleDeviation = 0)
     {
         var bullet = this.pool.GetFreeElement();
@@ -46,29 +62,52 @@ public class WeaponRanged : Weapon
         bullet.SetBulletDamage(WeaponData.Damage);
     }
     
-    private IEnumerator Shoot(WeaponData weaponData)
+    private IEnumerator Shoot()
     {
-        _canShoot = false;
+        _isOnShootingCooldown = true;
         _shootPS.Play();
-        for(int i=0;  i<((WeaponRangedData)_weaponData).AmmountOfBullets; i++)
+        for(int i=0;  i<_weaponRangedData.BulletsInOneShot; i++)
         {
-            int bulletAngleDeviation = ((WeaponRangedData)_weaponData).SpreadAngle / 2 - Random.Range(0, ((WeaponRangedData)_weaponData).SpreadAngle) ;
+            int bulletAngleDeviation = _weaponRangedData.SpreadAngle / 2 - Random.Range(0, ((WeaponRangedData)_weaponData).SpreadAngle) ;
             CreateBullet(angleDeviation:bulletAngleDeviation);
         }
-        yield return new WaitForSeconds(weaponData.AttackSpeed);
-        _canShoot = true;
+
+        _ammoLeftInClip--;
+        yield return new WaitForSeconds(_weaponRangedData.AttackSpeed);
+        _isOnShootingCooldown = false;
     }
 
     public override void DoAttack(AttackType attackType)
     {
-        if (_canShoot)
+        HandleReload();
+        if (CanShoot)
         {
             base.DoAttack(attackType);
             if (_shootCoroutine != null)
             {
                 StopCoroutine(_shootCoroutine);
             }
-            _shootCoroutine = StartCoroutine(Shoot(_weaponData));
+            _shootCoroutine = StartCoroutine(Shoot());
         }
     }
+
+    private IEnumerator Reload()
+    {
+        print("Reload start");
+        _reloading = true;
+        yield return new WaitForSeconds(_weaponRangedData.ReloadTime);
+        this._ammoLeftInClip = _weaponRangedData.AmmoCountInClip;
+        _reloading = false;
+        
+        print("Reload end");
+    }
+    public virtual void HandleReload(bool manual = false)
+    {
+        if ((_ammoLeftInClip == 0 || manual) && !_reloading)
+        {
+            _reloadCoroutine = StartCoroutine(Reload());
+        }
+    }
+    
+    
 }

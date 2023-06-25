@@ -19,4 +19,9 @@ public class Weapon : MonoBehaviour
     {
         spriteRenderer.sprite = WeaponData.Sprite;
     }
+
+    public virtual void Finilize()
+    {
+        
+    }
 }
