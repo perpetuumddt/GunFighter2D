@@ -8,6 +8,7 @@ TagManager:
   - Obstacle
   - Bullet
   - CoinPool
+  - EnemyPool
   layers:
   - Default
   - TransparentFX

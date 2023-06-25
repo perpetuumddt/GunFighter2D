@@ -23,7 +23,7 @@ public class CrosshairBehaviour : MonoBehaviour
     {
         _mousePos = _camera.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         //_mousePos = Mouse.current.position.ReadValue();
-        //Debug.Log(_mousePos);
+        Debug.Log(_mousePos);
         transform.position = _mousePos;
     }
 
