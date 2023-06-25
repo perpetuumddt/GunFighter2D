@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyContoller : CharacterController
+public class EnemyController : CharacterController
 {
     private StateMachine<CharacterController> _stateMachine;
 

@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class CoinController : MonoBehaviour, IDetectable, ICollectable, IDrop
+public class CoinController : MonoBehaviour, IDetectable, ICollectable
 {
     [SerializeField]
     private ScriptableObjectIntVariable _playerCoinCounter; 

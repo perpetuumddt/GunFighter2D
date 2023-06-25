@@ -22,9 +22,4 @@ public class GameController : MonoBehaviour
     {
         Time.timeScale = isPause ? 0f : 1f;
     }
-
-    private void ResumeGame(bool isPause)
-    {
-        Time.timeScale = isPause ? 1f : 0f;
-    }
 }

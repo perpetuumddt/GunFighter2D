@@ -21,6 +21,11 @@ public class EnemyMovementController : CharacterMovementController
         agent.updateUpAxis = false;
     }
 
+    private void OnEnable()
+    {
+        targetPositionTransform = GameObject.FindObjectOfType<PlayerController>().transform;
+    }
+
     private void Update()
     {
         if(_isMoving)

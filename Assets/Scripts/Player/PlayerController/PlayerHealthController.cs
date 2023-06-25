@@ -17,6 +17,7 @@ public class PlayerHealthController : CharacterHealthController, IDamageable
     {
         _currentHealth = (int)_playerData.Health;
         UpdateHealth(_currentHealth);
+        
     }
 
 

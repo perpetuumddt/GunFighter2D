@@ -8,6 +8,9 @@ namespace Assets.Scripts.Enemy.EnemyController
         [SerializeField]
         private EnemyData _enemyData;
 
+        [SerializeField]
+        
+
         private float _currentHealth;
 
         private void Start()

@@ -46,6 +46,7 @@ public class BulletScript : MonoBehaviour
     }
     private void Deactivate()
     {
+        //_destroyPS.Play();
         this.gameObject.SetActive(false);
     }
 

@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: CoinValue
   m_EditorClassIdentifier: 
   _variable: 1
+  _valueName: Coin
