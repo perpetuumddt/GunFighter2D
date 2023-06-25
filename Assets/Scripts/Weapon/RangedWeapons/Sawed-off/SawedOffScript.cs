@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class SawedOffScript : WeaponRanged
 {
-    private IEnumerator Shoot(WeaponData weaponData)
+    private IEnumerator Shoot()
     {
         _canShoot = false;
-        for(int i=0;  i<8; i++)
+        
+        for(int i=0;  i<((WeaponRangedData)_weaponData).AmmountOfBullets; i++)
         {
-            this.CreateBullet();
+            int bulletAngleDeviation = ((WeaponRangedData)_weaponData).SpreadAngle / 2 - Random.Range(0, ((WeaponRangedData)_weaponData).SpreadAngle) ;
+            CreateBullet(angleDeviation:bulletAngleDeviation);
         }
         _shootPS.Play();
-        yield return new WaitForSeconds(weaponData.AttackSpeed);
+        yield return new WaitForSeconds(_weaponData.AttackSpeed);
         _canShoot = true;
     }
 
@@ -25,7 +27,7 @@ public class SawedOffScript : WeaponRanged
             {
                 StopCoroutine(_shootCoroutine);
             }
-            _shootCoroutine = StartCoroutine(Shoot(_weaponData));
+            _shootCoroutine = StartCoroutine(Shoot());
         }
     }
 }

@@ -19,3 +19,5 @@ MonoBehaviour:
   _reloadTime: 2
   _ammoCountInClip: 7
   _ammoMaxCount: 35
+  _spreadAngle: 15
+  _ammountOfBullets: 4

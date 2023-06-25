@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -40,11 +41,12 @@ public class WeaponRanged : Weapon
     {
         base.DoAttack(attackType);
     }
-    public virtual void CreateBullet()
+    public virtual void CreateBullet(int angleDeviation = 0)
     {
         var bullet = this.pool.GetFreeElement();
         bullet.transform.position = _shotPoint.position;
-        bullet.transform.rotation = _shotPoint.rotation;
+        bullet.transform.rotation = _shotPoint.rotation * Quaternion.Euler(Vector3.forward * angleDeviation);
         bullet.SetBulletDamage(WeaponData.Damage);
     }
+    
 }
