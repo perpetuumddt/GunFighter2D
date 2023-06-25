@@ -21,13 +21,12 @@ public class EnemyDropController : CharacterDropController
     {
         base.DropItem();
         var coin = this._pool.GetFreeElement();
-        //GameObject drop = Instantiate(_itemToDrop, transform.position, transform.rotation);
         DropDirection(coin);
     }
 
     private void DropDirection(CoinController drop)
     {
-        Vector2 dropDirection = new Vector2(Random.Range(-3, 3), Random.Range(-3, 3));
+        Vector2 dropDirection = new Vector2(Random.Range(-1, 1), Random.Range(-1, 1));
         drop.GetComponent<Rigidbody2D>().AddForce(dropDirection * 100, ForceMode2D.Impulse);
     }
 }
