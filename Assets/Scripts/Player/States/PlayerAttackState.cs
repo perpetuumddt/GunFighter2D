@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerAttackState : CharacterAttackState
+public class PlayerAttackState : CharacterAttackState // Should be used for special attack cases
 {
     private float _velocity = 4f;
     public PlayerAttackState(CharacterController data, StateMachine<CharacterController> stateMachine) : base(data, stateMachine)

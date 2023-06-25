@@ -23,6 +23,7 @@ public class PlayerWalkState : CharacterWalkState
         StateMachine.CurrentState.Data.CharacterInputHandler.OnMove -= SwichStateIdle;
         StateMachine.CurrentState.Data.CharacterInputHandler.OnRoll -= SwichStateRoll;
         StateMachine.CurrentState.Data.CharacterInputHandler.OnAttack -= Attack;
+        StateMachine.CurrentState.Data.CharacterInputHandler.OnReload -= Reload;
         StateMachine.CurrentState.Data.CharacterInputHandler.OnSwapWeapon -= SwapWeapon;
     }
 
@@ -32,6 +33,7 @@ public class PlayerWalkState : CharacterWalkState
         StateMachine.CurrentState.Data.CharacterInputHandler.OnRoll += SwichStateRoll;
         StateMachine.CurrentState.Data.CharacterInputHandler.OnMove += SwichStateIdle;
         StateMachine.CurrentState.Data.CharacterInputHandler.OnAttack += Attack;
+        StateMachine.CurrentState.Data.CharacterInputHandler.OnReload += Reload;
         StateMachine.CurrentState.Data.CharacterInputHandler.OnSwapWeapon += SwapWeapon;
     }
 

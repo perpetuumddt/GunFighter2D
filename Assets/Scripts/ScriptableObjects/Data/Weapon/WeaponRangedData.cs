@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 [CreateAssetMenu(fileName = "WeaponRangedData", menuName = "Data/Weapon Data/New Weapon Ranged Data")]
 public class WeaponRangedData : WeaponData
@@ -25,7 +26,7 @@ public class WeaponRangedData : WeaponData
 
 
     [SerializeField] 
-    private int _ammountOfBullets;
-    public int AmmountOfBullets => _ammountOfBullets;
+    private int _bulletsInOneShot;
+    public int BulletsInOneShot => _bulletsInOneShot;
 
 }
