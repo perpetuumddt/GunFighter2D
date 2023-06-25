@@ -19,10 +19,7 @@ public class PlayerAttackController : CharacterAttackController
 
     private WeaponWorldViewController _weaponWorldViewController;
 
-    public override void Initialize()
-    {
-        base.Initialize();
-    }
+    
     private void OnEnable()
     {
         _weaponEvent.OnSetActivePickupWeapon += SetActiveChangeWeapon;
@@ -39,10 +36,7 @@ public class PlayerAttackController : CharacterAttackController
         _weaponController.CurrentWeapon.DoAttack(attackType);
     }
 
-    public override void Reload()
-    {
-        base.Reload();
-    }
+    
 
     public override void ChangeWeapon()
     {
