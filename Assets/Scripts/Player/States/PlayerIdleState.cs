@@ -14,6 +14,7 @@ public class PlayerIdleState : CharacterIdleState
         base.Initialize(param);
         StateMachine.CurrentState.Data.CharacterInputHandler.OnMove += SwitchState;
         StateMachine.CurrentState.Data.CharacterInputHandler.OnAttack += Attack;
+        StateMachine.CurrentState.Data.CharacterInputHandler.OnReload += Reload;
         StateMachine.CurrentState.Data.CharacterInputHandler.OnSwapWeapon += SwapWeapon;
     }
 
@@ -30,6 +31,7 @@ public class PlayerIdleState : CharacterIdleState
         base.StopExecution();
         StateMachine.CurrentState.Data.CharacterInputHandler.OnMove -= SwitchState;
         StateMachine.CurrentState.Data.CharacterInputHandler.OnAttack -= Attack;
+        StateMachine.CurrentState.Data.CharacterInputHandler.OnReload -= Reload;
         StateMachine.CurrentState.Data.CharacterInputHandler.OnSwapWeapon -= SwapWeapon;
     }
 

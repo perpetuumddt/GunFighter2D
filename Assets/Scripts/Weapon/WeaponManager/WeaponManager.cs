@@ -53,6 +53,7 @@ public class WeaponManager : MonoBehaviour
 
     public virtual void SwapWeapon()
     {
+        _currentWeapon.Finilize();
         Weapon buffWeapon = _currentWeapon;
         WeaponData buffData = _currentWeaponData;
 
@@ -67,6 +68,7 @@ public class WeaponManager : MonoBehaviour
 
     public void ChangeWeapon(Weapon weapon,WeaponData weaponData)
     {
+        _currentWeapon.Finilize();
         _currentWeapon = weapon;
         _currentWeaponData = weaponData;
         _weaponController.SetupWeapon(_currentWeapon, _currentWeaponData);
