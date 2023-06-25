@@ -37,7 +37,7 @@ namespace Assets.Scripts.Enemy.EnemyController
         public override void DestroyOnDeath()
         {
             base.DestroyOnDeath();
-            Destroy(gameObject, 1f);
+            this.gameObject.SetActive(false);
         }
     }
 }

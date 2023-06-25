@@ -18,6 +18,9 @@ public class CoinController : MonoBehaviour, IDetectable, ICollectable
     [SerializeField]
     private ParticleSystem _collectedPS;
 
+    [SerializeField]
+    private Transform CoinsPool;
+
     public event ObjectDetectedHandler OnObjectDetectedEvent;
     public event ObjectDetectedHandler OnObjectDetectedReleasedEvent;
 
@@ -37,12 +40,7 @@ public class CoinController : MonoBehaviour, IDetectable, ICollectable
         _spriteRenderer.enabled = false;
         _collectedPS.Play();
         await Task.Delay(1000);
-        Destroy(gameObject);
-    }
-
-    void OnDestroy()
-    {
-        PlayerCollectorController.OnPlayerPositionUpdate -= MoveTowardsDetector;
+        this.gameObject.SetActive(false);
     }
 
     private void MoveTowardsDetector(Vector2 moveDestination)
