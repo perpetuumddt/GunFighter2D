@@ -21,8 +21,8 @@ public class CoinController : MonoBehaviour, IDetectable, ICollectable
     [SerializeField]
     private Transform CoinsPool;
 
-    public event ObjectDetectedHandler OnObjectDetectedEvent;
-    public event ObjectDetectedHandler OnObjectDetectedReleasedEvent;
+    //public event ObjectDetectedHandler OnObjectDetectedEvent;
+    //public event ObjectDetectedHandler OnObjectDetectedReleasedEvent;
 
     public void Detected(GameObject detectionSource)
     {
