@@ -9,6 +9,7 @@ public class ShotgunScript : WeaponRanged
     {
         _canShoot = false;
         _shootPS.Play();
+        
         for (int i = 0; i < 4; i++)
         {
             CreateBullet();
