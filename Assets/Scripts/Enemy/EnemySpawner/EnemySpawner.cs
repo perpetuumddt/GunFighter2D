@@ -5,13 +5,9 @@ using UnityEngine;
 public class EnemySpawner : MonoBehaviour //TODO: Integrate pool object
 {
     [SerializeField]
-    private float _spawnRate = 2f;
+    private WaveData[] _waveData;
 
-    [SerializeField]
-    private GameObject[] _enemyPrefabs;
-
-    [SerializeField]
-    private bool _canSpawn;
+    private bool _canSpawn = true;
 
     private void Start()
     {
@@ -23,16 +19,17 @@ public class EnemySpawner : MonoBehaviour //TODO: Integrate pool object
         while (_canSpawn)
         {
             SpawnEnemy();
-            yield return new WaitForSeconds(_spawnRate);
+            yield return new WaitForSeconds(_waveData[0].SpawnRate);
         }
+        yield return new WaitForSeconds(_waveData[0].WaveDuration);
     }
 
     private void SpawnEnemy()
     {
-        int rand = Random.Range(0, _enemyPrefabs.Length);
+        int rand = Random.Range(0, _waveData[0].EnemyPrefabs.Length);
         int positionIndex = Random.Range(0, 4);
         Debug.Log(positionIndex);
-        GameObject enemyToSpawn = _enemyPrefabs[rand];
+        GameObject enemyToSpawn = _waveData[0].EnemyPrefabs[rand];
 
         Instantiate(enemyToSpawn, CalculateSpawnPosition(positionIndex), Quaternion.identity);
     }

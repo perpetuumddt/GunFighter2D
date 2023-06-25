@@ -7,6 +7,10 @@ using UnityEngine;
 public class WaveData : ScriptableObject
 {
     [SerializeField]
+    private int _waveCounter;
+    public int WaveCounter => _waveCounter;
+
+    [SerializeField]
     private GameObject[] _enemyPrefabs;
     public GameObject[] EnemyPrefabs => _enemyPrefabs;
 
