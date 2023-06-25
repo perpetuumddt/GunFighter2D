@@ -11,9 +11,7 @@ public class EnemyDropController : CharacterDropController
 
     private PoolMono<CoinController> _pool;
     private bool _autoExpand = true;
-    private int _poolCount = 1;
-
-    
+    private int _poolCount = 0;
 
     private void Start()
     {

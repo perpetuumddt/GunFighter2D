@@ -3,8 +3,8 @@ using UnityEngine;
 
 public interface IDetectable
 {
-    event ObjectDetectedHandler OnObjectDetectedEvent;
-    event ObjectDetectedHandler OnObjectDetectedReleasedEvent;
+    //event ObjectDetectedHandler OnObjectDetectedEvent;
+    //event ObjectDetectedHandler OnObjectDetectedReleasedEvent;
 
     GameObject gameObject { get;}
 

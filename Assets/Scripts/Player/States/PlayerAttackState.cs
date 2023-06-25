@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerAttackState : CharacterAttackState // Should be used for special attack cases
 {
+    /*
     private float _velocity = 4f;
     public PlayerAttackState(CharacterController data, StateMachine<CharacterController> stateMachine) : base(data, stateMachine)
     {
@@ -56,5 +57,8 @@ public class PlayerAttackState : CharacterAttackState // Should be used for spec
     private void Movement(PlayerInputHandler inputHandler)
     {
         StateMachine.CurrentState.Data.CharacterMovementController.DoMove(inputHandler.movementInputVector.x * _velocity, inputHandler.movementInputVector.y * _velocity);
+    }*/
+    public PlayerAttackState(CharacterController data, StateMachine<CharacterController> stateMachine) : base(data, stateMachine)
+    {
     }
 }
