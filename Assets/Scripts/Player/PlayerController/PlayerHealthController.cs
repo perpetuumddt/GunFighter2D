@@ -4,9 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerHealthController : CharacterHealthController, IDamageable
+public class PlayerHealthController : CharacterHealthController
 {
-    private int _currentHealth;
     private float invincibilityDurationSeconds = 1.5f;
     private float invincibilityDeltaTime = 0.15f;
     private bool isInvincible;
@@ -14,17 +13,18 @@ public class PlayerHealthController : CharacterHealthController, IDamageable
     [SerializeField]
     public PlayerData _playerData;
 
+
     private void Start()
     {
         _currentHealth = (int)_playerData.Health;
-        UpdateHealth(_currentHealth);
+        UpdateHealth(CurrentHealth);
         
     }
 
 
     public override void UpdateHealth(int _currentHealth)
     {
-        base.UpdateHealth(this._currentHealth);
+        base.UpdateHealth(this.CurrentHealth);
 
         if(_currentHealth <= 0)
         {
@@ -32,23 +32,23 @@ public class PlayerHealthController : CharacterHealthController, IDamageable
         }
     }
 
-    public void TakeDamage(int damage)
+    public override void TakeDamage(int damage)
     {
         if (damage < 0) throw new ArgumentOutOfRangeException();
         if (!isInvincible)
         {
-            _currentHealth -= damage;
+            _currentHealth = CurrentHealth - damage;
             StartCoroutine(BecomeTemporarilyInvincible());
-            UpdateHealth(_currentHealth);
+            UpdateHealth(CurrentHealth);
         }
     }
 
-    public void ReplenishHealth(int health)
+    public override void ReplenishHealth(int health)
     {
         if (health < 0) throw new ArgumentOutOfRangeException();
         
-        _currentHealth += health;
-        UpdateHealth(_currentHealth);
+        _currentHealth = CurrentHealth + health;
+        UpdateHealth(CurrentHealth);
     }
     
     private IEnumerator BecomeTemporarilyInvincible()

@@ -5,52 +5,41 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class HealthBarController : MonoBehaviour
+public class HealthBarController
 {
-    [SerializeField] 
     private GameObject _heartPrefab;
     
-    [SerializeField]
-    private PlayerHealthController _playerHealthController;
-
+    
     private Stack<GameObject> _heartObjects;
 
-    private void Awake()
+    public int GetAmountOfHearts => _heartObjects.Count;
+    public HealthBarController(GameObject heartPrefab)
     {
         _heartObjects = new Stack<GameObject>();
+        _heartPrefab = heartPrefab;
     }
 
-    private void OnEnable()
+    public void UpdateHealthBar(int newHealth, GameObject uiObject)
     {
-        UpdateHealthBar(_playerHealthController._playerData.Health);
-        _playerHealthController.OnUpdateHealth += UpdateHealthBar;
-    }
-
-    private void OnDisable()
-    {
-        _playerHealthController.OnUpdateHealth -= UpdateHealthBar;
-    }
-
-    public void UpdateHealthBar(int _currentHealth)
-    {
-        if (_currentHealth > _heartObjects.Count)
+        if (newHealth < 0) throw new ArgumentOutOfRangeException();
+        if (newHealth > _heartObjects.Count)
         {
-            for (int i = _heartObjects.Count; i < _currentHealth; i++)
+            for (int i = _heartObjects.Count; i < newHealth; i++)
             {
-                GameObject heartObject = Instantiate(_heartPrefab, this.transform);
+                GameObject heartObject = GameObject.Instantiate(_heartPrefab, uiObject.transform);
                 Vector3 location = new Vector3(5 + i * 15, -5 + ((i%2)* -5), 0);
                 heartObject.transform.SetLocalPositionAndRotation(location, new Quaternion());
                 _heartObjects.Push(heartObject);
             }
         }
-        else if(_currentHealth < _heartObjects.Count)
+        else if(newHealth < _heartObjects.Count)
         {
             if(_heartObjects.Count == 0)
                 return;
-            for (int i = _heartObjects.Count; i > _currentHealth; i--)
+            for (int i = _heartObjects.Count; i > newHealth; i--)
             {
                 GameObject heart = _heartObjects.Pop();
-                Destroy(heart);
+                GameObject.Destroy(heart);
             }
         }
     }
