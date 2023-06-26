@@ -31,7 +31,7 @@ public class PlayerHealthController : CharacterHealthController, IDamageable
         }
     }
 
-    public void TakeDamage(float damage)
+    public void TakeDamage(int damage)
     {
         _currentHealth -= (int)damage;
         UpdateHealth(_currentHealth);    

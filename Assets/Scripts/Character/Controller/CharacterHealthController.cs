@@ -10,10 +10,7 @@ public class CharacterHealthController : MonoBehaviour
     {
 
     }
-    public virtual void UpdateHealth(float _currentHealth) 
-    {
-
-    }
+    
 
     public virtual void DestroyOnDeath()
     {

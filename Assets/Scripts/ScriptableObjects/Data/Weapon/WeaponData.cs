@@ -9,8 +9,8 @@ public class WeaponData : ScriptableObject
     public string Name => _name;
 
     [SerializeField]
-    private float _damage;
-    public float Damage => _damage;
+    private int _damage;
+    public int Damage => _damage;
 
     [SerializeField]
     private float _attackSpeed;

@@ -9,7 +9,7 @@ public class BulletScript : MonoBehaviour
     private float bulletForce = 10f;
 
     [SerializeField]
-    public float bulletDamage { get; set; }
+    public int bulletDamage { get; set; }
 
     [SerializeField]
     private float bulletLifeTime = 2f;
@@ -57,6 +57,6 @@ public class BulletScript : MonoBehaviour
         this.gameObject.SetActive(false);
     }
 
-    public void SetBulletDamage(float bulletDamage)
+    public void SetBulletDamage(int bulletDamage)
     { this.bulletDamage = bulletDamage;}
 }
