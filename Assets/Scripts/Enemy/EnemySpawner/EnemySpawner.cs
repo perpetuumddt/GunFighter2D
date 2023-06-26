@@ -28,7 +28,6 @@ public class EnemySpawner : MonoBehaviour //TODO: Integrate pool object
     {
         int rand = Random.Range(0, _waveData[0].EnemyPrefabs.Length);
         int positionIndex = Random.Range(0, 4);
-        Debug.Log(positionIndex);
         GameObject enemyToSpawn = _waveData[0].EnemyPrefabs[rand];
 
         Instantiate(enemyToSpawn, CalculateSpawnPosition(positionIndex), Quaternion.identity);

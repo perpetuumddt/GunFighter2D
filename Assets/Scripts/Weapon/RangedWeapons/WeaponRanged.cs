@@ -93,13 +93,11 @@ public class WeaponRanged : Weapon
 
     private IEnumerator Reload()
     {
-        print("Reload start");
         _reloading = true;
         yield return new WaitForSeconds(_weaponRangedData.ReloadTime);
         this._ammoLeftInClip = _weaponRangedData.AmmoCountInClip;
         _reloading = false;
         
-        print("Reload end");
     }
     public virtual void HandleReload(bool manual = false)
     {
