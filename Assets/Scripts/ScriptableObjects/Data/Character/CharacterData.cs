@@ -8,8 +8,8 @@ public class CharacterData : ScriptableObject
     public string Name => _name;
 
     [SerializeField]
-    private float _health;
-    public float Health => _health;
+    private int _health;
+    public int Health => _health;
 
     [SerializeField]
     private float _movementSpeed;

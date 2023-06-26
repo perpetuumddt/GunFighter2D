@@ -11,7 +11,7 @@ namespace Assets.Scripts.Enemy.EnemyController
         [SerializeField]
         
 
-        private float _currentHealth;
+        private int _currentHealth;
 
         private void Start()
         {
@@ -19,12 +19,9 @@ namespace Assets.Scripts.Enemy.EnemyController
             UpdateHealth(_currentHealth);
         }
 
-        public override void UpdateHealth(float _currentHealth)
-        {
-            base.UpdateHealth(_currentHealth);
-        }
+        
 
-        public void TakeDamage(float damage)
+        public void TakeDamage(int damage)
         {
             _currentHealth -= damage;
             if (_currentHealth <= 0)

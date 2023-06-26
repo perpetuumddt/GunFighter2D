@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: Sawed-off
   m_EditorClassIdentifier: 
   _name: Sawed - Off
-  _damage: 0.3
+  _damage: 1
   _attackSpeed: 1
   _sprite: {fileID: 21300000, guid: 8a489bdee3ac54e4f9cf1b420ca86d1e, type: 3}
   _reloadTime: 2
   _ammoCountInClip: 2
   _ammoMaxCount: 20
   _spreadAngle: 25
-  _ammountOfBullets: 8
+  _bulletsInOneShot: 8

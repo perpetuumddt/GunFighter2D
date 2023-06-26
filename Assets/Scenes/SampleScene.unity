@@ -5161,6 +5161,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: -7191240500024142605, guid: efe771e9e7557fc4192c7c7d201583d4, type: 3}
   _shotPoint: {fileID: 2057889918}
   _shootPS: {fileID: 1816302543}
+  _ammoLeftInClip: 0
 --- !u!1 &230581513
 GameObject:
   m_ObjectHideFlags: 0
@@ -5919,7 +5920,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 3.75
+  orthographic size: 4.28125
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -5962,8 +5963,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f88f1386dd63147198d003daff00d37d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  screenResolution: {x: 1920, y: 1080}
-  internalResolution: {x: 427, y: 240}
+  screenResolution: {x: 457, y: 392}
+  internalResolution: {x: 320, y: 274}
   upscaledResolution: {x: 0, y: 0}
   smooth: 0
   forceSquarePixels: 0
@@ -6078,7 +6079,7 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 32
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 319.75018, y: 240}
+  m_ReferenceResolution: {x: 319.4337, y: 240}
   m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -6181,6 +6182,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: -7191240500024142605, guid: efe771e9e7557fc4192c7c7d201583d4, type: 3}
   _shotPoint: {fileID: 2057889918}
   _shootPS: {fileID: 1816302543}
+  _ammoLeftInClip: 0
 --- !u!1 &636730897
 GameObject:
   m_ObjectHideFlags: 0
@@ -6985,6 +6987,7 @@ MonoBehaviour:
   bulletPrefab: {fileID: -7191240500024142605, guid: efe771e9e7557fc4192c7c7d201583d4, type: 3}
   _shotPoint: {fileID: 2057889918}
   _shootPS: {fileID: 1816302543}
+  _ammoLeftInClip: 0
 --- !u!1 &1094877798
 GameObject:
   m_ObjectHideFlags: 0
