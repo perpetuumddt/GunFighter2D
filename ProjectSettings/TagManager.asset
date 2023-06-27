@@ -10,6 +10,7 @@ TagManager:
   - CoinPool
   - EnemyPool
   - BulletPool
+  - EnemyManager
   layers:
   - Default
   - TransparentFX
