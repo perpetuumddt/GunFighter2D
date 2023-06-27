@@ -13,4 +13,9 @@ public class PlayerData : CharacterData
     [SerializeField]
     private float _rollCooldown;
     public float RollCooldown => _rollCooldown;
+
+    [SerializeField] private AnimationCurve experienceLevelDistribution;
+    public AnimationCurve ExperienceLevelDistribution=>experienceLevelDistribution;
+    
+
 }
