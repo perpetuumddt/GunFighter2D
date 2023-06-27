@@ -37,7 +37,6 @@ public class BulletScript : MonoBehaviour
         {
             collision.transform.GetComponent<IDamageable>().TakeDamage(bulletDamage);
             Deactivate();
-            
         }
         if(collision.collider.CompareTag("Obstacle"))
         {

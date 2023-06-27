@@ -18,7 +18,6 @@ public class PlayerHealthController : CharacterHealthController
     {
         _currentHealth = (int)_playerData.Health;
         UpdateHealth(CurrentHealth);
-        
     }
 
 

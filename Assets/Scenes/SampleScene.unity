@@ -6119,7 +6119,7 @@ GameObject:
   - component: {fileID: 626545060}
   m_Layer: 0
   m_Name: EnemyManager
-  m_TagString: Untagged
+  m_TagString: EnemyManager
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -6153,6 +6153,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spawner: {fileID: 1386257308}
   _aliveEnemies: 0
+  _deadEnemies: 0
 --- !u!1 &636730897
 GameObject:
   m_ObjectHideFlags: 0

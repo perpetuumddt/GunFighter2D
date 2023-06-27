@@ -8,16 +8,15 @@ namespace Assets.Scripts.Enemy.EnemyController
         [SerializeField]
         private EnemyData _enemyData;
 
-        
+        private EnemyManager _enemyManager;
 
         
         private void Start()
         {
+            _enemyManager = GameObject.FindGameObjectWithTag("EnemyManager").GetComponent<EnemyManager>();
             _currentHealth = _enemyData.Health;
             UpdateHealth(_currentHealth);
         }
-
-        
 
         public override void TakeDamage(int damage)
         {
@@ -25,6 +24,8 @@ namespace Assets.Scripts.Enemy.EnemyController
             if (_currentHealth <= 0)
             {
                 InvokeOnHealthZero();
+                _enemyManager.InvokeOnEnemyDied(this.gameObject);
+                //_enemyManager.EnemyDied(this.gameObject);
             }
             UpdateHealth(_currentHealth);
         }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,16 +13,18 @@ public class EnemyManager : MonoBehaviour
     [SerializeField]
     private int _deadEnemies = 0;
 
+    public event Action<GameObject> OnEnemyDied;
+
     private void OnEnable()
     {
         spawner.OnSpawn += EnemySpawned;
-        //characterHealthController.OnHealthZero += EnemyDied;
+        OnEnemyDied += EnemyDied;
     }
 
     private void OnDisable()
     {
         spawner.OnSpawn -= EnemySpawned;
-        //characterHealthController.OnHealthZero -= EnemyDied;
+        OnEnemyDied -= EnemyDied;
     }
 
     private void EnemySpawned(GameObject obj)
@@ -29,10 +32,14 @@ public class EnemyManager : MonoBehaviour
         _aliveEnemies+=1;
     }
 
-    private void EnemyDied()
+    public void EnemyDied(GameObject obj)
     {
         _aliveEnemies -= 1;
         _deadEnemies += 1;
     }
 
+    public void InvokeOnEnemyDied(GameObject obj)
+    {
+        OnEnemyDied?.Invoke(obj);
+    }    
 }
