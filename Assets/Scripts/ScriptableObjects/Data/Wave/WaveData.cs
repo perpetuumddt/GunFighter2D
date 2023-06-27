@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,27 +7,22 @@ using UnityEngine;
 
 public class WaveData : ScriptableObject
 {
-    [SerializeField]
-    private int _waveCounter;
-    public int WaveCounter => _waveCounter;
 
-    [SerializeField]
-    private GameObject[] _enemyPrefabs;
-    public GameObject[] EnemyPrefabs => _enemyPrefabs;
+    [Serializable]
+    public struct Enemies
+    {
+        public GameObject _enemyPrefab;
+        public int _enemyCount;
+        public float _spawnRate;
+    }
 
-    [SerializeField]
-    private int[] _enemyCount;
-    public int[] EnemyCount => _enemyCount;
+    [Serializable]
+    public struct Waves
+    {
+        public int _counter;
+        public Enemies[] _enemies;
+        public float _waveDuration;
+    }
 
-    [SerializeField]
-    private float _spawnRate;
-    public float SpawnRate => _spawnRate;
-
-    [SerializeField]
-    private float _waveDuration;
-    public float WaveDuration => _waveDuration;
-
-    [SerializeField]
-    private float _difficultyModifier;
-    public float DifficultyModifier => _difficultyModifier;
+    public Waves[] _wave;
 }
