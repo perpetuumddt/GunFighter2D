@@ -133,7 +133,7 @@ public class EnemySpawner : MonoBehaviour
             if (enemy.EnemyID == enemyID && enemy.EnemyCount == 0)
             {
                 Debug.Log("Enemy of Type " + enemy.EnemyID + "is Empty");
-                enemies.Remove(enemy);
+                //enemies.Remove(enemy);
                 return true;
             }
         }
