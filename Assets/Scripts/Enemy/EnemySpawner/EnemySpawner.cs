@@ -89,6 +89,20 @@ public class EnemySpawner : MonoBehaviour
         }
     }
 
+    private void SetupEnemyCounter(int waveID)
+    {
+        enemies = new List<Enemy>();
+        for (int i=0; i< _waveSystemManager.EnemiesOnTheWaveLenght(waveID);i++)
+        {
+            enemies.Add(new Enemy() 
+            { 
+                EnemyID = i, 
+                EnemyCount = _waveSystemManager.GetEnemyAmountToSpawn(waveID,i), 
+                EnemySpawnRate = _waveSystemManager.GetEnemySpawnRate(waveID,i)
+            });
+        }
+    }
+
     private IEnumerator StartWave(int waveCounter, int amountOfEnemies, int totalAmountOfEnemies) //TODO: spawn random type of enemy in wave
     {
         while (_isSpawning && _totalEnemiesLeftToSpawn>0)
