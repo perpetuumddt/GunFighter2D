@@ -310,6 +310,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyData: {fileID: 11400000, guid: 7a762eb1fe8129647b5f6f0e6eaba0bb, type: 2}
+  _enemyManager: {fileID: 0}
 --- !u!114 &3362577381024735462
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -322,7 +323,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 12b557ac6e3c3b84cb4cfcaadbc3ea50, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _coinToDrop: {fileID: 3877206521866041178, guid: d251bafdbf9c5434f931bdae2cc7543a, type: 3}
+  _coinToDrop: {fileID: 3877206521866041178, guid: d251bafdbf9c5434f931bdae2cc7543a,
+    type: 3}
 --- !u!114 &3362577381024735456
 MonoBehaviour:
   m_ObjectHideFlags: 0
