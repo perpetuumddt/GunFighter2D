@@ -1,35 +1,69 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
-public class EnemySpawner : MonoBehaviour //TODO: Integrate pool object
+public class EnemySpawner : MonoBehaviour
 {
+    
+    [Header("Wave Info")]
     [SerializeField]
-    private WaveData[] _waveData;
+    private int _currentWave;
 
-    private bool _canSpawn = true;
+    [SerializeField]
+    private int _enemyLeftToSpawn;
+    [SerializeField]
+    private int _enemySpawned;
+
+    private int _enemyAlive;
+    private int _enemyDestroyed;
+
+    private float _timeUntilNextWave;
+
+    private bool _isSpawning = true;
+
+    [SerializeField]
+    private WaveSystemManager _waveSystemManager;
+    //private PoolManager _poolManager; //TODO: integrate pool
+    //private UIManager _uiManager; //TODO: integrate ui manager
 
     private void Start()
     {
-        StartCoroutine(Spawner());
+        _currentWave = _waveSystemManager.WaveCounter(0);
+        var _currentWaveID = _currentWave - 1;
+        SetupWave(_currentWaveID);
     }
 
-    private IEnumerator Spawner()
+    private void SetupWave(int waveID) //TODO: invoke starting wave in game manager
     {
-        while (_canSpawn)
+        int amountOfEnemies = _waveSystemManager.EnemiesOnTheWaveLenght(waveID);
+        int totalAmountOfEnemies = _waveSystemManager.GetTotalEnemyAmountToSpawn(waveID);
+        _enemySpawned = 0;
+        _enemyLeftToSpawn = totalAmountOfEnemies;
+        StartCoroutine(StartWave(waveID, amountOfEnemies, totalAmountOfEnemies));
+    }
+
+    private IEnumerator StartWave(int waveCounter, int amountOfEnemies, int totalAmountOfEnemies) //TODO: spawn random type of enemy in wave
+    {
+        while (_isSpawning && _enemyLeftToSpawn>0)
         {
-            SpawnEnemy();
-            yield return new WaitForSeconds(_waveData[0].SpawnRate);
+            for (int i = 0; i < totalAmountOfEnemies; i++)
+            {
+                int randEnemyID = Random.Range(0, _waveSystemManager.EnemiesOnTheWaveLenght(waveCounter));
+                SpawnEnemy(waveCounter, randEnemyID);
+                yield return new WaitForSeconds(_waveSystemManager.GetEnemySpawnRate(waveCounter, randEnemyID));
+                _enemyLeftToSpawn -= 1;
+                _enemySpawned += 1;
+            }
         }
-        yield return new WaitForSeconds(_waveData[0].WaveDuration);
     }
 
-    private void SpawnEnemy()
+    private void SpawnEnemy(int waveID, int enemyID)
     {
-        int rand = Random.Range(0, _waveData[0].EnemyPrefabs.Length);
         int positionIndex = Random.Range(0, 4);
-        GameObject enemyToSpawn = _waveData[0].EnemyPrefabs[rand];
 
+        GameObject enemyToSpawn = _waveSystemManager.GetEnemyFromWave(waveID, enemyID);
         Instantiate(enemyToSpawn, CalculateSpawnPosition(positionIndex), Quaternion.identity);
     }
 

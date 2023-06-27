@@ -23,6 +23,8 @@ public class WeaponRanged : Weapon
 
     private PoolMono<BulletScript> pool;
 
+    private Transform _bulletPool;
+
     protected bool CanShoot => !_reloading && !_isOnShootingCooldown && _ammoLeftInClip > 0;
     protected bool _reloading;
     protected bool _isOnShootingCooldown;
@@ -32,9 +34,10 @@ public class WeaponRanged : Weapon
 
     public void Start()
     {
+        _bulletPool = GameObject.FindGameObjectWithTag("BulletPool").transform;
         _shotPoint.rotation = Quaternion.Euler(0, 0, 90);
         print("start");
-        this.pool = new PoolMono<BulletScript>(this.bulletPrefab, this.poolCount, this.transform);
+        this.pool = new PoolMono<BulletScript>(this.bulletPrefab, this.poolCount, this._bulletPool);
         this.pool.autoExpand = this.autoExpand;
         this._weaponRangedData = (WeaponRangedData)_weaponData;
         this._ammoLeftInClip = _weaponRangedData.AmmoCountInClip;
