@@ -103,8 +103,42 @@ public class EnemySpawner : MonoBehaviour
                     WriteToConsole();
                     yield return new WaitForSeconds(_waveSystemManager.GetEnemySpawnRate(waveCounter, randEnemyID));
                 }
+
             }
         }
+    }
+
+    private void WriteToConsole()
+    {
+        foreach(Enemy enemy in enemies)
+        {
+            Debug.Log(enemy.ToString());
+        }
+    }
+
+    private void DecrementEnemyAmountLeftToSpawn(int enemyID)
+    {
+        foreach(Enemy enemy in enemies) 
+        {
+            if(enemy.EnemyID == enemyID)
+            {
+                enemy.EnemyCount--;
+            }
+        }
+    }
+
+    private bool CheckIfEnemyTypeIsEmpty(int enemyID)
+    {
+        foreach (Enemy enemy in enemies)
+        {
+            if (enemy.EnemyID == enemyID && enemy.EnemyCount == 0)
+            {
+                Debug.Log("Enemy of Type " + enemy.EnemyID + "is Empty");
+                enemies.Remove(enemy);
+                return true;
+            }
+        }
+        return false;
     }
 
     private void WriteToConsole()
@@ -154,6 +188,7 @@ public class EnemySpawner : MonoBehaviour
     public void InvokeOnSpawn(GameObject obj)
     {
         OnSpawn?.Invoke(obj);
+
     }
 
     private Vector3 CalculateSpawnPosition(int positionIndex)
