@@ -32,7 +32,7 @@ public class EnemyManager : MonoBehaviour
         _aliveEnemies+=1;
     }
 
-    public void EnemyDied(GameObject obj)
+    private void EnemyDied(GameObject obj)
     {
         _aliveEnemies -= 1;
         _deadEnemies += 1;

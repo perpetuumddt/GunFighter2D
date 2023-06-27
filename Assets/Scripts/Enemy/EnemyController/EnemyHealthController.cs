@@ -20,14 +20,16 @@ namespace Assets.Scripts.Enemy.EnemyController
 
         public override void TakeDamage(int damage)
         {
-            _currentHealth -= damage;
-            if (_currentHealth <= 0)
+            if(_currentHealth >0)
             {
-                InvokeOnHealthZero();
-                _enemyManager.InvokeOnEnemyDied(this.gameObject);
-                //_enemyManager.EnemyDied(this.gameObject);
+                _currentHealth -= damage;
+                if (_currentHealth <= 0)
+                {
+                    InvokeOnHealthZero();
+                    _enemyManager.InvokeOnEnemyDied(this.gameObject);
+                }
+                UpdateHealth(_currentHealth);
             }
-            UpdateHealth(_currentHealth);
         }
 
         public override void DestroyOnDeath()
