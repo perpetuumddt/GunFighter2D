@@ -42,6 +42,11 @@ public class EnemySpawner : MonoBehaviour
     //private int _enemyDestroyed;
     //private float _timeUntilNextWave;
 
+    [SerializeField]
+    private Transform _container;
+
+    public event Action<GameObject> OnSpawn;
+
     private bool _isSpawning = true;
 
     [SerializeField]
@@ -140,9 +145,15 @@ public class EnemySpawner : MonoBehaviour
         int positionIndex = Random.Range(0, 4);
 
         GameObject enemyToSpawn = _waveSystemManager.GetEnemyFromWave(waveID, enemyID);
-        Instantiate(enemyToSpawn, CalculateSpawnPosition(positionIndex), Quaternion.identity);
+        Instantiate(enemyToSpawn, CalculateSpawnPosition(positionIndex), Quaternion.identity, _container);
+        InvokeOnSpawn(enemyToSpawn);
         _totalEnemiesLeftToSpawn -= 1;
         _enemySpawned += 1;
+    }
+
+    public void InvokeOnSpawn(GameObject obj)
+    {
+        OnSpawn?.Invoke(obj);
     }
 
     private Vector3 CalculateSpawnPosition(int positionIndex)
