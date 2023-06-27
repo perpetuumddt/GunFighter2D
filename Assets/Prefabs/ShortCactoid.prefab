@@ -232,6 +232,7 @@ MonoBehaviour:
   _characterHealthController: {fileID: 3362577381024735460}
   _characterDropController: {fileID: 3362577381024735462}
   _characterCollectorController: {fileID: 3362577381024735456}
+  _characterData: {fileID: 11400000, guid: 7a762eb1fe8129647b5f6f0e6eaba0bb, type: 2}
 --- !u!114 &3362577381024735463
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -309,7 +310,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _enemyData: {fileID: 11400000, guid: 7a762eb1fe8129647b5f6f0e6eaba0bb, type: 2}
-  _currentHealth: 0
 --- !u!114 &3362577381024735462
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -1,4 +1,5 @@
-﻿using UnityEditor;
+﻿using System;
+using UnityEditor;
 using UnityEngine;
 
 public class CharacterData : ScriptableObject
@@ -14,4 +15,11 @@ public class CharacterData : ScriptableObject
     [SerializeField]
     private float _movementSpeed;
     public float MovementSpeed => _movementSpeed;
+    
+    public event Action<CharacterData> OnDeath;
+
+    public void InvokeOnDeath(CharacterData data)
+    {
+        OnDeath?.Invoke(data);
+    }
 }

@@ -16,3 +16,4 @@ MonoBehaviour:
   _health: 3
   _movementSpeed: 3
   _damage: 1
+  _baseXpReward: 10

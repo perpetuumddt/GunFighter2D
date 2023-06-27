@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterLevelController
+public class PlayerLevelController
 {
     private PlayerData _playerData;
     private int _level;
@@ -14,7 +14,7 @@ public class CharacterLevelController
         get => _level;
     }
 
-    public CharacterLevelController(PlayerData playerData, int level, int exp)
+    public PlayerLevelController(PlayerData playerData, int level, int exp)
     {
         _playerData = playerData;
         _level = level;
@@ -23,6 +23,7 @@ public class CharacterLevelController
     private void LevelUp()
     {
         _level++;
+        _experience = 0;
         OnLevelUp?.Invoke(Level);
     }
 
@@ -31,7 +32,8 @@ public class CharacterLevelController
         if (addExp < 0) throw new ArgumentOutOfRangeException();
         int absoluteExperienceToCurrentLvl = (int)_playerData.ExperienceLevelDistribution.Evaluate(Level);
         int absoluteExperienceToNextLvl = (int)_playerData.ExperienceLevelDistribution.Evaluate(Level + 1);
-        int experienceToNextLvl = absoluteExperienceToCurrentLvl + _experience - absoluteExperienceToNextLvl;
+        int experienceToNextLvl = absoluteExperienceToNextLvl - (absoluteExperienceToCurrentLvl + _experience);
+        Debug.Log("addExp " + addExp + " ETCL: " + absoluteExperienceToCurrentLvl + " ETNL: " +experienceToNextLvl + " Level: " + _level);
         if (addExp > experienceToNextLvl)
         {
             LevelUp();
@@ -41,7 +43,7 @@ public class CharacterLevelController
         {
             _experience += addExp;
         }
-
+        Debug.Log("Level: " + _level + " xp: " + _experience);
     }
 
     

@@ -46,10 +46,5 @@ public class CharacterController : MonoBehaviour
     
     protected StateMachine<CharacterController> _stateMachine;
 
-    public event Action<CharacterData> OnDeath;
-
-    public void InvokeOnDeath(CharacterData data)
-    {
-        OnDeath.Invoke(data);
-    }
+    
 }

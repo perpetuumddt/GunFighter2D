@@ -51,6 +51,8 @@ public class EnemySpawner : MonoBehaviour
 
     private List<Enemy> enemies;
 
+    public event Action<CharacterData> OnEnemySpawn;
+
     private void Start()
     {
         _currentWave = _waveSystemManager.WaveCounter(0);
@@ -106,7 +108,7 @@ public class EnemySpawner : MonoBehaviour
     {
         foreach(Enemy enemy in enemies)
         {
-            Debug.Log(enemy.ToString());
+            // Debug.Log(enemy.ToString());
         }
     }
 
@@ -127,7 +129,7 @@ public class EnemySpawner : MonoBehaviour
         {
             if (enemy.EnemyID == enemyID && enemy.EnemyCount == 0)
             {
-                Debug.Log("Enemy of Type " + enemy.EnemyID + "is Empty");
+                // Debug.Log("Enemy of Type " + enemy.EnemyID + "is Empty");
                 enemies.Remove(enemy);
                 return true;
             }
@@ -140,7 +142,8 @@ public class EnemySpawner : MonoBehaviour
         int positionIndex = Random.Range(0, 4);
 
         GameObject enemyToSpawn = _waveSystemManager.GetEnemyFromWave(waveID, enemyID);
-        Instantiate(enemyToSpawn, CalculateSpawnPosition(positionIndex), Quaternion.identity);
+        GameObject enemy = Instantiate(enemyToSpawn, CalculateSpawnPosition(positionIndex), Quaternion.identity);
+        OnEnemySpawn?.Invoke(enemy.GetComponent<CharacterController>().CharacterData);
         _totalEnemiesLeftToSpawn -= 1;
         _enemySpawned += 1;
     }
