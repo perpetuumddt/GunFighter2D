@@ -7,8 +7,6 @@ using UnityEngine.TextCore.Text;
 
 public class PlayerController : CharacterController
 {
-    private StateMachine<CharacterController> _stateMachine;
-
     private void Awake()
     {
         _stateMachine = new StateMachine<CharacterController>();

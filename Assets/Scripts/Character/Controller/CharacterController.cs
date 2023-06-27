@@ -1,5 +1,7 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using StateMachine;
 using UnityEngine;
 
 public class CharacterController : MonoBehaviour
@@ -35,4 +37,19 @@ public class CharacterController : MonoBehaviour
     [SerializeField]
     private CharacterCollectorController _characterCollectorController;
     public CharacterCollectorController CharacterCollectorController => _characterCollectorController;
+
+
+    [SerializeField] 
+    private CharacterData _characterData;
+
+    public CharacterData CharacterData => _characterData;
+    
+    protected StateMachine<CharacterController> _stateMachine;
+
+    public event Action<CharacterData> OnDeath;
+
+    public void InvokeOnDeath(CharacterData data)
+    {
+        OnDeath.Invoke(data);
+    }
 }

@@ -1,3 +1,4 @@
+using System;
 using StateMachine;
 using System.Collections;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ public class CharacterDeathState : State<CharacterController>
     public override void Execute()
     {
         base.Execute();
+        Data.InvokeOnDeath(Data.CharacterData);
         StateMachine.CurrentState.Data.CharacterAnimationController.SetActiveBoolAnim(_animParameter, true);
     }
 
