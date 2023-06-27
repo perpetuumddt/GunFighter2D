@@ -36,7 +36,6 @@ public class WeaponRanged : Weapon
     {
         _bulletPool = GameObject.FindGameObjectWithTag("BulletPool").transform;
         _shotPoint.rotation = Quaternion.Euler(0, 0, 90);
-        print("start");
         this.pool = new PoolMono<BulletScript>(this.bulletPrefab, this.poolCount, this._bulletPool);
         this.pool.autoExpand = this.autoExpand;
         this._weaponRangedData = (WeaponRangedData)_weaponData;
