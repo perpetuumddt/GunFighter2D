@@ -3,12 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharacterHealthController : MonoBehaviour
+public class CharacterHealthController : MonoBehaviour, IDamageable, ICharacterHealthController
 {
+    
+    protected int _currentHealth;
+    public int CurrentHealth => _currentHealth;
     public event Action<bool> OnHealthZero;
+    public event Action<int> OnUpdateHealth;
     public virtual void UpdateHealth(int _currentHealth)
     {
-
+        OnUpdateHealth?.Invoke(_currentHealth);
     }
     
 
@@ -16,9 +20,19 @@ public class CharacterHealthController : MonoBehaviour
     {
 
     }
+    
+    public virtual void ReplenishHealth(int health)
+    {
+        
+    }
 
     protected void InvokeOnHealthZero()
     {
         OnHealthZero?.Invoke(true);
+    }
+
+
+    public virtual void TakeDamage(int damage)
+    {
     }
 }

@@ -3,16 +3,14 @@ using UnityEngine;
 
 namespace Assets.Scripts.Enemy.EnemyController
 {
-    public class EnemyHealthController : CharacterHealthController, IDamageable
+    public class EnemyHealthController : CharacterHealthController
     {
         [SerializeField]
         private EnemyData _enemyData;
 
-        [SerializeField]
         
 
-        private int _currentHealth;
-
+        
         private void Start()
         {
             _currentHealth = _enemyData.Health;
@@ -21,7 +19,7 @@ namespace Assets.Scripts.Enemy.EnemyController
 
         
 
-        public void TakeDamage(int damage)
+        public override void TakeDamage(int damage)
         {
             _currentHealth -= damage;
             if (_currentHealth <= 0)

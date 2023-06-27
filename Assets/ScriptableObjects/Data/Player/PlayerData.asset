@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   _name: Frogg
-  _health: 6
+  _health: 13
   _movementSpeed: 3
   _rollSpeed: 5
   _rollCooldown: 0
