@@ -9,6 +9,7 @@ public class PlayerLevelController
     private int _level;
     private int _experience;
     public event Action<int> OnLevelUp;
+    public event Action<int,int> OnExperienceChange;
     public int Level => _level;
     public int Experience => _experience;
 
@@ -34,11 +35,8 @@ public class PlayerLevelController
     public void AddExperience(int addExp)
     {
         if (addExp < 0) throw new ArgumentOutOfRangeException();
-        int absoluteExperienceToCurrentLvl = (int)_playerData.ExperienceLevelDistribution.Evaluate(Level);
-        int absoluteExperienceToNextLvl = (int)_playerData.ExperienceLevelDistribution.Evaluate(Level + 1);
-        int experienceToNextLvl = absoluteExperienceToNextLvl - (absoluteExperienceToCurrentLvl + _experience);
+        var experienceToNextLvl = ExperienceToNextLvl;
         if (experienceToNextLvl <= 0) throw new OverflowException("Experience to next level is zero or negative!");
-        Debug.Log("addExp " + addExp + " ETCL: " + absoluteExperienceToCurrentLvl + " ETNL: " +experienceToNextLvl + " Level: " + _level);
         if (addExp >= experienceToNextLvl)
         {
             LevelUp();
@@ -48,9 +46,16 @@ public class PlayerLevelController
         {
             _experience += addExp;
         }
-        Debug.Log("Level: " + _level + " xp: " + _experience);
+        OnExperienceChange?.Invoke(Experience,ExperienceToNextLvl);
     }
 
-    
-    
+    public int ExperienceToNextLvl
+    {
+        get
+        {
+            int absoluteExperienceToCurrentLvl = (int)_playerData.ExperienceLevelDistribution.Evaluate(Level);
+            int absoluteExperienceToNextLvl = (int)_playerData.ExperienceLevelDistribution.Evaluate(Level + 1);
+            return absoluteExperienceToNextLvl - (absoluteExperienceToCurrentLvl + _experience);
+        }
+    }
 }
