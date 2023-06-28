@@ -13,16 +13,23 @@ public class AmmoUIController : MonoBehaviour
 
     private void OnEnable()
     {
-        _weaponController.OnAmmoLeftChanged += UpdateAmmo; 
+        _weaponController.OnAmmoLeftChanged += UpdateAmmo;
+        _weaponController.OnWeaponSetup += SetupAmmo;
     }
 
     private void OnDisable()
     {
         _weaponController.OnAmmoLeftChanged -= UpdateAmmo;
+        _weaponController.OnWeaponSetup -= SetupAmmo;
     }
 
     private void UpdateAmmo(int value)
     {
         
+    }
+
+    private void SetupAmmo(int value)
+    {
+        Debug.Log("Current weapon has " + value + " clip size");
     }
 }

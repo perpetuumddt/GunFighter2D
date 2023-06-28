@@ -15,4 +15,9 @@ public class AmmoController : MonoBehaviour
     {
 
     }
+
+    public void SetupAmmoController()
+    {
+
+    }
 }

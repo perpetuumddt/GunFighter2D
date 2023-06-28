@@ -31,16 +31,22 @@ public class WeaponRanged : Weapon
 
     [SerializeField]
     protected int _ammoLeftInClip;
+    [SerializeField]
+    protected int _clipSize;
     public int AmmoLeftInClip { get => _ammoLeftInClip; private set { _ammoLeftInClip = value; InvokeOnAmmoLeftChanged(value); } }
+    public int ClipSize { get => _clipSize; private set { _clipSize = value; InvokeOnWeaponSetup(value); } }
 
     public event Action<int> OnAmmoLeftChanged;
+    public event Action<int> OnWeaponSetup;
 
     protected WeaponRangedData _weaponRangedData;
+    
 
     private void Awake()
     {
         this._weaponRangedData = (WeaponRangedData)_weaponData;
         AmmoLeftInClip = _weaponRangedData.AmmoCountInClip;
+        ClipSize = _weaponRangedData.AmmoCountInClip;
     }
     public void Start()
     {
@@ -123,4 +129,9 @@ public class WeaponRanged : Weapon
     {
         OnAmmoLeftChanged?.Invoke(ammoLeft);
     }
+
+    public void InvokeOnWeaponSetup(int value)
+    {
+        OnWeaponSetup?.Invoke(value);
+    }    
 }

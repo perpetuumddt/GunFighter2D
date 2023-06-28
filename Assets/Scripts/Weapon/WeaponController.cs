@@ -16,18 +16,23 @@ public class WeaponController : MonoBehaviour
 
     public event Action<int> OnAmmoLeftChanged;
 
+    public event Action<int> OnWeaponSetup;
+
     public void SetupWeapon(Weapon weapon, WeaponData weaponData)
     {
         if (CurrentWeapon is WeaponRanged)
         {
             ((WeaponRanged)CurrentWeapon).OnAmmoLeftChanged -= InvokeOnAmmoLeftChanged;
+            ((WeaponRanged)CurrentWeapon).OnWeaponSetup -= InvokeOnWeaponSetup;
         }
         _weapon = weapon;
         _weaponData = weaponData;
         _weapon.Initialize(_spriteRenderer);
         if (CurrentWeapon is WeaponRanged)
         {
+            ((WeaponRanged)CurrentWeapon).OnWeaponSetup += InvokeOnWeaponSetup;
             ((WeaponRanged)CurrentWeapon).OnAmmoLeftChanged += InvokeOnAmmoLeftChanged;
+            InvokeOnWeaponSetup(((WeaponRanged)CurrentWeapon).ClipSize);
             InvokeOnAmmoLeftChanged(((WeaponRanged)CurrentWeapon).AmmoLeftInClip);
         }
     }
@@ -35,5 +40,10 @@ public class WeaponController : MonoBehaviour
     public void InvokeOnAmmoLeftChanged(int value)
     {
         OnAmmoLeftChanged?.Invoke(value);
+    }
+
+    public void InvokeOnWeaponSetup(int value)
+    {
+        OnWeaponSetup?.Invoke(value);
     }
 }
