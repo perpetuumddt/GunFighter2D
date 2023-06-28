@@ -8,34 +8,21 @@ public class AmmoUIController : MonoBehaviour
     private GameObject _ammoUnitPrefab;
 
     [SerializeField]
-    private PlayerAttackController _playerAttackController;
+    private WeaponController _weaponController;
 
-    private void Awake()
-    {
-        
-    }
 
     private void OnEnable()
     {
-        _playerAttackController.OnAttack += UpdateAmmo;
-        _playerAttackController.OnReload += UpdateAmmo;
-        _playerAttackController.OnWeaponChanged += SetupAmmo;
+        _weaponController.OnAmmoLeftChanged += UpdateAmmo; 
     }
 
     private void OnDisable()
     {
-        _playerAttackController.OnAttack -= UpdateAmmo;
-        _playerAttackController.OnReload -= UpdateAmmo;
-        _playerAttackController.OnWeaponChanged -= SetupAmmo;
+        _weaponController.OnAmmoLeftChanged -= UpdateAmmo;
     }
 
-    private void UpdateAmmo()
+    private void UpdateAmmo(int value)
     {
         
-    }
-
-    private void SetupAmmo(WeaponData weaponData)
-    {
-
     }
 }

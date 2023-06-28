@@ -111,7 +111,7 @@ public class EnemySpawner : MonoBehaviour
     {
         foreach(Enemy enemy in enemies)
         {
-            Debug.Log(enemy.ToString());
+            //Debug.Log(enemy.ToString());
         }
     }
 
@@ -132,7 +132,7 @@ public class EnemySpawner : MonoBehaviour
         {
             if (enemy.EnemyID == enemyID && enemy.EnemyCount == 0)
             {
-                Debug.Log("Enemy of Type " + enemy.EnemyID + "is Empty");
+                //Debug.Log("Enemy of Type " + enemy.EnemyID + "is Empty");
                 //enemies.Remove(enemy);
                 return true;
             }
