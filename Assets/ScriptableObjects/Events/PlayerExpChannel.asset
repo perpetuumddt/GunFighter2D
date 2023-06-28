@@ -9,11 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 822283ed55a4f844b8cfab95b24014a8, type: 3}
-  m_Name: ShortCactoidData
+  m_Script: {fileID: 11500000, guid: 50454e17fa9dee14a894efa8001782ac, type: 3}
+  m_Name: PlayerExpChannel
   m_EditorClassIdentifier: 
-  _name: ShortCactoid
-  _health: 3
-  _movementSpeed: 3
-  _damage: 1
-  _baseXpReward: 10

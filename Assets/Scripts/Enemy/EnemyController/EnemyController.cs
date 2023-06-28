@@ -6,7 +6,6 @@ using UnityEngine.AI;
 
 public class EnemyController : CharacterController
 {
-    private StateMachine<CharacterController> _stateMachine;
 
     private void Awake()
     {
