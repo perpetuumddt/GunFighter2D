@@ -8,6 +8,7 @@ public class Weapon : MonoBehaviour
     protected WeaponData _weaponData;
 
     public float Damage => _weaponData.Damage;
+
     public WeaponData WeaponData => _weaponData;
 
     public virtual void DoAttack(AttackType attackType)

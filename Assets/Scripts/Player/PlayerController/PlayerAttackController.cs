@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -19,6 +20,9 @@ public class PlayerAttackController : CharacterAttackController
 
     private WeaponWorldViewController _weaponWorldViewController;
 
+    public event Action<WeaponData> OnWeaponChanged;
+    public event Action OnAttack;
+    public event Action OnReload;
     
     private void OnEnable()
     {
@@ -34,6 +38,7 @@ public class PlayerAttackController : CharacterAttackController
     {
         base.DoAttack(attackType);
         _weaponController.CurrentWeapon.DoAttack(attackType);
+        InvokeOnAttack();
     }
 
     public override void Reload()
@@ -54,6 +59,7 @@ public class PlayerAttackController : CharacterAttackController
     {
         base.SwapWeapon();
         _weaponManager.SwapWeapon();
+        InvokeOnWeaponChanged(_weaponManager.CurrentWeapon.WeaponData);
     }
 
     public void SetActiveChangeWeapon(bool isActive, WeaponWorldViewController weaponWorldViewController)
@@ -68,5 +74,20 @@ public class PlayerAttackController : CharacterAttackController
             _inputHandler.OnInteract -= ChangeWeapon;
             _weaponWorldViewController = null;
         }
+    }
+
+    public void InvokeOnWeaponChanged(WeaponData weaponData)
+    {
+        OnWeaponChanged?.Invoke(weaponData);
+    }
+
+    public void InvokeOnAttack()
+    {
+        OnAttack?.Invoke();
+    }
+
+    public void InvokeOnReload()
+    {
+        OnReload?.Invoke();
     }
 }
