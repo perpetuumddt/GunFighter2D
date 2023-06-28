@@ -8,8 +8,17 @@ public class AmmoUIController : MonoBehaviour
     private GameObject _ammoUnitPrefab;
 
     [SerializeField]
+    private GameObject _containerElement;
+
+    [SerializeField]
     private WeaponController _weaponController;
 
+    private AmmoController _ammoController;
+
+    private void Awake()
+    {
+        _ammoController = new AmmoController(_ammoUnitPrefab, _containerElement);
+    }
 
     private void OnEnable()
     {
@@ -25,11 +34,11 @@ public class AmmoUIController : MonoBehaviour
 
     private void UpdateAmmo(int value)
     {
-        
+        _ammoController.UpdateAmmoController(value);
     }
 
     private void SetupAmmo(int value)
     {
-        Debug.Log("Current weapon has " + value + " clip size");
+        _ammoController.SetupAmmoController(value, this.gameObject);
     }
 }
