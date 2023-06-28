@@ -17,3 +17,27 @@ MonoBehaviour:
   _movementSpeed: 3
   _rollSpeed: 5
   _rollCooldown: 0
+  experienceLevelDistribution:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 33.788033
+      outSlope: 33.788033
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0.02059947
+    - serializedVersion: 3
+      time: 25
+      value: 5000
+      inSlope: 618.43665
+      outSlope: 618.43665
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.05033954
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

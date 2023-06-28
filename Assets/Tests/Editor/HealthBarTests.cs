@@ -20,7 +20,7 @@ public class HealthBarTests
         }
         
         [Test]
-        public void health_bar_initializes_correctly()
+        public void _0_health_bar_initializes_correctly()
         {
             
             _healthBarController.UpdateHealthBar(10,_uiElement);
@@ -28,7 +28,7 @@ public class HealthBarTests
         }
         
         [Test]
-        public void health_bar_updates_correctly()
+        public void _1_health_bar_updates_correctly()
         {
             _healthBarController.UpdateHealthBar(0,_uiElement);
             _healthBarController.UpdateHealthBar(6,_uiElement);
@@ -36,7 +36,7 @@ public class HealthBarTests
         }
         
         [Test]
-        public void throws_exeption_with_negative_health_value()
+        public void _2_throws_exeption_with_negative_health_value()
         {
             Assert.Throws<ArgumentOutOfRangeException>(()=>_healthBarController.UpdateHealthBar(-1,_uiElement));
         }

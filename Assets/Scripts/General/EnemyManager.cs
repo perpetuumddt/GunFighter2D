@@ -13,18 +13,23 @@ public class EnemyManager : MonoBehaviour
     [SerializeField]
     private int _deadEnemies = 0;
 
+    [SerializeField] private ScriptableObjectExpEvent _expChannel;
+
     public event Action<GameObject> OnEnemyDied;
+    
 
     private void OnEnable()
     {
         spawner.OnSpawn += EnemySpawned;
         OnEnemyDied += EnemyDied;
+        OnEnemyDied += _expChannel.RaiseEvent;
     }
 
     private void OnDisable()
     {
         spawner.OnSpawn -= EnemySpawned;
         OnEnemyDied -= EnemyDied;
+        OnEnemyDied -= _expChannel.RaiseEvent;
     }
 
     private void EnemySpawned(GameObject obj)
