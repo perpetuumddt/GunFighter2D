@@ -17,12 +17,16 @@ public class AmmoUIController : MonoBehaviour
 
     private void OnEnable()
     {
-        
+        _playerAttackController.OnAttack += UpdateAmmo;
+        _playerAttackController.OnReload += UpdateAmmo;
+        _playerAttackController.OnWeaponChanged += SetupAmmo;
     }
 
     private void OnDisable()
     {
-        
+        _playerAttackController.OnAttack -= UpdateAmmo;
+        _playerAttackController.OnReload -= UpdateAmmo;
+        _playerAttackController.OnWeaponChanged -= SetupAmmo;
     }
 
     private void UpdateAmmo()
@@ -30,7 +34,7 @@ public class AmmoUIController : MonoBehaviour
         
     }
 
-    private void SetupAmmo()
+    private void SetupAmmo(WeaponData weaponData)
     {
 
     }

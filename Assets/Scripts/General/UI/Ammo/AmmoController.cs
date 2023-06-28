@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class AmmoController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private GameObject _ammoUnitPrefab;
+
+    public AmmoController(GameObject ammoUnitPrefab)
     {
-        
+        _ammoUnitPrefab = ammoUnitPrefab;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void UpdateAmmoController()
     {
-        
+
     }
 }

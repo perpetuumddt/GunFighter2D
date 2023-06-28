@@ -105,6 +105,8 @@ public class WeaponRanged : Weapon
     {
         if ((_ammoLeftInClip == 0 || manual) && !_reloading)
         {
+            PlayerAttackController playerAttackController = new PlayerAttackController();
+            playerAttackController.InvokeOnReload();
             _reloadCoroutine = StartCoroutine(Reload());
         }
     }

@@ -38,6 +38,7 @@ public class PlayerAttackController : CharacterAttackController
     {
         base.DoAttack(attackType);
         _weaponController.CurrentWeapon.DoAttack(attackType);
+        InvokeOnAttack();
     }
 
     public override void Reload()
