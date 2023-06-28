@@ -28,18 +28,32 @@ public class WeaponRanged : Weapon
     protected bool CanShoot => !_reloading && !_isOnShootingCooldown && _ammoLeftInClip > 0;
     protected bool _reloading;
     protected bool _isOnShootingCooldown;
+
     [SerializeField]
     protected int _ammoLeftInClip;
-    protected WeaponRangedData _weaponRangedData;
+    [SerializeField]
+    protected int _clipSize;
+    public int AmmoLeftInClip { get => _ammoLeftInClip; private set { _ammoLeftInClip = value; InvokeOnAmmoLeftChanged(value); } }
+    public int ClipSize { get => _clipSize; private set { _clipSize = value; InvokeOnWeaponSetup(value); } }
 
+    public event Action<int> OnAmmoLeftChanged;
+    public event Action<int> OnWeaponSetup;
+
+    protected WeaponRangedData _weaponRangedData;
+    
+
+    private void Awake()
+    {
+        this._weaponRangedData = (WeaponRangedData)_weaponData;
+        AmmoLeftInClip = _weaponRangedData.AmmoCountInClip;
+        ClipSize = _weaponRangedData.AmmoCountInClip;
+    }
     public void Start()
     {
         _bulletPool = GameObject.FindGameObjectWithTag("BulletPool").transform;
         _shotPoint.rotation = Quaternion.Euler(0, 0, 90);
         this.pool = new PoolMono<BulletScript>(this.bulletPrefab, this.poolCount, this._bulletPool);
         this.pool.autoExpand = this.autoExpand;
-        this._weaponRangedData = (WeaponRangedData)_weaponData;
-        this._ammoLeftInClip = _weaponRangedData.AmmoCountInClip;
     }
 
     public override void Initialize(SpriteRenderer spriteRenderer)
@@ -74,7 +88,7 @@ public class WeaponRanged : Weapon
             CreateBullet(angleDeviation:bulletAngleDeviation);
         }
 
-        _ammoLeftInClip--;
+        AmmoLeftInClip--;
         yield return new WaitForSeconds(_weaponRangedData.AttackSpeed);
         _isOnShootingCooldown = false;
     }
@@ -97,17 +111,27 @@ public class WeaponRanged : Weapon
     {
         _reloading = true;
         yield return new WaitForSeconds(_weaponRangedData.ReloadTime);
-        this._ammoLeftInClip = _weaponRangedData.AmmoCountInClip;
+        AmmoLeftInClip = _weaponRangedData.AmmoCountInClip;
         _reloading = false;
         
     }
     public virtual void HandleReload(bool manual = false)
     {
-        if ((_ammoLeftInClip == 0 || manual) && !_reloading)
+        if ((AmmoLeftInClip == 0 || manual) && !_reloading)
         {
+            PlayerAttackController playerAttackController = new PlayerAttackController();
+            playerAttackController.InvokeOnReload();
             _reloadCoroutine = StartCoroutine(Reload());
         }
     }
-    
-    
+
+    public void InvokeOnAmmoLeftChanged(int ammoLeft)
+    {
+        OnAmmoLeftChanged?.Invoke(ammoLeft);
+    }
+
+    public void InvokeOnWeaponSetup(int value)
+    {
+        OnWeaponSetup?.Invoke(value);
+    }    
 }

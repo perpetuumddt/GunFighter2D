@@ -32,25 +32,6 @@ public class WeaponManager : MonoBehaviour
         _weaponController.SetupWeapon(_currentWeapon,_currentWeaponData);
     }
 
-    /*
-    private void SetupWeapon(Weapon weapon, WeaponData weaponData)
-    {
-        foreach (var curWeapon in _weapons) 
-        {
-            if(curWeapon.WeaponData == weaponData)
-            {
-                weapon = curWeapon;
-                curWeapon.gameObject.SetActive(true);
-                curWeapon.Initialize(_spriteRenderer);
-            }
-            else
-            {
-                curWeapon.gameObject.SetActive(false);
-            }
-        }
-    }
-    */
-
     public virtual void SwapWeapon()
     {
         _currentWeapon.Finilize();
