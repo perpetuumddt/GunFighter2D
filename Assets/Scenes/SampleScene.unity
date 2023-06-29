@@ -5818,8 +5818,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f88f1386dd63147198d003daff00d37d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  screenResolution: {x: 1920, y: 1080}
-  internalResolution: {x: 427, y: 240}
+  screenResolution: {x: 616, y: 347}
+  internalResolution: {x: 426, y: 240}
   upscaledResolution: {x: 0, y: 0}
   smooth: 0
   forceSquarePixels: 0
@@ -5896,7 +5896,7 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 32
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 319.75018, y: 240}
+  m_ReferenceResolution: {x: 320.03897, y: 240}
   m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -6408,6 +6408,51 @@ Transform:
   m_Father: {fileID: 2009276173}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1099291487
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1099291488}
+  - component: {fileID: 1099291489}
+  m_Layer: 0
+  m_Name: GameSaveManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1099291488
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1099291487}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1193921177}
+  m_RootOrder: -1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1099291489
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1099291487}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e10b05ec49a5b1a43b184fcf534effae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _fileName: save-file.json
 --- !u!1 &1151649050
 GameObject:
   m_ObjectHideFlags: 0
@@ -6788,6 +6833,7 @@ Transform:
   - {fileID: 1898933207}
   - {fileID: 1386257307}
   - {fileID: 626545059}
+  - {fileID: 1099291488}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -20500,6 +20546,7 @@ GameObject:
   - component: {fileID: 2009276186}
   - component: {fileID: 2009276187}
   - component: {fileID: 2009276165}
+  - component: {fileID: 2009276189}
   m_Layer: 7
   m_Name: Player
   m_TagString: Player
@@ -20830,6 +20877,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6b5d1214906e3404c9ead5613a3479a9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2009276189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2009276164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 53c40d3fec3c1fd4baf994e91b1868a8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _playerController: {fileID: 2009276169}
 --- !u!1 &2023052814
 GameObject:
   m_ObjectHideFlags: 0

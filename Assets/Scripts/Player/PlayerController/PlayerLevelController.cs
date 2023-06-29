@@ -32,6 +32,14 @@ public class PlayerLevelController
         OnLevelUp?.Invoke(Level);
     }
 
+    public void SetLevelAndExperience(int level, int experience)
+    {
+        if (level < 1 || experience < 0) throw new ArgumentOutOfRangeException();
+        _level = level - 1;
+        LevelUp();// Calls levelUp event only once
+        AddExperience(experience);
+    }
+
     public void AddExperience(int addExp)
     {
         if (addExp < 0) throw new ArgumentOutOfRangeException();
