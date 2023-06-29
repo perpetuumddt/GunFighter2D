@@ -22,7 +22,6 @@ public class PlayerAttackController : CharacterAttackController
 
     public event Action<WeaponData> OnWeaponChanged;
     public event Action OnAttack;
-    public event Action OnReload;
     
     private void OnEnable()
     {
@@ -86,8 +85,4 @@ public class PlayerAttackController : CharacterAttackController
         OnAttack?.Invoke();
     }
 
-    public void InvokeOnReload()
-    {
-        OnReload?.Invoke();
-    }
 }
