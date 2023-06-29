@@ -6452,6 +6452,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e10b05ec49a5b1a43b184fcf534effae, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _fileName: save-file.json
 --- !u!1 &1151649050
 GameObject:
   m_ObjectHideFlags: 0

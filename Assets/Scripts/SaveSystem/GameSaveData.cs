@@ -5,6 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class GameSaveData
 {
+    [SerializeField]
     private int _playerLevel;
     public int PlayerLevel
     {
@@ -12,6 +13,7 @@ public class GameSaveData
         set => _playerLevel = value;
     }
 
+    [SerializeField]
     private int _playerExperience;
     public int PlayerExperience
     {
