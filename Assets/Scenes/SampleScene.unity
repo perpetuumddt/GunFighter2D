@@ -5818,8 +5818,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f88f1386dd63147198d003daff00d37d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  screenResolution: {x: 656, y: 369}
-  internalResolution: {x: 427, y: 240}
+  screenResolution: {x: 616, y: 347}
+  internalResolution: {x: 426, y: 240}
   upscaledResolution: {x: 0, y: 0}
   smooth: 0
   forceSquarePixels: 0
@@ -5896,7 +5896,7 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 32
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 319.7502, y: 240}
+  m_ReferenceResolution: {x: 320.03897, y: 240}
   m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -20420,7 +20420,9 @@ MonoBehaviour:
   _characterDropController: {fileID: 2009276186}
   _characterCollectorController: {fileID: 2009276187}
   _characterData: {fileID: 11400000, guid: 52be9dd7a7c510144beb9a24e4d390f7, type: 2}
-  _expChannel: {fileID: 11400000, guid: 7fd3f70bff14c774d9a3930c581528d4, type: 2}
+  _expIncomingChannel: {fileID: 11400000, guid: 7fd3f70bff14c774d9a3930c581528d4, type: 2}
+  _onExpChangedChannel: {fileID: 11400000, guid: 39fb71883bb380944ae4db57c3bebdeb, type: 2}
+  _onLevelUpChannel: {fileID: 11400000, guid: 505354cb34f8d174db26d58c9a28897a, type: 2}
 --- !u!61 &2009276170
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -21737,9 +21739,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 1864062720}
     m_Modifications:
     - target: {fileID: 3832366435121321011, guid: 234ffce40870d394ebacbcd3b24ee17c, type: 3}
+      propertyPath: _onLevelUpChannel
+      value: 
+      objectReference: {fileID: 11400000, guid: 505354cb34f8d174db26d58c9a28897a, type: 2}
+    - target: {fileID: 3832366435121321011, guid: 234ffce40870d394ebacbcd3b24ee17c, type: 3}
       propertyPath: _playerController
       value: 
       objectReference: {fileID: 2009276169}
+    - target: {fileID: 3832366435121321011, guid: 234ffce40870d394ebacbcd3b24ee17c, type: 3}
+      propertyPath: _onXpChangedChannel
+      value: 
+      objectReference: {fileID: 11400000, guid: 39fb71883bb380944ae4db57c3bebdeb, type: 2}
     - target: {fileID: 4402892068808208700, guid: 234ffce40870d394ebacbcd3b24ee17c, type: 3}
       propertyPath: m_Name
       value: ExperienceBar

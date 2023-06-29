@@ -8,8 +8,9 @@ public class ExperienceBarUIController : MonoBehaviour
 {
     private ExperienceBarController _experienceBarController;
     [SerializeField] private ProgressBar _progressBar;
-    [SerializeField] private PlayerController _playerController;
     [SerializeField] private TMP_Text _levelText;
+    [SerializeField] private ScriptableObjectTwoIntEvent _onXpChangedChannel;
+    [SerializeField] private ScriptableObjectIntEvent _onLevelUpChannel;
     void Awake()
     {
         _experienceBarController = new ExperienceBarController(_progressBar, _levelText);
@@ -17,18 +18,13 @@ public class ExperienceBarUIController : MonoBehaviour
 
     private void OnEnable()
     {
-        // Debug.Log(_playerController.PlayerLevelController);
-        // _playerController.PlayerLevelController.OnExperienceChange += _experienceBarController.HandleExperienceChange;
+        _onXpChangedChannel.OnEventRaised += _experienceBarController.HandleExperienceChange;
+        _onLevelUpChannel.OnEventRaised += _experienceBarController.HandleLevelUp;
     }
 
     private void OnDisable()
     {
-        // _playerController.PlayerLevelController.OnExperienceChange -= _experienceBarController.HandleExperienceChange;
-    }
-
-    private void Start()
-    {
-        _playerController.PlayerLevelController.OnExperienceChange += _experienceBarController.HandleExperienceChange;
-        _playerController.PlayerLevelController.OnLevelUp += _experienceBarController.HandleLevelUp;
+        _onXpChangedChannel.OnEventRaised -= _experienceBarController.HandleExperienceChange;
+        _onLevelUpChannel.OnEventRaised -= _experienceBarController.HandleLevelUp;
     }
 }

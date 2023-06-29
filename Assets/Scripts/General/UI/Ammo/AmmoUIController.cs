@@ -18,6 +18,7 @@ public class AmmoUIController : MonoBehaviour
     private void Awake()
     {
         _ammoController = new AmmoController(_ammoUnitPrefab, _containerElement);
+        SetupAmmo(((WeaponRanged)_weaponController.CurrentWeapon).AmmoLeftInClip);
     }
 
     private void OnEnable()

@@ -38,6 +38,7 @@ public class WeaponRanged : Weapon
 
     public event Action<int> OnAmmoLeftChanged;
     public event Action<int> OnWeaponSetup;
+    public event Action OnReload;
 
     protected WeaponRangedData _weaponRangedData;
     
@@ -119,8 +120,6 @@ public class WeaponRanged : Weapon
     {
         if ((AmmoLeftInClip == 0 || manual) && !_reloading)
         {
-            PlayerAttackController playerAttackController = new PlayerAttackController();
-            playerAttackController.InvokeOnReload();
             _reloadCoroutine = StartCoroutine(Reload());
         }
     }
@@ -133,5 +132,10 @@ public class WeaponRanged : Weapon
     public void InvokeOnWeaponSetup(int value)
     {
         OnWeaponSetup?.Invoke(value);
-    }    
+    }
+
+    public void InvokeOnReload()
+    {
+        OnReload?.Invoke();
+    }
 }
