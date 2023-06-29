@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerAttackController : CharacterAttackController
 {
+    [SerializeField]
+    private Animator _reloadUIAnimator;
 
     [SerializeField]
     protected WeaponManager _weaponManager;
@@ -26,11 +28,13 @@ public class PlayerAttackController : CharacterAttackController
     private void OnEnable()
     {
         _weaponEvent.OnSetActivePickupWeapon += SetActiveChangeWeapon;
+        _weaponController.OnReload += PlayReloadUIAnimation;
     }
 
     private void OnDisable()
     {
         _weaponEvent.OnSetActivePickupWeapon -= SetActiveChangeWeapon;
+        _weaponController.OnReload -= PlayReloadUIAnimation;
     }
 
     public override void DoAttack(AttackType attackType)
@@ -85,4 +89,16 @@ public class PlayerAttackController : CharacterAttackController
         OnAttack?.Invoke();
     }
 
+    private void PlayReloadUIAnimation(bool value)
+    {
+        if (value)
+        {
+            _reloadUIAnimator.Play("ReloadUIAnimation");
+        }
+        else
+        {
+            _reloadUIAnimator.Play("None");
+        }
+        
+    }    
 }

@@ -18,7 +18,7 @@ public class WeaponController : MonoBehaviour
 
     public event Action<int> OnWeaponSetup;
 
-    public event Action OnReload;
+    public event Action<bool> OnReload;
 
     public void SetupWeapon(Weapon weapon, WeaponData weaponData)
     {
@@ -26,7 +26,7 @@ public class WeaponController : MonoBehaviour
         {
             ((WeaponRanged)CurrentWeapon).OnAmmoLeftChanged -= InvokeOnAmmoLeftChanged;
             ((WeaponRanged)CurrentWeapon).OnWeaponSetup -= InvokeOnWeaponSetup;
-            ((WeaponRanged)CurrentWeapon).OnReload -= InvokeOnReload;
+            ((WeaponRanged)CurrentWeapon).OnReloadPerforming -= InvokeOnReload;
         }
         _weapon = weapon;
         _weaponData = weaponData;
@@ -35,14 +35,15 @@ public class WeaponController : MonoBehaviour
         {
             ((WeaponRanged)CurrentWeapon).OnWeaponSetup += InvokeOnWeaponSetup;
             ((WeaponRanged)CurrentWeapon).OnAmmoLeftChanged += InvokeOnAmmoLeftChanged;
+            ((WeaponRanged)CurrentWeapon).OnReloadPerforming += InvokeOnReload;
             InvokeOnWeaponSetup(((WeaponRanged)CurrentWeapon).ClipSize);
             InvokeOnAmmoLeftChanged(((WeaponRanged)CurrentWeapon).AmmoLeftInClip);
         }
     }
 
-    private void InvokeOnReload()
+    private void InvokeOnReload(bool value)
     {
-        OnReload?.Invoke();
+        OnReload?.Invoke(value);
     }
 
     public void InvokeOnAmmoLeftChanged(int value)
