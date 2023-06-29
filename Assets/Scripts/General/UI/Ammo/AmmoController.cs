@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using static UnityEditor.FilePathAttribute;
 
-public class AmmoController : MonoBehaviour
+public class AmmoController 
 {
     private GameObject _ammoUnitPrefab;
 
@@ -43,7 +43,7 @@ public class AmmoController : MonoBehaviour
         {
             foreach (GameObject ammo in _ammoUnits)
             {
-                Destroy(ammo);
+                GameObject.Destroy(ammo);
             }
         }
 
@@ -51,7 +51,7 @@ public class AmmoController : MonoBehaviour
         
         for (int i = 0; i < value; i++)
         {
-            _ammoUnits[i] = Instantiate(_ammoUnitPrefab, UIObject.transform);
+            _ammoUnits[i] = GameObject.Instantiate(_ammoUnitPrefab, UIObject.transform);
 
             Vector3 location = new Vector3(-2.5f, 2f + i * 3, 0);
             _ammoUnits[i].transform.SetLocalPositionAndRotation(location, new Quaternion());
