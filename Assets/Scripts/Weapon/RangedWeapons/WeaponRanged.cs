@@ -33,6 +33,7 @@ public class WeaponRanged : Weapon
     protected int _ammoLeftInClip;
     [SerializeField]
     protected int _clipSize;
+
     public int AmmoLeftInClip { get => _ammoLeftInClip; private set { _ammoLeftInClip = value; InvokeOnAmmoLeftChanged(value); } }
     public int ClipSize { get => _clipSize; private set { _clipSize = value; InvokeOnWeaponSetup(value); } }
     public bool ReloadPerforming { get => _reloading; private set { _reloading = value; InvokeOnReloadPerforming(value); } }
@@ -70,7 +71,6 @@ public class WeaponRanged : Weapon
         if (_reloadCoroutine != null)
             StopCoroutine(_reloadCoroutine);
         ReloadPerforming = false;
-        //_reloading = false;
     }
 
     public virtual void CreateBullet(int angleDeviation = 0)
@@ -112,11 +112,9 @@ public class WeaponRanged : Weapon
 
     private IEnumerator Reload()
     {
-        //_reloading = true;
         ReloadPerforming = true;
         yield return new WaitForSeconds(_weaponRangedData.ReloadTime);
         AmmoLeftInClip = _weaponRangedData.AmmoCountInClip;
-        //_reloading = false;
         ReloadPerforming = false;
         
     }
