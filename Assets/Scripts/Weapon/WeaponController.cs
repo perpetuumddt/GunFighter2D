@@ -26,7 +26,7 @@ public class WeaponController : MonoBehaviour
         {
             ((WeaponRanged)CurrentWeapon).OnAmmoLeftChanged -= InvokeOnAmmoLeftChanged;
             ((WeaponRanged)CurrentWeapon).OnWeaponSetup -= InvokeOnWeaponSetup;
-            ((WeaponRanged)CurrentWeapon).OnReload -= InvokeOnReload;
+            ((WeaponRanged)CurrentWeapon).OnReloadPerforming -= InvokeOnReload;
         }
         _weapon = weapon;
         _weaponData = weaponData;
@@ -40,7 +40,7 @@ public class WeaponController : MonoBehaviour
         }
     }
 
-    private void InvokeOnReload()
+    private void InvokeOnReload(bool value)
     {
         OnReload?.Invoke();
     }

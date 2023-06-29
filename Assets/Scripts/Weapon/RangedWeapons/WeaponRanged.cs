@@ -35,7 +35,7 @@ public class WeaponRanged : Weapon
     protected int _clipSize;
     public int AmmoLeftInClip { get => _ammoLeftInClip; private set { _ammoLeftInClip = value; InvokeOnAmmoLeftChanged(value); } }
     public int ClipSize { get => _clipSize; private set { _clipSize = value; InvokeOnWeaponSetup(value); } }
-    public bool ReloadPerforming { get => _reloading; private set { InvokeOnReloadPerforming(value); } }
+    public bool ReloadPerforming { get => _reloading; private set { _reloading = value; InvokeOnReloadPerforming(value); } }
 
     public event Action<int> OnAmmoLeftChanged;
     public event Action<int> OnWeaponSetup;
@@ -69,7 +69,8 @@ public class WeaponRanged : Weapon
         
         if (_reloadCoroutine != null)
             StopCoroutine(_reloadCoroutine);
-        _reloading = false;
+        ReloadPerforming = false;
+        //_reloading = false;
     }
 
     public virtual void CreateBullet(int angleDeviation = 0)
@@ -111,15 +112,17 @@ public class WeaponRanged : Weapon
 
     private IEnumerator Reload()
     {
-        _reloading = true;
+        //_reloading = true;
+        ReloadPerforming = true;
         yield return new WaitForSeconds(_weaponRangedData.ReloadTime);
         AmmoLeftInClip = _weaponRangedData.AmmoCountInClip;
-        _reloading = false;
+        //_reloading = false;
+        ReloadPerforming = false;
         
     }
     public virtual void HandleReload(bool manual = false)
     {
-        if ((AmmoLeftInClip == 0 || manual) && !_reloading)
+        if ((AmmoLeftInClip == 0 || manual) && !ReloadPerforming)
         {
             _reloadCoroutine = StartCoroutine(Reload());
         }
