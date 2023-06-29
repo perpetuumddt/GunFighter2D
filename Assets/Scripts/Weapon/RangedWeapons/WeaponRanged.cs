@@ -35,10 +35,11 @@ public class WeaponRanged : Weapon
     protected int _clipSize;
     public int AmmoLeftInClip { get => _ammoLeftInClip; private set { _ammoLeftInClip = value; InvokeOnAmmoLeftChanged(value); } }
     public int ClipSize { get => _clipSize; private set { _clipSize = value; InvokeOnWeaponSetup(value); } }
+    public bool ReloadPerforming { get => _reloading; private set { InvokeOnReloadPerforming(value); } }
 
     public event Action<int> OnAmmoLeftChanged;
     public event Action<int> OnWeaponSetup;
-    public event Action OnReload;
+    public event Action<bool> OnReloadPerforming;
 
     protected WeaponRangedData _weaponRangedData;
     
@@ -134,8 +135,8 @@ public class WeaponRanged : Weapon
         OnWeaponSetup?.Invoke(value);
     }
 
-    public void InvokeOnReload()
+    public void InvokeOnReloadPerforming(bool value)
     {
-        OnReload?.Invoke();
+        OnReloadPerforming?.Invoke(value);
     }
 }
