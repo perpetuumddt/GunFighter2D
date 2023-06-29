@@ -8,7 +8,7 @@ public abstract class Singleton<T> : MonoBehaviour where T : Component
 
     public static T GetInstance()
     {
-        //if (_mApplicationIsQuitting) { return null; }
+        if (_mApplicationIsQuitting) { return null; }
 
         if (_instance == null)
         {

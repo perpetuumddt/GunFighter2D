@@ -7,7 +7,16 @@ public class CharacterHealthController : MonoBehaviour, IDamageable, ICharacterH
 {
     
     protected int _currentHealth;
-    public int CurrentHealth => _currentHealth;
+    public int CurrentHealth
+    {
+        get => _currentHealth;
+        set
+        {
+            if(value < 0)throw new ArgumentOutOfRangeException();
+            _currentHealth = value;
+            OnUpdateHealth?.Invoke(_currentHealth);
+        }
+    }
     public event Action<bool> OnHealthZero;
     public event Action<int> OnUpdateHealth;
     public virtual void UpdateHealth(int _currentHealth)

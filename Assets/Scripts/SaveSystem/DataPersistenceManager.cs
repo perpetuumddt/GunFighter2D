@@ -25,7 +25,7 @@ public class DataPersistenceManager : Singleton<DataPersistenceManager>
         return new List<IDataPersistence>(dataPersistenceObjects);
     }
 
-    [ContextMenu("DPM/New game")]    
+    [ContextMenu("Data Persistence Manager/New game")]    
     public void NewGame()
     {
         _gameSaveData = new GameSaveData();
@@ -40,7 +40,7 @@ public class DataPersistenceManager : Singleton<DataPersistenceManager>
         }
     }
     
-    [ContextMenu("DPM/Load game")]
+    [ContextMenu("Data Persistence Manager/Load game")]
     public void LoadGame()
     {
         this._gameSaveData = _fileDataHandler.Load();
@@ -55,7 +55,7 @@ public class DataPersistenceManager : Singleton<DataPersistenceManager>
         
     }
     
-    [ContextMenu("DPM/Save game")]
+    [ContextMenu("Data Persistence Manager/Save game")]
     public void SaveGame()
     {
         if (_gameSaveData == null) _gameSaveData = new GameSaveData();
