@@ -5820,7 +5820,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   screenResolution: {x: 1920, y: 1080}
   internalResolution: {x: 427, y: 240}
-  upscaledResolution: {x: 0, y: 0}
+  upscaledResolution: {x: 2135, y: 1200}
   smooth: 0
   forceSquarePixels: 0
   pixels: {x: 320, y: 240}
@@ -5844,7 +5844,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 2009276173}
-  smoothing: 5
+  smoothing: 10
 --- !u!1 &600053577
 GameObject:
   m_ObjectHideFlags: 0
