@@ -6,7 +6,7 @@ namespace Gunfighter.Entity.Character.Enemy.EnemyController
 {
     public class EnemyAnimationController : CharacterAnimationController
     {
-        [FormerlySerializedAs("_animator")] [SerializeField]
+        [SerializeField]
         private Animator animator;
 
         public override void SetActiveBoolAnim(string parameter, bool isActive)
