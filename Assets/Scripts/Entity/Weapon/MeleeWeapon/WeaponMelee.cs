@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Entity.Weapon.MeleeWeapon
+namespace Gunfighter.Entity.Weapon.MeleeWeapon
 {
     public class WeaponMelee : MonoBehaviour
     {

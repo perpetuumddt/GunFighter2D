@@ -1,17 +1,18 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace SaveSystem
+namespace Gunfighter.SaveSystem
 {
     [System.Serializable]
     public class GameSaveData
     {
-        [SerializeField]
-        private  PlayerSaveData _playerSaveData;
-        public PlayerSaveData PlayerSaveData => _playerSaveData;
+        [FormerlySerializedAs("_playerSaveData")] [SerializeField]
+        private  PlayerSaveData playerSaveData;
+        public PlayerSaveData PlayerSaveData => playerSaveData;
 
         public GameSaveData()
         {
-            _playerSaveData = new PlayerSaveData();
+            playerSaveData = new PlayerSaveData();
         }
     
 

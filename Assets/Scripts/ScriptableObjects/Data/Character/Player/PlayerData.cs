@@ -1,17 +1,18 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace ScriptableObjects.Data.Character.Player
+namespace Gunfighter.ScriptableObjects.Data.Character.Player
 {
     [CreateAssetMenu(fileName = "PlayerData", menuName = "Data/Character Data/New Player Data")]
     public class PlayerData : CharacterData
     {
-        [SerializeField]
-        private float _rollSpeed;
-        public float RollSpeed => _rollSpeed;
+        [FormerlySerializedAs("_rollSpeed")] [SerializeField]
+        private float rollSpeed;
+        public float RollSpeed => rollSpeed;
 
-        [SerializeField]
-        private float _rollCooldown;
-        public float RollCooldown => _rollCooldown;
+        [FormerlySerializedAs("_rollCooldown")] [SerializeField]
+        private float rollCooldown;
+        public float RollCooldown => rollCooldown;
 
         [SerializeField] private AnimationCurve experienceLevelDistribution;
 

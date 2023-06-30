@@ -1,17 +1,18 @@
-using Entity.Character.Controller;
+using Gunfighter.Entity.Character.Controller;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace Entity.Character.Player.PlayerController
+namespace Gunfighter.Entity.Character.Player.PlayerController
 {
     public class PlayerAnimationController : CharacterAnimationController
     {
-        [SerializeField]
-        private Animator _animator;
+        [FormerlySerializedAs("_animator")] [SerializeField]
+        private Animator animator;
 
         public override void SetActiveBoolAnim(string parameter, bool isActive)
         {
             base.SetActiveBoolAnim(parameter, isActive);
-            _animator.SetBool(parameter, isActive);
+            animator.SetBool(parameter, isActive);
         }
     }
 }

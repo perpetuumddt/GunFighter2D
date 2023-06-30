@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using Interface.Detect;
+using Gunfighter.Interface.Detect;
 using UnityEngine;
 
-namespace Entity.Character.Player.Components
+namespace Gunfighter.Entity.Character.Player.Components
 {
     public class CoinDetector : MonoBehaviour, IDetector
     {
@@ -12,12 +12,12 @@ namespace Entity.Character.Player.Components
         private List<GameObject> _detectedCoins = new List<GameObject>();
         public void Detect(IDetectable detectableObject)
         {
-            if(!_detectedCoins.Contains(detectableObject.gameObject))
+            if(!_detectedCoins.Contains(detectableObject.GameObject))
             {
                 detectableObject.Detected(gameObject);
-                _detectedCoins.Add(detectableObject.gameObject);
+                _detectedCoins.Add(detectableObject.GameObject);
 
-                OnObjectDetectedEvent?.Invoke(gameObject, detectableObject.gameObject);
+                OnObjectDetectedEvent?.Invoke(gameObject, detectableObject.GameObject);
             }
         }
 
@@ -33,12 +33,12 @@ namespace Entity.Character.Player.Components
 
         public void ReleaseDetection(IDetectable detectableObject)
         {
-            if(_detectedCoins.Contains(detectableObject.gameObject))
+            if(_detectedCoins.Contains(detectableObject.GameObject))
             {
                 detectableObject.DetectionReleased(gameObject);
-                _detectedCoins.Remove(detectableObject.gameObject);
+                _detectedCoins.Remove(detectableObject.GameObject);
 
-                OnObjectDetectioReleasedEvent?.Invoke(gameObject, detectableObject.gameObject);
+                OnObjectDetectioReleasedEvent?.Invoke(gameObject, detectableObject.GameObject);
             }
         }
 
@@ -54,7 +54,7 @@ namespace Entity.Character.Player.Components
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            if(isColliderDetectableObject(collision, out var detectedObject))
+            if(IsColliderDetectableObject(collision, out var detectedObject))
             {
                 Detect(detectedObject);
             }
@@ -62,13 +62,13 @@ namespace Entity.Character.Player.Components
 
         private void OnTriggerExit2D(Collider2D collision)
         {
-            if (isColliderDetectableObject(collision, out var detectedObject))
+            if (IsColliderDetectableObject(collision, out var detectedObject))
             {
                 ReleaseDetection(detectedObject);
             }
         }
 
-        private bool isColliderDetectableObject(Collider2D collider, out IDetectable detectedObject) //ìåòîä âàëèäàöèè
+        private bool IsColliderDetectableObject(Collider2D collider, out IDetectable detectedObject) //ìåòîä âàëèäàöèè
         {
             detectedObject = collider.GetComponentInParent<IDetectable>();
 

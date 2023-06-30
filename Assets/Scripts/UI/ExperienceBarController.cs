@@ -1,6 +1,6 @@
 using TMPro;
 
-namespace UI
+namespace Gunfighter.UI
 {
     public class ExperienceBarController
     {

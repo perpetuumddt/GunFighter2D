@@ -1,11 +1,12 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using General.WaveSystem;
+using Gunfighter.General.WaveSystem;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-namespace Entity.Character.Enemy.EnemySpawner
+namespace Gunfighter.Entity.Character.Enemy.EnemySpawner
 {
     public class Enemy : IEquatable<Enemy>
     {
@@ -32,46 +33,47 @@ namespace Entity.Character.Enemy.EnemySpawner
 
     public class EnemySpawner : MonoBehaviour
     {
+        [FormerlySerializedAs("_currentWave")]
         [Header("Wave Info")]
         [SerializeField]
-        private int _currentWave;
+        private int currentWave;
 
-        [SerializeField]
-        private int _totalEnemiesLeftToSpawn;
-        [SerializeField]
-        private int _enemySpawned;
+        [FormerlySerializedAs("_totalEnemiesLeftToSpawn")] [SerializeField]
+        private int totalEnemiesLeftToSpawn;
+        [FormerlySerializedAs("_enemySpawned")] [SerializeField]
+        private int enemySpawned;
 
         //private int _enemyAlive;
         //private int _enemyDestroyed;
         //private float _timeUntilNextWave;
 
-        [SerializeField]
-        private Transform _container;
+        [FormerlySerializedAs("_container")] [SerializeField]
+        private Transform container;
 
         public event Action<GameObject> OnSpawn;
 
         private bool _isSpawning = true;
 
-        [SerializeField]
-        private WaveSystemManager _waveSystemManager;
+        [FormerlySerializedAs("_waveSystemManager")] [SerializeField]
+        private WaveSystemManager waveSystemManager;
         //private PoolManager _poolManager; //TODO: integrate pool
         //private UIManager _uiManager; //TODO: integrate ui manager
 
-        private List<Enemy> enemies;
+        private List<Enemy> _enemies;
 
         private void Start()
         {
-            _currentWave = _waveSystemManager.WaveCounter(0);
-            var _currentWaveID = _currentWave - 1;
-            SetupWave(_currentWaveID);
+            currentWave = waveSystemManager.WaveCounter(0);
+            var currentWaveID = currentWave - 1;
+            SetupWave(currentWaveID);
         }
 
         private void SetupWave(int waveID) //TODO: invoke starting wave in game manager
         {
-            int amountOfEnemies = _waveSystemManager.EnemiesOnTheWaveLenght(waveID);
-            int totalAmountOfEnemies = _waveSystemManager.GetTotalEnemyAmountToSpawn(waveID);
-            _enemySpawned = 0;
-            _totalEnemiesLeftToSpawn = totalAmountOfEnemies;
+            int amountOfEnemies = waveSystemManager.EnemiesOnTheWaveLenght(waveID);
+            int totalAmountOfEnemies = waveSystemManager.GetTotalEnemyAmountToSpawn(waveID);
+            enemySpawned = 0;
+            totalEnemiesLeftToSpawn = totalAmountOfEnemies;
 
             SetupEnemyCounter(waveID);
 
@@ -80,21 +82,21 @@ namespace Entity.Character.Enemy.EnemySpawner
 
         private void SetupEnemyCounter(int waveID)
         {
-            enemies = new List<Enemy>();
-            for (int i=0; i< _waveSystemManager.EnemiesOnTheWaveLenght(waveID);i++)
+            _enemies = new List<Enemy>();
+            for (int i=0; i< waveSystemManager.EnemiesOnTheWaveLenght(waveID);i++)
             {
-                enemies.Add(new Enemy() 
+                _enemies.Add(new Enemy() 
                 { 
                     EnemyID = i, 
-                    EnemyCount = _waveSystemManager.GetEnemyAmountToSpawn(waveID,i), 
-                    EnemySpawnRate = _waveSystemManager.GetEnemySpawnRate(waveID,i)
+                    EnemyCount = waveSystemManager.GetEnemyAmountToSpawn(waveID,i), 
+                    EnemySpawnRate = waveSystemManager.GetEnemySpawnRate(waveID,i)
                 });
             }
         }
 
         private IEnumerator StartWave(int waveCounter, int amountOfEnemies, int totalAmountOfEnemies) //TODO: spawn random type of enemy in wave
         {
-            while (_isSpawning && _totalEnemiesLeftToSpawn>0)
+            while (_isSpawning && totalEnemiesLeftToSpawn>0)
             {
                 for (int i = 0; i < totalAmountOfEnemies; i++)
                 {
@@ -104,7 +106,7 @@ namespace Entity.Character.Enemy.EnemySpawner
                         SpawnEnemy(waveCounter, randEnemyID);
                         DecrementEnemyAmountLeftToSpawn(randEnemyID);
                         WriteToConsole();
-                        yield return new WaitForSeconds(_waveSystemManager.GetEnemySpawnRate(waveCounter, randEnemyID));
+                        yield return new WaitForSeconds(waveSystemManager.GetEnemySpawnRate(waveCounter, randEnemyID));
                     }
                 }
             }
@@ -112,7 +114,7 @@ namespace Entity.Character.Enemy.EnemySpawner
 
         private void WriteToConsole()
         {
-            foreach(Enemy enemy in enemies)
+            foreach(Enemy enemy in _enemies)
             {
                 //Debug.Log(enemy.ToString());
             }
@@ -120,7 +122,7 @@ namespace Entity.Character.Enemy.EnemySpawner
 
         private void DecrementEnemyAmountLeftToSpawn(int enemyID)
         {
-            foreach(Enemy enemy in enemies) 
+            foreach(Enemy enemy in _enemies) 
             {
                 if(enemy.EnemyID == enemyID)
                 {
@@ -131,7 +133,7 @@ namespace Entity.Character.Enemy.EnemySpawner
 
         private bool CheckIfEnemyTypeIsEmpty(int enemyID)
         {
-            foreach (Enemy enemy in enemies)
+            foreach (Enemy enemy in _enemies)
             {
                 if (enemy.EnemyID == enemyID && enemy.EnemyCount == 0)
                 {
@@ -147,11 +149,11 @@ namespace Entity.Character.Enemy.EnemySpawner
         {
             int positionIndex = Random.Range(0, 4);
 
-            GameObject enemyToSpawn = _waveSystemManager.GetEnemyFromWave(waveID, enemyID);
-            Instantiate(enemyToSpawn, CalculateSpawnPosition(positionIndex), Quaternion.identity, _container);
+            GameObject enemyToSpawn = waveSystemManager.GetEnemyFromWave(waveID, enemyID);
+            Instantiate(enemyToSpawn, CalculateSpawnPosition(positionIndex), Quaternion.identity, container);
             InvokeOnSpawn(enemyToSpawn);
-            _totalEnemiesLeftToSpawn -= 1;
-            _enemySpawned += 1;
+            totalEnemiesLeftToSpawn -= 1;
+            enemySpawned += 1;
         }
 
         public void InvokeOnSpawn(GameObject obj)

@@ -24,20 +24,20 @@ namespace Plugins.CodeAssist.Editor.EditorCoroutines
                 None = 0,
                 WaitForSeconds = 1,
                 EditorCoroutine = 2,
-                AsyncOP = 3,
+                AsyncOp = 3,
             }
             struct ProcessorData
             {
-                public DataType type;
-                public double targetTime;
-                public object current;
+                public DataType Type;
+                public double TargetTime;
+                public object Current;
             }
 
-            ProcessorData data;
+            ProcessorData _data;
 
             public void Set(object yield)
             {
-                if (yield == data.current)
+                if (yield == _data.Current)
                     return;
 
                 var type = yield.GetType();
@@ -55,91 +55,91 @@ namespace Plugins.CodeAssist.Editor.EditorCoroutines
                 }
                 else if(type == typeof(AsyncOperation) || type.IsSubclassOf(typeof(AsyncOperation)))
                 {
-                    dataType = DataType.AsyncOP;
+                    dataType = DataType.AsyncOp;
                 }
 
-                data = new ProcessorData { current = yield, targetTime = targetTime, type = dataType };
+                _data = new ProcessorData { Current = yield, TargetTime = targetTime, Type = dataType };
             }
 
             public bool MoveNext(IEnumerator enumerator)
             {
-                var advance = data.type switch
+                var advance = _data.Type switch
                 {
-                    DataType.WaitForSeconds => data.targetTime <= EditorApplication.timeSinceStartup,
-                    DataType.EditorCoroutine => (data.current as EditorCoroutine).m_IsDone,
-                    DataType.AsyncOP => (data.current as AsyncOperation).isDone,
-                    _ => data.current == enumerator.Current,//a IEnumerator or a plain object was passed to the implementation
+                    DataType.WaitForSeconds => _data.TargetTime <= EditorApplication.timeSinceStartup,
+                    DataType.EditorCoroutine => (_data.Current as EditorCoroutine)._mIsDone,
+                    DataType.AsyncOp => (_data.Current as AsyncOperation).isDone,
+                    _ => _data.Current == enumerator.Current,//a IEnumerator or a plain object was passed to the implementation
                 };
                 if (advance)
                 {
-                    data = default;// (ProcessorData);
+                    _data = default;// (ProcessorData);
                     return enumerator.MoveNext();
                 }
                 return true;
             }
         }
 
-        internal WeakReference m_Owner;
-        IEnumerator m_Routine;
-        YieldProcessor m_Processor;
+        internal WeakReference MOwner;
+        IEnumerator _mRoutine;
+        YieldProcessor _mProcessor;
 
-        bool m_IsDone;
+        bool _mIsDone;
 
         internal EditorCoroutine(IEnumerator routine)
         {
-            m_Owner = null;
-            m_Routine = routine;
+            MOwner = null;
+            _mRoutine = routine;
             EditorApplication.update += MoveNext;
         }
 
         internal EditorCoroutine(IEnumerator routine, object owner)
         {
-            m_Processor = new YieldProcessor();
-            m_Owner = new WeakReference(owner);
-            m_Routine = routine;
+            _mProcessor = new YieldProcessor();
+            MOwner = new WeakReference(owner);
+            _mRoutine = routine;
             EditorApplication.update += MoveNext;
         }
 
         internal void MoveNext()
         {
-            if (m_Owner != null && !m_Owner.IsAlive)
+            if (MOwner != null && !MOwner.IsAlive)
             {
                 EditorApplication.update -= MoveNext;
                 return;
             }
 
-            bool done = ProcessIEnumeratorRecursive(m_Routine);
-            m_IsDone = !done;
+            bool done = ProcessIEnumeratorRecursive(_mRoutine);
+            _mIsDone = !done;
 
-            if (m_IsDone)
+            if (_mIsDone)
                 EditorApplication.update -= MoveNext;
         }
 
-        static readonly Stack<IEnumerator> kIEnumeratorProcessingStack = new Stack<IEnumerator>(32);
+        static readonly Stack<IEnumerator> KIEnumeratorProcessingStack = new Stack<IEnumerator>(32);
         private bool ProcessIEnumeratorRecursive(IEnumerator enumerator)
         {
             var root = enumerator;
             while(enumerator.Current as IEnumerator != null)
             {
-                kIEnumeratorProcessingStack.Push(enumerator);
+                KIEnumeratorProcessingStack.Push(enumerator);
                 enumerator = enumerator.Current as IEnumerator;
             }
 
             //process leaf
-            m_Processor.Set(enumerator.Current);
-            var result = m_Processor.MoveNext(enumerator);
+            _mProcessor.Set(enumerator.Current);
+            var result = _mProcessor.MoveNext(enumerator);
 
-            while (kIEnumeratorProcessingStack.Count > 1)
+            while (KIEnumeratorProcessingStack.Count > 1)
             {
                 if (!result)
                 {
-                    result = kIEnumeratorProcessingStack.Pop().MoveNext();
+                    result = KIEnumeratorProcessingStack.Pop().MoveNext();
                 }
                 else
-                    kIEnumeratorProcessingStack.Clear();
+                    KIEnumeratorProcessingStack.Clear();
             }
 
-            if (kIEnumeratorProcessingStack.Count > 0 && !result && root == kIEnumeratorProcessingStack.Pop())
+            if (KIEnumeratorProcessingStack.Count > 0 && !result && root == KIEnumeratorProcessingStack.Pop())
             {
                 result = root.MoveNext();
             }
@@ -149,8 +149,8 @@ namespace Plugins.CodeAssist.Editor.EditorCoroutines
 
         internal void Stop()
         {
-            m_Owner = null;
-            m_Routine = null;
+            MOwner = null;
+            _mRoutine = null;
             EditorApplication.update -= MoveNext;
         }
     }

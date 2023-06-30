@@ -6,26 +6,26 @@ namespace Plugins.NavMeshPlus_master.NavMeshComponents.Scripts
 {
     public class NavMeshBuilderState: IDisposable
     {
-        public Matrix4x4 worldToLocal;
-        public Bounds worldBounds;
-        public IEnumerable<GameObject> roots;
-        private CompositeDisposable disposable;
-        private Dictionary<Type, System.Object> mExtraState;
+        public Matrix4x4 WorldToLocal;
+        public Bounds WorldBounds;
+        public IEnumerable<GameObject> Roots;
+        private CompositeDisposable _disposable;
+        private Dictionary<Type, System.Object> _mExtraState;
         private bool _disposed;
 
         public T GetExtraState<T>(bool dispose = true) where T : class, new()
         {
-            if (mExtraState == null)
+            if (_mExtraState == null)
             { 
-                mExtraState = new Dictionary<Type, System.Object>();
-                disposable = new CompositeDisposable();
+                _mExtraState = new Dictionary<Type, System.Object>();
+                _disposable = new CompositeDisposable();
             }
-            if (!mExtraState.TryGetValue(typeof(T), out System.Object extra))
+            if (!_mExtraState.TryGetValue(typeof(T), out System.Object extra))
             {
-                extra = mExtraState[typeof(T)] = new T();
+                extra = _mExtraState[typeof(T)] = new T();
                 if (dispose)
                 {
-                    disposable.Add(extra);
+                    _disposable.Add(extra);
                 }
             }
 
@@ -42,7 +42,7 @@ namespace Plugins.NavMeshPlus_master.NavMeshComponents.Scripts
             if (disposing)
             {
                 // TODO: dispose managed state (managed objects).
-                disposable?.Dispose();
+                _disposable?.Dispose();
             }
 
             // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.
@@ -62,17 +62,17 @@ namespace Plugins.NavMeshPlus_master.NavMeshComponents.Scripts
     partial class CompositeDisposable: IDisposable
     {
         private bool _disposed;
-        private List<IDisposable> extraStates = new List<IDisposable>();
+        private List<IDisposable> _extraStates = new List<IDisposable>();
 
         public void Add(IDisposable dispose)
         {
-            extraStates.Add(dispose);
+            _extraStates.Add(dispose);
         }
         public void Add(object dispose)
         {
             if(dispose is IDisposable)
             {
-                extraStates.Add((IDisposable)dispose);
+                _extraStates.Add((IDisposable)dispose);
             }
         }
         protected virtual void Dispose(bool disposing)
@@ -85,11 +85,11 @@ namespace Plugins.NavMeshPlus_master.NavMeshComponents.Scripts
             if (disposing)
             {
                 // TODO: dispose managed state (managed objects).
-                foreach (var item in extraStates)
+                foreach (var item in _extraStates)
                 {
                     item?.Dispose();
                 }
-                extraStates.Clear();
+                _extraStates.Clear();
             }
 
             // TODO: free unmanaged resources (unmanaged objects) and override a finalizer below.

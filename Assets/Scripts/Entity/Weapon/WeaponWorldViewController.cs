@@ -1,38 +1,41 @@
-using Interface.Detect;
-using Interface.Interact;
-using ScriptableObjects;
-using ScriptableObjects.Data.Weapon;
+using Gunfighter.Interface.Detect;
+using Gunfighter.Interface.Interact;
+using Gunfighter.ScriptableObjects;
+using Gunfighter.ScriptableObjects.Data.Weapon;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace Entity.Weapon
+namespace Gunfighter.Entity.Weapon
 {
     public class WeaponWorldViewController : MonoBehaviour, IInteractable, IDetectable
     {
-        [SerializeField]
-        private SpriptableObjectWeaponEvent _weaponEvent;
+        [FormerlySerializedAs("_weaponEvent")] [SerializeField]
+        private SpriptableObjectWeaponEvent weaponEvent;
 
-        [SerializeField]
-        private Weapon _weapon;
-        [SerializeField]
-        private WeaponData _weaponData;
+        [FormerlySerializedAs("_weapon")] [SerializeField]
+        private Weapon weapon;
+        [FormerlySerializedAs("_weaponData")] [SerializeField]
+        private WeaponData weaponData;
 
         public event ObjectDetectedHandler OnObjectDetectedEvent;
         public event ObjectDetectedHandler OnObjectDetectedReleasedEvent;
 
         public void ActivateInteraction()
         {
-            _weaponEvent.SetActivePickupWeapon(true, this);
+            weaponEvent.SetActivePickupWeapon(true, this);
         }
 
         public void DeactivateInteraction()
         {
-            _weaponEvent.SetActivePickupWeapon(false, this);
+            weaponEvent.SetActivePickupWeapon(false, this);
         }
 
         public void DoInteract()
         {
             Destroy(gameObject);
         }
+
+        public GameObject GameObject { get; }
 
         public void Detected(GameObject detectionSource)
         {
@@ -46,12 +49,12 @@ namespace Entity.Weapon
 
         public Weapon GetWeapon() 
         {
-            return _weapon;
+            return weapon;
         }
 
         public WeaponData GetWeaponData() 
         {
-            return _weaponData;
+            return weaponData;
         }
     }
 }

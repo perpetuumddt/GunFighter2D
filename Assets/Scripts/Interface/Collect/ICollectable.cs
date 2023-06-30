@@ -1,4 +1,4 @@
-namespace Interface.Collect
+namespace Gunfighter.Interface.Collect
 {
     public interface ICollectable
     {

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 namespace Plugins.NavMeshPlus_master.NavMeshComponents.Scripts
 {
@@ -8,10 +9,10 @@ namespace Plugins.NavMeshPlus_master.NavMeshComponents.Scripts
     [AddComponentMenu("Navigation/NavMesh RootSources2d", 30)]
     public class RootSources2d: NavMeshExtension
     {
-        [SerializeField]
-        private List<GameObject> _rootSources;
+        [FormerlySerializedAs("_rootSources")] [SerializeField]
+        private List<GameObject> rootSources;
 
-        public List<GameObject> RooySources { get => _rootSources; set => _rootSources = value; }
+        public List<GameObject> RooySources { get => rootSources; set => rootSources = value; }
 
         protected override void Awake()
         {
@@ -21,7 +22,7 @@ namespace Plugins.NavMeshPlus_master.NavMeshComponents.Scripts
 
         public override void CollectSources(NavMeshSurface surface, List<NavMeshBuildSource> sources, NavMeshBuilderState navNeshState)
         {
-            navNeshState.roots = _rootSources;
+            navNeshState.Roots = rootSources;
         }
     }
 }

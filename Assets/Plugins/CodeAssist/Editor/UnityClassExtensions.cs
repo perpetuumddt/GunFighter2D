@@ -12,7 +12,7 @@ namespace Plugins.CodeAssist.Editor
 {
     internal static class UnityClassExtensions
     {
-        static GameObject? GetParentGO(GameObject go)
+        static GameObject? GetParentGo(GameObject go)
         {
             if (!go)
                 return null;
@@ -48,16 +48,16 @@ namespace Plugins.CodeAssist.Editor
                 Tag = go.tag,
                 Scene = go.scene.name,
 
-                ParentId = GetId(GetParentGO(go)),
-                ChildrenIds = getChildrenIds(go),
+                ParentId = GetId(GetParentGo(go)),
+                ChildrenIds = GetChildrenIds(go),
 
-                Components = getComponents(go),
+                Components = GetComponents(go),
 
                 Priority = priority,
             };
             return data;
 
-            static string[] getChildrenIds(GameObject g)
+            static string[] GetChildrenIds(GameObject g)
             {
                 var ids = new List<string>();
                 var limit = 10;//**--
@@ -75,7 +75,7 @@ namespace Plugins.CodeAssist.Editor
             }
 
             //**--limit/10
-            static string[] getComponents(GameObject g) =>
+            static string[] GetComponents(GameObject g) =>
               g.GetComponents<Component>().Where(c => c).Select(c => c.GetType().FullName).Take(10).ToArray();
             /*(string[] componentNames, Synchronizer.Model.ComponentData[] componentData) getComponents(GameObject g)
             {
@@ -101,7 +101,7 @@ namespace Plugins.CodeAssist.Editor
 
             var list = new List<Meryel.UnityCodeAssist.Synchronizer.Model.GameObject>();
 
-            var parent = GetParentGO(go);
+            var parent = GetParentGo(go);
             if (parent != null && parent)
             {
                 var parentModel = parent.ToSyncModel();

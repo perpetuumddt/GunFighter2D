@@ -1,27 +1,28 @@
-using Entity.Character.Controller;
-using Entity.Character.Player.PlayerController;
-using ScriptableObjects.Data.Character.Enemies;
+using Gunfighter.Entity.Character.Controller;
+using Gunfighter.Entity.Character.Player.PlayerController;
+using Gunfighter.ScriptableObjects.Data.Character.Enemies;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
-namespace Entity.Character.Enemy.EnemyController
+namespace Gunfighter.Entity.Character.Enemy.EnemyController
 {
     public class EnemyMovementController : CharacterMovementController
     {
         [SerializeField]
         private Transform targetPositionTransform;
 
-        [SerializeField]
-        private EnemyData _enemyData;
+        [FormerlySerializedAs("_enemyData")] [SerializeField]
+        private EnemyData enemyData;
 
-        private NavMeshAgent agent;
+        private NavMeshAgent _agent;
 
         private bool _isMoving;
         private void Start()
         {
-            agent = GetComponent<NavMeshAgent>();
-            agent.updateRotation = false;
-            agent.updateUpAxis = false;
+            _agent = GetComponent<NavMeshAgent>();
+            _agent.updateRotation = false;
+            _agent.updateUpAxis = false;
         }
 
         private void OnEnable()
@@ -33,12 +34,12 @@ namespace Entity.Character.Enemy.EnemyController
         {
             if(_isMoving)
             {
-                agent.speed = _enemyData.MovementSpeed;
-                agent.destination = targetPositionTransform.position;
+                _agent.speed = enemyData.MovementSpeed;
+                _agent.destination = targetPositionTransform.position;
             }
             else
             {
-                agent.isStopped = true;
+                _agent.isStopped = true;
             }
         }
 

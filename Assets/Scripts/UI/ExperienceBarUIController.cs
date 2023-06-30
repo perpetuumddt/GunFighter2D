@@ -1,31 +1,32 @@
-using ScriptableObjects.Event;
+using Gunfighter.ScriptableObjects.Event;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace UI
+namespace Gunfighter.UI
 {
     public class ExperienceBarUIController : MonoBehaviour
     {
         private ExperienceBarController _experienceBarController;
-        [SerializeField] private ProgressBar _progressBar;
-        [SerializeField] private TMP_Text _levelText;
-        [SerializeField] private ScriptableObjectTwoIntEvent _onXpChangedChannel;
-        [SerializeField] private ScriptableObjectIntEvent _onLevelUpChannel;
+        [FormerlySerializedAs("_progressBar")] [SerializeField] private ProgressBar progressBar;
+        [FormerlySerializedAs("_levelText")] [SerializeField] private TMP_Text levelText;
+        [FormerlySerializedAs("_onXpChangedChannel")] [SerializeField] private ScriptableObjectTwoIntEvent onXpChangedChannel;
+        [FormerlySerializedAs("_onLevelUpChannel")] [SerializeField] private ScriptableObjectIntEvent onLevelUpChannel;
         void Awake()
         {
-            _experienceBarController = new ExperienceBarController(_progressBar, _levelText);
+            _experienceBarController = new ExperienceBarController(progressBar, levelText);
         }
 
         private void OnEnable()
         {
-            _onXpChangedChannel.OnEventRaised += _experienceBarController.HandleExperienceChange;
-            _onLevelUpChannel.OnEventRaised += _experienceBarController.HandleLevelUp;
+            onXpChangedChannel.EventRaised += _experienceBarController.HandleExperienceChange;
+            onLevelUpChannel.EventRaised += _experienceBarController.HandleLevelUp;
         }
 
         private void OnDisable()
         {
-            _onXpChangedChannel.OnEventRaised -= _experienceBarController.HandleExperienceChange;
-            _onLevelUpChannel.OnEventRaised -= _experienceBarController.HandleLevelUp;
+            onXpChangedChannel.EventRaised -= _experienceBarController.HandleExperienceChange;
+            onLevelUpChannel.EventRaised -= _experienceBarController.HandleLevelUp;
         }
     }
 }

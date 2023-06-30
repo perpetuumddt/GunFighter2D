@@ -11,21 +11,21 @@ namespace Plugins.NavMeshPlus_master.NavMeshComponents.Scripts
 
         public RotateAgentInstantly(NavMeshAgent agent, AgentOverride2d owner)
         {
-            this.agent = agent;
-            this.owner = owner;
+            this._agent = agent;
+            this._owner = owner;
         }
-        private NavMeshAgent agent;
-        private AgentOverride2d owner;
-        private Vector3 nextWaypoint;
+        private NavMeshAgent _agent;
+        private AgentOverride2d _owner;
+        private Vector3 _nextWaypoint;
 
         public void UpdateAgent()
         {
-            if (agent.hasPath && agent.path.corners.Length > 1)
+            if (_agent.hasPath && _agent.path.corners.Length > 1)
             {
-                if (nextWaypoint != agent.path.corners[1])
+                if (_nextWaypoint != _agent.path.corners[1])
                 {
-                    RotateToPoint(agent.path.corners[1], agent.transform);
-                    nextWaypoint = agent.path.corners[1];
+                    RotateToPoint(_agent.path.corners[1], _agent.transform);
+                    _nextWaypoint = _agent.path.corners[1];
                 }
             }
         }

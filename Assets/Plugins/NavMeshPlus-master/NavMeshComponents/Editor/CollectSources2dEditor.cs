@@ -8,16 +8,16 @@ namespace Plugins.NavMeshPlus_master.NavMeshComponents.Editor
     [CustomEditor(typeof(CollectSources2d))]
     internal class CollectSources2dEditor: UnityEditor.Editor
     {
-        SerializedProperty m_OverrideByGrid;
-        SerializedProperty m_UseMeshPrefab;
-        SerializedProperty m_CompressBounds;
-        SerializedProperty m_OverrideVector;
+        SerializedProperty _mOverrideByGrid;
+        SerializedProperty _mUseMeshPrefab;
+        SerializedProperty _mCompressBounds;
+        SerializedProperty _mOverrideVector;
         void OnEnable()
         {
-            m_OverrideByGrid = serializedObject.FindProperty("m_OverrideByGrid");
-            m_UseMeshPrefab = serializedObject.FindProperty("m_UseMeshPrefab");
-            m_CompressBounds = serializedObject.FindProperty("m_CompressBounds");
-            m_OverrideVector = serializedObject.FindProperty("m_OverrideVector");
+            _mOverrideByGrid = serializedObject.FindProperty("m_OverrideByGrid");
+            _mUseMeshPrefab = serializedObject.FindProperty("m_UseMeshPrefab");
+            _mCompressBounds = serializedObject.FindProperty("m_CompressBounds");
+            _mOverrideVector = serializedObject.FindProperty("m_OverrideVector");
         }
 
         public override void OnInspectorGUI()
@@ -26,15 +26,15 @@ namespace Plugins.NavMeshPlus_master.NavMeshComponents.Editor
     
             var surf = target as CollectSources2d;
 
-            EditorGUILayout.PropertyField(m_OverrideByGrid);
-            using (new EditorGUI.DisabledScope(!m_OverrideByGrid.boolValue))
+            EditorGUILayout.PropertyField(_mOverrideByGrid);
+            using (new EditorGUI.DisabledScope(!_mOverrideByGrid.boolValue))
             {
                 EditorGUI.indentLevel++;
-                EditorGUILayout.PropertyField(m_UseMeshPrefab);
+                EditorGUILayout.PropertyField(_mUseMeshPrefab);
                 EditorGUI.indentLevel--;
             }
-            EditorGUILayout.PropertyField(m_CompressBounds);
-            EditorGUILayout.PropertyField(m_OverrideVector);
+            EditorGUILayout.PropertyField(_mCompressBounds);
+            EditorGUILayout.PropertyField(_mOverrideVector);
 
             EditorGUILayout.Space();
 

@@ -1,31 +1,32 @@
-using ScriptableObjects;
+using Gunfighter.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
-namespace UI.Screens
+namespace Gunfighter.UI.Screens
 {
     public class PauseScreen : ScreenUIController
     {
-        [SerializeField]
-        private Button _exitPauseButton;
-        [SerializeField]
-        private ScriptableObjectBoolVariable _isPause;
+        [FormerlySerializedAs("_exitPauseButton")] [SerializeField]
+        private Button exitPauseButton;
+        [FormerlySerializedAs("_isPause")] [SerializeField]
+        private ScriptableObjectBoolVariable isPause;
 
         public void OnEnable()
         {
-            _exitPauseButton.onClick.AddListener(DeactivatePause);
-            _isPause.OnVariableChanged += SetActive;
+            exitPauseButton.onClick.AddListener(DeactivatePause);
+            isPause.OnVariableChanged += SetActive;
         }
 
         public void OnDisable()
         {
-            _exitPauseButton.onClick.RemoveListener(DeactivatePause);
-            _isPause.OnVariableChanged -= SetActive;
+            exitPauseButton.onClick.RemoveListener(DeactivatePause);
+            isPause.OnVariableChanged -= SetActive;
         }
 
         private void DeactivatePause()
         {
-            _isPause.ChangeVariable(false);
+            isPause.ChangeVariable(false);
         }
 
         private void OnResume(bool isPause)

@@ -85,7 +85,7 @@ namespace Plugins.NavMeshPlus_master.NavMeshComponents.Scripts
         }
         public AsyncOperation UpdateNavMesh()
         {
-            return UpdateNavMesh(NavMeshSurfaceOwner.navMeshData);
+            return UpdateNavMesh(NavMeshSurfaceOwner.NavMeshData);
         }
         public override void CollectSources(NavMeshSurface surface, List<NavMeshBuildSource> sources, NavMeshBuilderState navMeshState)
         {
@@ -93,7 +93,7 @@ namespace Plugins.NavMeshPlus_master.NavMeshComponents.Scripts
             IsDirty = false;
             _state?.Dispose();
             _state = navMeshState.GetExtraState<NavMeshBuilder2dState>(false);
-            _state.lookupCallback = LookupCallback;
+            _state.LookupCallback = LookupCallback;
         }
 
         private void LookupCallback(UnityEngine.Object component, NavMeshBuildSource source)
@@ -107,7 +107,7 @@ namespace Plugins.NavMeshPlus_master.NavMeshComponents.Scripts
 
         public override void PostCollectSources(NavMeshSurface surface, List<NavMeshBuildSource> sources, NavMeshBuilderState navNeshState)
         {
-            _sourcesBounds = navNeshState.worldBounds;
+            _sourcesBounds = navNeshState.WorldBounds;
             _sources = sources;
         }
     }

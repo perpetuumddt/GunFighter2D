@@ -1,37 +1,38 @@
-using Entity.Character.Player.PlayerController;
+using Gunfighter.Entity.Character.Player.PlayerController;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace UI.HealthBar
+namespace Gunfighter.UI.HealthBar
 {
     public class HealthBarUIController : MonoBehaviour
     {
-        [SerializeField] 
-        private GameObject _heartPrefab;
+        [FormerlySerializedAs("_heartPrefab")] [SerializeField] 
+        private GameObject heartPrefab;
     
-        [SerializeField]
-        private PlayerHealthController _playerHealthController;
+        [FormerlySerializedAs("_playerHealthController")] [SerializeField]
+        private PlayerHealthController playerHealthController;
 
         private HealthBarController _healthBarController;
         private void Awake()
         {
-            _healthBarController = new HealthBarController(_heartPrefab,this.gameObject);
+            _healthBarController = new HealthBarController(heartPrefab,this.gameObject);
         }
 
         private void OnEnable()
         {
-            UpdateHealthBar(_playerHealthController._playerData.DefaultMaxHealth);
-            _playerHealthController.OnUpdateHealth += UpdateHealthBar;
+            UpdateHealthBar(playerHealthController.playerData.DefaultMaxHealth);
+            playerHealthController.OnUpdateHealth += UpdateHealthBar;
         }
 
         private void OnDisable()
         {
-            _playerHealthController.OnUpdateHealth -= UpdateHealthBar;
+            playerHealthController.OnUpdateHealth -= UpdateHealthBar;
         }
 
-        public void UpdateHealthBar(int _currentHealth)
+        public void UpdateHealthBar(int currentHealth)
         {
-            _healthBarController.SetupDisplay(_playerHealthController.MaxHealth);
-            _healthBarController.UpdateDisplay(_currentHealth);
+            _healthBarController.SetupDisplay(playerHealthController.MaxHealth);
+            _healthBarController.UpdateDisplay(currentHealth);
         }
     }
 }

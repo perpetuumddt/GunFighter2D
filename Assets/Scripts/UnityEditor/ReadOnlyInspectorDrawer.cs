@@ -1,6 +1,7 @@
+using UnityEditor;
 using UnityEngine;
 
-namespace UnityEditor
+namespace Gunfighter.UnityEditor
 {
     [CustomPropertyDrawer(typeof(ReadOnlyInspectorAttribute))]
 

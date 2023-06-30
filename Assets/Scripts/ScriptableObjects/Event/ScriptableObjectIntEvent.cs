@@ -1,18 +1,18 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-namespace ScriptableObjects.Event
+namespace Gunfighter.ScriptableObjects.Event
 {
     [CreateAssetMenu(menuName = "Data/Event/Int Event Channel")]
     public class ScriptableObjectIntEvent : ScriptableObject
     {
-        public UnityAction<int> OnEventRaised;
+        public UnityAction<int> EventRaised;
 
         public void RaiseEvent(int value)
         {
-            if (OnEventRaised != null)
+            if (EventRaised != null)
             {
-                OnEventRaised.Invoke(value);
+                EventRaised.Invoke(value);
             }
         }
     }

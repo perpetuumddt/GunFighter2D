@@ -1,7 +1,7 @@
-﻿using Interface.Collect;
+﻿using Gunfighter.Interface.Collect;
 using UnityEngine;
 
-namespace Entity.Character.Controller
+namespace Gunfighter.Entity.Character.Controller
 {
     public class CharacterCollectorController : MonoBehaviour ,ICollector
     {

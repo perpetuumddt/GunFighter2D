@@ -11,45 +11,45 @@ namespace Plugins.NavMeshPlus_master.NavMeshComponents.Scripts
     {
         public RotateAgentSmoothly(NavMeshAgent agent, AgentOverride2d owner, float rotateSpeed)
         {
-            this.agent = agent;
-            this.owner = owner;
-            this.rotateSpeed = rotateSpeed;
+            this._agent = agent;
+            this._owner = owner;
+            this.RotateSpeed = rotateSpeed;
         }
 
-        private NavMeshAgent agent;
-        private AgentOverride2d owner;
-        private Vector2 nextWaypoint;
-        private float angleDifference;
-        private float targetAngle;
-        public float rotateSpeed;
+        private NavMeshAgent _agent;
+        private AgentOverride2d _owner;
+        private Vector2 _nextWaypoint;
+        private float _angleDifference;
+        private float _targetAngle;
+        public float RotateSpeed;
 
         public void UpdateAgent()
         {
-            if (agent.hasPath && agent.path.corners.Length > 1)
+            if (_agent.hasPath && _agent.path.corners.Length > 1)
             {
-                if (nextWaypoint != (Vector2)agent.path.corners[1])
+                if (_nextWaypoint != (Vector2)_agent.path.corners[1])
                 {
-                    owner.StartCoroutine(_RotateCoroutine());
-                    nextWaypoint = agent.path.corners[1];
+                    _owner.StartCoroutine(_RotateCoroutine());
+                    _nextWaypoint = _agent.path.corners[1];
                 }
             }
         }
         protected IEnumerator _RotateCoroutine()
         {
-            yield return RotateToWaypoints(agent.transform);
+            yield return RotateToWaypoints(_agent.transform);
         }
         protected IEnumerator RotateToWaypoints(Transform transform)
         {
-            Vector2 targetVector = agent.path.corners[1] - transform.position;
-            angleDifference = Vector2.SignedAngle(transform.up, targetVector);
-            targetAngle = transform.localEulerAngles.z + angleDifference;
+            Vector2 targetVector = _agent.path.corners[1] - transform.position;
+            _angleDifference = Vector2.SignedAngle(transform.up, targetVector);
+            _targetAngle = transform.localEulerAngles.z + _angleDifference;
 
-            if (targetAngle >= 360) { targetAngle -= 360; }
-            else if (targetAngle < 0) { targetAngle += 360; }
+            if (_targetAngle >= 360) { _targetAngle -= 360; }
+            else if (_targetAngle < 0) { _targetAngle += 360; }
 
-            while (transform.localEulerAngles.z < targetAngle - 0.1f || transform.localEulerAngles.z > targetAngle + 0.1f)
+            while (transform.localEulerAngles.z < _targetAngle - 0.1f || transform.localEulerAngles.z > _targetAngle + 0.1f)
             {
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, targetAngle), rotateSpeed * Time.deltaTime);
+                transform.rotation = Quaternion.RotateTowards(transform.rotation, Quaternion.Euler(0, 0, _targetAngle), RotateSpeed * Time.deltaTime);
                 yield return null;
             }
         }

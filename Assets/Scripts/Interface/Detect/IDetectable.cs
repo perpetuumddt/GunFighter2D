@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 
-namespace Interface.Detect
+namespace Gunfighter.Interface.Detect
 {
     public interface IDetectable
     {
         //event ObjectDetectedHandler OnObjectDetectedEvent;
         //event ObjectDetectedHandler OnObjectDetectedReleasedEvent;
 
-        GameObject gameObject { get;}
+        GameObject GameObject { get;}
 
         void Detected(GameObject detectionSource);
         void DetectionReleased(GameObject detectionSource);

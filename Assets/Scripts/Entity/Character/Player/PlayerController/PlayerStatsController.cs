@@ -1,16 +1,17 @@
-using ScriptableObjects;
+using Gunfighter.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace Entity.Character.Player.PlayerController
+namespace Gunfighter.Entity.Character.Player.PlayerController
 {
     public class PlayerStatsController : MonoBehaviour
     {
-        [SerializeField]
-        private ScriptableObjectIntVariable _playerCoinCounter;
+        [FormerlySerializedAs("_playerCoinCounter")] [SerializeField]
+        private ScriptableObjectIntVariable playerCoinCounter;
         void Awake()
         {
             //_playerCoinCounter.RestoreValue(); //äëÿ èçóìðóäîâ
-            _playerCoinCounter.ChangeVariable(0);
+            playerCoinCounter.ChangeVariable(0);
         }
     }
 }

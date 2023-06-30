@@ -1,39 +1,40 @@
-using Entity.Character.Player.States;
-using Entity.Character.StateMachine;
-using ScriptableObjects.Data.Character.Player;
-using ScriptableObjects.Event;
+using Gunfighter.Entity.Character.Player.States;
+using Gunfighter.Entity.Character.StateMachine;
+using Gunfighter.ScriptableObjects.Data.Character.Player;
+using Gunfighter.ScriptableObjects.Event;
 using UnityEngine;
-using CharacterController = Entity.Character.Controller.CharacterController;
+using UnityEngine.Serialization;
+using CharacterController = Gunfighter.Entity.Character.Controller.CharacterController;
 
-namespace Entity.Character.Player.PlayerController
+namespace Gunfighter.Entity.Character.Player.PlayerController
 {
-    public class PlayerController : CharacterController
+    public class PlayerController : Controller.CharacterController
     {
         private PlayerLevelController _playerLevelController;
         public PlayerLevelController PlayerLevelController => _playerLevelController;
-        [SerializeField] private ScriptableObjectExpEvent _expIncomingChannel;
-        [SerializeField] private ScriptableObjectTwoIntEvent _onExpChangedChannel; 
-        [SerializeField] private ScriptableObjectIntEvent _onLevelUpChannel; 
+        [FormerlySerializedAs("_expIncomingChannel")] [SerializeField] private ScriptableObjectExpEvent expIncomingChannel;
+        [FormerlySerializedAs("_onExpChangedChannel")] [SerializeField] private ScriptableObjectTwoIntEvent onExpChangedChannel; 
+        [FormerlySerializedAs("_onLevelUpChannel")] [SerializeField] private ScriptableObjectIntEvent onLevelUpChannel; 
         private void Awake()
         {
             _playerLevelController = new PlayerLevelController((PlayerData)this.CharacterData, 1, 0);
-            _stateMachine = new StateMachine<CharacterController>();
-            _stateMachine.CurrentState = new PlayerIdleState(this, _stateMachine);
-            _stateMachine.CurrentState.Initialize();
+            StateMachine = new StateMachine<CharacterController>();
+            StateMachine.CurrentState = new PlayerIdleState(this, StateMachine);
+            StateMachine.CurrentState.Initialize();
         }
 
         private void OnEnable()
         {
-            _expIncomingChannel.OnEventRaised += _playerLevelController.AddExperience;
-            _playerLevelController.OnExperienceChange += _onExpChangedChannel.RaiseEvent;
-            _playerLevelController.OnLevelUp += _onLevelUpChannel.RaiseEvent;
+            expIncomingChannel.EventRaised += _playerLevelController.AddExperience;
+            _playerLevelController.OnExperienceChange += onExpChangedChannel.RaiseEvent;
+            _playerLevelController.OnLevelUp += onLevelUpChannel.RaiseEvent;
         }
 
         private void OnDisable()
         {
-            _expIncomingChannel.OnEventRaised -= _playerLevelController.AddExperience;
-            _playerLevelController.OnExperienceChange -= _onExpChangedChannel.RaiseEvent;
-            _playerLevelController.OnLevelUp -= _onLevelUpChannel.RaiseEvent;
+            expIncomingChannel.EventRaised -= _playerLevelController.AddExperience;
+            _playerLevelController.OnExperienceChange -= onExpChangedChannel.RaiseEvent;
+            _playerLevelController.OnLevelUp -= onLevelUpChannel.RaiseEvent;
         }
     }
 }

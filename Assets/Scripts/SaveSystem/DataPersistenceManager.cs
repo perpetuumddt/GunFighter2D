@@ -1,15 +1,16 @@
 using System.Collections.Generic;
 using System.Linq;
-using General;
-using Interface.SaveSystem;
+using Gunfighter.General;
+using Gunfighter.Interface.SaveSystem;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace SaveSystem
+namespace Gunfighter.SaveSystem
 {
     public class DataPersistenceManager : Singleton<DataPersistenceManager>
     {
-        [Header("File Storage Config")] [SerializeField]
-        private string _fileName;
+        [FormerlySerializedAs("_fileName")] [Header("File Storage Config")] [SerializeField]
+        private string fileName;
     
         private GameSaveData _gameSaveData;
         private List<IDataPersistence> _dataPersistenceObjects;
@@ -17,7 +18,7 @@ namespace SaveSystem
 
         private void Start()
         {
-            _fileDataHandler = new FileDataHandler(Application.persistentDataPath, _fileName);
+            _fileDataHandler = new FileDataHandler(Application.persistentDataPath, fileName);
             _dataPersistenceObjects = FindAllDataPersistenceObjects();
         }
 

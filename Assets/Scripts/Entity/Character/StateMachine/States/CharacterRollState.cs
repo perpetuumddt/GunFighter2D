@@ -1,8 +1,8 @@
-﻿using CharacterController = Entity.Character.Controller.CharacterController;
+﻿using CharacterController = Gunfighter.Entity.Character.Controller.CharacterController;
 
-namespace Entity.Character.StateMachine.States
+namespace Gunfighter.Entity.Character.StateMachine.States
 {
-    public class CharacterRollState : State<CharacterController>
+    public class CharacterRollState : State<Controller.CharacterController>
     {
         private string _animParameter = "isRoll";
 

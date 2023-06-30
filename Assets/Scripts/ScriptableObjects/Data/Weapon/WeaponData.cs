@@ -1,23 +1,24 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace ScriptableObjects.Data.Weapon
+namespace Gunfighter.ScriptableObjects.Data.Weapon
 {
     public class WeaponData : ScriptableObject
     {
-        [SerializeField]
-        private string _name;
-        public string Name => _name;
+        [FormerlySerializedAs("_name")] [SerializeField]
+        private string name;
+        public string Name => name;
 
-        [SerializeField]
-        private int _damage;
-        public int Damage => _damage;
+        [FormerlySerializedAs("_damage")] [SerializeField]
+        private int damage;
+        public int Damage => damage;
 
-        [SerializeField]
-        private float _attackSpeed;
-        public float AttackSpeed => _attackSpeed;
+        [FormerlySerializedAs("_attackSpeed")] [SerializeField]
+        private float attackSpeed;
+        public float AttackSpeed => attackSpeed;
 
-        [SerializeField]
-        private Sprite _sprite;
-        public Sprite Sprite => _sprite;
+        [FormerlySerializedAs("_sprite")] [SerializeField]
+        private Sprite sprite;
+        public Sprite Sprite => sprite;
     }
 }

@@ -1,37 +1,37 @@
 ﻿using UnityEditor;
 using UnityEngine;
 
-namespace Plugins.PixelPerfectCamera.PixelArtCamera.Editor
+namespace Gunfighter.Plugins.PixelPerfectCamera.PixelArtCamera.Editor
 {
 	[CustomEditor(typeof(PixelArtCamera))]
-	public class PixelArtCameraEditor : UnityEditor.Editor {
-		SerializedProperty pixels;
-		SerializedProperty pixelsPerUnit;
-		SerializedProperty smooth;
-		SerializedProperty forceSquarePixels;
+	public class PixelArtCameraEditor : global::UnityEditor.Editor {
+		SerializedProperty _pixels;
+		SerializedProperty _pixelsPerUnit;
+		SerializedProperty _smooth;
+		SerializedProperty _forceSquarePixels;
 
-		SerializedProperty screenResolution;
-		SerializedProperty upscaledResolution;
-		SerializedProperty internalResolution;
-		SerializedProperty finalBlitStretch;
+		SerializedProperty _screenResolution;
+		SerializedProperty _upscaledResolution;
+		SerializedProperty _internalResolution;
+		SerializedProperty _finalBlitStretch;
 
-		SerializedProperty mainCamera;
-		SerializedProperty mainCanvas;
+		SerializedProperty _mainCamera;
+		SerializedProperty _mainCanvas;
 
-		SerializedProperty requireStencilBuffer;
+		SerializedProperty _requireStencilBuffer;
 	
 		void OnEnable () {
-			pixels = serializedObject.FindProperty("pixels");		
-			pixelsPerUnit = serializedObject.FindProperty("pixelsPerUnit");
-			smooth = serializedObject.FindProperty("smooth");
-			forceSquarePixels = serializedObject.FindProperty("forceSquarePixels");
-			screenResolution = serializedObject.FindProperty("screenResolution");
-			upscaledResolution = serializedObject.FindProperty("upscaledResolution");
-			internalResolution = serializedObject.FindProperty("internalResolution");
-			finalBlitStretch = serializedObject.FindProperty("finalBlitStretch");
-			mainCamera = serializedObject.FindProperty("mainCamera");
-			mainCanvas = serializedObject.FindProperty("mainCanvas");
-			requireStencilBuffer = serializedObject.FindProperty("requireStencilBuffer");
+			_pixels = serializedObject.FindProperty("pixels");		
+			_pixelsPerUnit = serializedObject.FindProperty("pixelsPerUnit");
+			_smooth = serializedObject.FindProperty("smooth");
+			_forceSquarePixels = serializedObject.FindProperty("forceSquarePixels");
+			_screenResolution = serializedObject.FindProperty("screenResolution");
+			_upscaledResolution = serializedObject.FindProperty("upscaledResolution");
+			_internalResolution = serializedObject.FindProperty("internalResolution");
+			_finalBlitStretch = serializedObject.FindProperty("finalBlitStretch");
+			_mainCamera = serializedObject.FindProperty("mainCamera");
+			_mainCanvas = serializedObject.FindProperty("mainCanvas");
+			_requireStencilBuffer = serializedObject.FindProperty("requireStencilBuffer");
 		}
 
 		public override void OnInspectorGUI() {
@@ -39,17 +39,17 @@ namespace Plugins.PixelPerfectCamera.PixelArtCamera.Editor
 
 			//GUILayout.Label ("Smooth");
 			DrawDefaultInspector ();
-			pixels.vector2IntValue = EditorGUILayout.Vector2IntField("Target Pixel Dimensions", pixels.vector2IntValue);
-			pixelsPerUnit.floatValue = EditorGUILayout.FloatField("Pixels Per Unit", pixelsPerUnit.floatValue);
-			smooth.boolValue = EditorGUILayout.Toggle("Smooth", smooth.boolValue);
-			forceSquarePixels.boolValue = EditorGUILayout.Toggle("Force Square Pixels", forceSquarePixels.boolValue);
-			requireStencilBuffer.boolValue = EditorGUILayout.Toggle("Require Stencil Buffer (For Masks)", requireStencilBuffer.boolValue);
-			EditorGUILayout.LabelField("Screen: " + screenResolution.vector2IntValue.x + "×" + screenResolution.vector2IntValue.y);
-			EditorGUILayout.LabelField("Pixel Resolution: " + internalResolution.vector2IntValue.x + "×" + internalResolution.vector2IntValue.y);
-			EditorGUILayout.LabelField("Upscaled Resolution: " + upscaledResolution.vector2IntValue.x + "×" + upscaledResolution.vector2IntValue.y);
+			_pixels.vector2IntValue = EditorGUILayout.Vector2IntField("Target Pixel Dimensions", _pixels.vector2IntValue);
+			_pixelsPerUnit.floatValue = EditorGUILayout.FloatField("Pixels Per Unit", _pixelsPerUnit.floatValue);
+			_smooth.boolValue = EditorGUILayout.Toggle("Smooth", _smooth.boolValue);
+			_forceSquarePixels.boolValue = EditorGUILayout.Toggle("Force Square Pixels", _forceSquarePixels.boolValue);
+			_requireStencilBuffer.boolValue = EditorGUILayout.Toggle("Require Stencil Buffer (For Masks)", _requireStencilBuffer.boolValue);
+			EditorGUILayout.LabelField("Screen: " + _screenResolution.vector2IntValue.x + "×" + _screenResolution.vector2IntValue.y);
+			EditorGUILayout.LabelField("Pixel Resolution: " + _internalResolution.vector2IntValue.x + "×" + _internalResolution.vector2IntValue.y);
+			EditorGUILayout.LabelField("Upscaled Resolution: " + _upscaledResolution.vector2IntValue.x + "×" + _upscaledResolution.vector2IntValue.y);
 			Vector2 pixelSize = Vector2.zero;
-			pixelSize.x = (float)screenResolution.vector2IntValue.x / (float)internalResolution.vector2IntValue.x / finalBlitStretch.vector2Value.x;
-			pixelSize.y = (float)screenResolution.vector2IntValue.y / (float)internalResolution.vector2IntValue.y / finalBlitStretch.vector2Value.y;
+			pixelSize.x = (float)_screenResolution.vector2IntValue.x / (float)_internalResolution.vector2IntValue.x / _finalBlitStretch.vector2Value.x;
+			pixelSize.y = (float)_screenResolution.vector2IntValue.y / (float)_internalResolution.vector2IntValue.y / _finalBlitStretch.vector2Value.y;
 			EditorGUILayout.LabelField("Pixel Scale: " + pixelSize.x + "×" + pixelSize.y);
 
 			serializedObject.ApplyModifiedProperties ();

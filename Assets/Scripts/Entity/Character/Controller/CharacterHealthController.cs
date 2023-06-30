@@ -1,14 +1,15 @@
 using System;
-using Interface.Character;
-using Interface.Damage;
+using Gunfighter.Interface.Damage;
 using UnityEngine;
 
-namespace Entity.Character.Controller
+namespace Gunfighter.Entity.Character.Controller
 {
-    public class CharacterHealthController : MonoBehaviour, IDamageable, ICharacterHealthController
+    public class CharacterHealthController : MonoBehaviour, IDamageable
     {
-        protected int _maxHealth;
+      
+        
         protected int _currentHealth;
+        protected int _maxHealth;
         public int CurrentHealth
         {
             get => _currentHealth;

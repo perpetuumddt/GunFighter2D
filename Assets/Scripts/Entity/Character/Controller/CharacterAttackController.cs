@@ -1,7 +1,7 @@
-using Entity.Weapon;
+using Gunfighter.Entity.Weapon;
 using UnityEngine;
 
-namespace Entity.Character.Controller
+namespace Gunfighter.Entity.Character.Controller
 {
     public class CharacterAttackController : MonoBehaviour
     {

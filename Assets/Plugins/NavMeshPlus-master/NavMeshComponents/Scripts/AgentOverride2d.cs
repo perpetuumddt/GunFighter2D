@@ -17,7 +17,7 @@ namespace Plugins.NavMeshPlus_master.NavMeshComponents.Scripts
     public class AgentOverride2d: MonoBehaviour
     {
         public NavMeshAgent Agent { get; private set; }
-        public IAgentOverride agentOverride { get; set; }
+        public IAgentOverride AgentOverride { get; set; }
         private void Awake()
         {
             Agent = GetComponent<NavMeshAgent>();
@@ -30,7 +30,7 @@ namespace Plugins.NavMeshPlus_master.NavMeshComponents.Scripts
 
         private void Update()
         {
-            agentOverride?.UpdateAgent();
+            AgentOverride?.UpdateAgent();
         }
     }
 }

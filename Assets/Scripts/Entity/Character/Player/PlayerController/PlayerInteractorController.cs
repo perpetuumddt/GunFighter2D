@@ -1,8 +1,8 @@
-using Entity.Character.Controller;
-using Interface.Interact;
+using Gunfighter.Entity.Character.Controller;
+using Gunfighter.Interface.Interact;
 using UnityEngine;
 
-namespace Entity.Character.Player.PlayerController
+namespace Gunfighter.Entity.Character.Player.PlayerController
 {
     public class PlayerInteractorController : CharacterInteractorController,IInteractor
     {

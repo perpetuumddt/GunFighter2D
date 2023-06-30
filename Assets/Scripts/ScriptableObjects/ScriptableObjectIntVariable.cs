@@ -1,7 +1,8 @@
 using System;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace ScriptableObjects
+namespace Gunfighter.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "Int Variable", menuName = "Data/Variables/New Int Variable")]
 
@@ -10,35 +11,35 @@ namespace ScriptableObjects
 
         public event Action<int> OnVariableChanged;
 
-        [SerializeField]
-        private int _variable;
-        [SerializeField]
-        private string _valueName;
+        [FormerlySerializedAs("_variable")] [SerializeField]
+        private int variable;
+        [FormerlySerializedAs("_valueName")] [SerializeField]
+        private string valueName;
 
-        public int Variable => _variable;
+        public int Variable => variable;
 
         public void ChangeVariable(int variable)
         {
-            _variable = variable;
+            this.variable = variable;
             OnVariableChanged?.Invoke(variable);
-            PlayerPrefs.SetInt(_valueName, variable);
+            PlayerPrefs.SetInt(valueName, variable);
         }
 
         public void IncreaseVariable(int value)
         {
-            ChangeVariable(_variable+value);
-            OnVariableChanged?.Invoke(_variable);
+            ChangeVariable(variable+value);
+            OnVariableChanged?.Invoke(variable);
         }
 
         public void DecreaseVariable(int value) 
         {
-            ChangeVariable(_variable - value);
-            OnVariableChanged?.Invoke(_variable);
+            ChangeVariable(variable - value);
+            OnVariableChanged?.Invoke(variable);
         }
 
         public void RestoreValue()
         {
-            _variable = PlayerPrefs.GetInt(_valueName);
+            variable = PlayerPrefs.GetInt(valueName);
         }
     }
 }

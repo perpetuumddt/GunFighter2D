@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace UI
+namespace Gunfighter.UI
 {
     public class ScreenUIManager : MonoBehaviour
     {

@@ -7,11 +7,11 @@ using UnityEditor;
 namespace Plugins.CodeAssist.Editor
 {
     [InitializeOnLoad]
-    public static class NetMQInitializer
+    public static class NetMqInitializer
     {
-        public static NetMQPublisher? Publisher;
+        public static NetMqPublisher? Publisher;
         
-        static NetMQInitializer()
+        static NetMqInitializer()
         {
             EditorApplication.quitting += EditorApplication_quitting;
             AssemblyReloadEvents.beforeAssemblyReload += AssemblyReloadEvents_beforeAssemblyReload;
@@ -30,7 +30,7 @@ namespace Plugins.CodeAssist.Editor
             NetMQ.NetMQConfig.Cleanup(true);
 
             Serilog.Log.Debug("NetMQ constructing");
-            Publisher = new NetMQPublisher();
+            Publisher = new NetMqPublisher();
             
             RunOnShutdown(OnShutDown);
             Serilog.Log.Debug("NetMQ initialized");
@@ -68,13 +68,13 @@ namespace Plugins.CodeAssist.Editor
 
         private static void RunOnceOnUpdate(Action action)
         {
-            void callback()
+            void Callback()
             {
-                EditorApplication.update -= callback;
+                EditorApplication.update -= Callback;
                 action();
             }
 
-            EditorApplication.update += callback;
+            EditorApplication.update += Callback;
         }
 
         private static void RunOnShutdown(Action action)

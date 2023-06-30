@@ -1,7 +1,7 @@
 using System;
-using Entity.Character.Player.PlayerController;
+using Gunfighter.Entity.Character.Player.PlayerController;
+using Gunfighter.ScriptableObjects.Data.Character.Player;
 using NUnit.Framework;
-using ScriptableObjects.Data.Character.Player;
 using UnityEngine;
 
 namespace Tests.Editor

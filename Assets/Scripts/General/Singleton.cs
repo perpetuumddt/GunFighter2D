@@ -1,7 +1,7 @@
 using UnityEngine;
 
 //https://www.youtube.com/watch?v=ErJgQY5smnw
-namespace General
+namespace Gunfighter.General
 {
     public abstract class Singleton<T> : MonoBehaviour where T : Component
     {

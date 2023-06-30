@@ -1,7 +1,7 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace UI
+namespace Gunfighter.UI
 {
     public class CrosshairBehaviour : MonoBehaviour
     {

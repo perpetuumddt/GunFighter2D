@@ -1,11 +1,12 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace ScriptableObjects.Data.Weapon
+namespace Gunfighter.ScriptableObjects.Data.Weapon
 {
     [CreateAssetMenu(fileName = "WeaponMeleeData", menuName = "Data/Weapon Data/New Weapon Melee Data")]
     public class WeaponMeleeData : WeaponData
     {
-        [SerializeField]
-        private float _range;
+        [FormerlySerializedAs("_range")] [SerializeField]
+        private float range;
     }
 }

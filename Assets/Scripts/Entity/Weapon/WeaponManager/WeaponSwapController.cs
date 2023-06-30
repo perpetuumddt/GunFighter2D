@@ -1,11 +1,12 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace Entity.Weapon.WeaponManager
+namespace Gunfighter.Entity.Weapon.WeaponManager
 {
     public class WeaponSwap : MonoBehaviour
     {
-        public Weapon _currentWeapon;
-        public Weapon _spareWeapon;
+        [FormerlySerializedAs("_currentWeapon")] public Weapon currentWeapon;
+        [FormerlySerializedAs("_spareWeapon")] public Weapon spareWeapon;
 
 
     }

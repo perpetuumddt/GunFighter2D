@@ -20,7 +20,7 @@ namespace Plugins.NavMeshPlus_master.NavMeshComponents.Editor
             var surf = target as RootSources2d;
             EditorGUILayout.HelpBox("Add GameObjects to create NavMesh form it and it's ancestors", MessageType.Info);
 
-            if (surf.NavMeshSurfaceOwner.collectObjects != CollectObjects.Children)
+            if (surf.NavMeshSurfaceOwner.CollectObjects != CollectObjects.Children)
             {
                 EditorGUILayout.Space();
                 EditorGUILayout.HelpBox("Root Sources are only suitable for 'CollectObjects - Children'", MessageType.Info);

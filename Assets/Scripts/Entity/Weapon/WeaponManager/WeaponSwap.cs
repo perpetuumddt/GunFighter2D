@@ -1,30 +1,31 @@
-using ScriptableObjects.Data.Weapon;
+using Gunfighter.ScriptableObjects.Data.Weapon;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace Entity.Weapon.WeaponManager
+namespace Gunfighter.Entity.Weapon.WeaponManager
 {
     public class WeaponSwapController : MonoBehaviour
     {
-        [SerializeField]
-        private WeaponManager _weaponManager;
+        [FormerlySerializedAs("_weaponManager")] [SerializeField]
+        private WeaponManager weaponManager;
 
-        public Weapon _currentWeapon;
-        public WeaponData _currentWeaponData;
-        public Weapon _spareWeapon;
-        public WeaponData _spareWeaponData;
+        [FormerlySerializedAs("_currentWeapon")] public Weapon currentWeapon;
+        [FormerlySerializedAs("_currentWeaponData")] public WeaponData currentWeaponData;
+        [FormerlySerializedAs("_spareWeapon")] public Weapon spareWeapon;
+        [FormerlySerializedAs("_spareWeaponData")] public WeaponData spareWeaponData;
 
         public virtual void SwapWeapon()
         {
-            Weapon buffWeapon = _currentWeapon;
-            WeaponData buffData = _currentWeaponData;
+            Weapon buffWeapon = currentWeapon;
+            WeaponData buffData = currentWeaponData;
 
-            _currentWeapon = _spareWeapon;
-            _currentWeaponData = _spareWeaponData;
+            currentWeapon = spareWeapon;
+            currentWeaponData = spareWeaponData;
 
             //_weaponManager.SetupWeapon(_currentWeapon,_currentWeaponData);
 
-            _spareWeapon = buffWeapon;
-            _spareWeaponData = buffData;
+            spareWeapon = buffWeapon;
+            spareWeaponData = buffData;
         }
     }
 }

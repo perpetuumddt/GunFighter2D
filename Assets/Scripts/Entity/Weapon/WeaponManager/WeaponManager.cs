@@ -1,59 +1,64 @@
-﻿using ScriptableObjects.Data.Weapon;
+﻿using Gunfighter.ScriptableObjects.Data.Weapon;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace Entity.Weapon.WeaponManager
+namespace Gunfighter.Entity.Weapon.WeaponManager
 {
     public class WeaponManager : MonoBehaviour
     {
+        [FormerlySerializedAs("_weaponController")]
         [Header("Weapon Controller")]
         [SerializeField]
-        private WeaponController _weaponController;
+        private WeaponController weaponController;
 
+        [FormerlySerializedAs("_currentWeapon")]
         [Header("Current Weapon")]
         [SerializeField]
-        private Weapon _currentWeapon;
-        [SerializeField]
-        protected WeaponData _currentWeaponData;
+        private Weapon currentWeapon;
+        [FormerlySerializedAs("_currentWeaponData")] [SerializeField]
+        protected WeaponData currentWeaponData;
 
+        [FormerlySerializedAs("_spareWeapon")]
         [Header("Spare Weapon")]
         [SerializeField]
-        private Weapon _spareWeapon;
-        [SerializeField]
-        protected WeaponData _spareWeaponData;
+        private Weapon spareWeapon;
+        [FormerlySerializedAs("_spareWeaponData")] [SerializeField]
+        protected WeaponData spareWeaponData;
 
+        [FormerlySerializedAs("_weapons")]
         [Header("Weapons")]
         [SerializeField]
-        private Weapon[] _weapons;
+        private Weapon[] weapons;
 
-        public Weapon CurrentWeapon => _currentWeapon;
-        public Weapon SpareWeapon => _spareWeapon;
+        public Weapon CurrentWeapon => currentWeapon;
+        public Weapon SpareWeapon => spareWeapon;
 
         private void Awake()
         {
-            _weaponController.SetupWeapon(_currentWeapon,_currentWeaponData);
+            weaponController.SetupWeapon(currentWeapon,currentWeaponData);
         }
 
         public virtual void SwapWeapon()
         {
-            _currentWeapon.Finilize();
-            Weapon buffWeapon = _currentWeapon;
-            WeaponData buffData = _currentWeaponData;
+            currentWeapon.Finilize();
+            Weapon buffWeapon = currentWeapon;
+            WeaponData buffData = currentWeaponData;
 
-            _currentWeapon = _spareWeapon;
-            _currentWeaponData = _spareWeaponData;
+            currentWeapon = spareWeapon;
+            currentWeaponData = spareWeaponData;
 
-            _weaponController.SetupWeapon(_currentWeapon, _currentWeaponData);
+            weaponController.SetupWeapon(currentWeapon, currentWeaponData);
 
-            _spareWeapon = buffWeapon;
-            _spareWeaponData = buffData;    
+            spareWeapon = buffWeapon;
+            spareWeaponData = buffData;    
         }
 
         public void ChangeWeapon(Weapon weapon,WeaponData weaponData)
         {
-            _currentWeapon.Finilize();
-            _currentWeapon = weapon;
-            _currentWeaponData = weaponData;
-            _weaponController.SetupWeapon(_currentWeapon, _currentWeaponData);
+            currentWeapon.Finilize();
+            currentWeapon = weapon;
+            currentWeaponData = weaponData;
+            weaponController.SetupWeapon(currentWeapon, currentWeaponData);
         }
     }
 }

@@ -1,4 +1,4 @@
-namespace Interface.Damage
+namespace Gunfighter.Interface.Damage
 {
     public interface IDamageable
     {

@@ -1,13 +1,13 @@
 ﻿using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Entity.Character.Player.Input
+namespace Gunfighter.Entity.Character.Player.Input
 {
     public class PlayerInputHandler : CharacterInputHandler
     {
-        PlayerInputAction playerInputAction; //"Player Input Action" is a name of Input Action Asset
+        PlayerInputAction _playerInputAction; //"Player Input Action" is a name of Input Action Asset
 
-        public Vector2 movementInputVector { get; private set; }
+        public Vector2 MovementInputVector { get; private set; }
 
         public bool RollInput { get; protected set; }
 
@@ -19,41 +19,41 @@ namespace Entity.Character.Player.Input
 
         private void OnEnable()
         {
-            playerInputAction = new PlayerInputAction(); //Creates instance of Input Action Asset
-            playerInputAction.Gameplay.Enable(); //Enables Gameplay Action Map
+            _playerInputAction = new PlayerInputAction(); //Creates instance of Input Action Asset
+            _playerInputAction.Gameplay.Enable(); //Enables Gameplay Action Map
 
-            playerInputAction.Gameplay.Movement.performed += SetMovementVector;
-            playerInputAction.Gameplay.Movement.canceled += SetMovementVector;
+            _playerInputAction.Gameplay.Movement.performed += SetMovementVector;
+            _playerInputAction.Gameplay.Movement.canceled += SetMovementVector;
 
-            playerInputAction.Gameplay.Roll.started += OnRollInput;
+            _playerInputAction.Gameplay.Roll.started += OnRollInput;
 
-            playerInputAction.Gameplay.Attack.started += OnAttackInput;
-            playerInputAction.Gameplay.Attack.canceled += OnAttackInput;    
+            _playerInputAction.Gameplay.Attack.started += OnAttackInput;
+            _playerInputAction.Gameplay.Attack.canceled += OnAttackInput;    
 
-            playerInputAction.Gameplay.Reload.started += OnReloadInput;
+            _playerInputAction.Gameplay.Reload.started += OnReloadInput;
 
-            playerInputAction.Gameplay.SwitchWeapon.started += OnSwitchWeaponInput;
+            _playerInputAction.Gameplay.SwitchWeapon.started += OnSwitchWeaponInput;
 
-            playerInputAction.Gameplay.Interact.started += OnInteractInput;
+            _playerInputAction.Gameplay.Interact.started += OnInteractInput;
         }
 
         private void OnDisable()
         {
-            playerInputAction.Gameplay.Movement.performed -= SetMovementVector;
-            playerInputAction.Gameplay.Movement.canceled -= SetMovementVector;
+            _playerInputAction.Gameplay.Movement.performed -= SetMovementVector;
+            _playerInputAction.Gameplay.Movement.canceled -= SetMovementVector;
 
-            playerInputAction.Gameplay.Roll.started -= OnRollInput;
+            _playerInputAction.Gameplay.Roll.started -= OnRollInput;
 
-            playerInputAction.Gameplay.Attack.started -= OnAttackInput;
-            playerInputAction.Gameplay.Attack.canceled-= OnAttackInput;
+            _playerInputAction.Gameplay.Attack.started -= OnAttackInput;
+            _playerInputAction.Gameplay.Attack.canceled-= OnAttackInput;
 
-            playerInputAction.Gameplay.Reload.started -= OnReloadInput;
+            _playerInputAction.Gameplay.Reload.started -= OnReloadInput;
 
-            playerInputAction.Gameplay.SwitchWeapon.started -= OnSwitchWeaponInput;
+            _playerInputAction.Gameplay.SwitchWeapon.started -= OnSwitchWeaponInput;
 
-            playerInputAction.Gameplay.Interact.started -= OnInteractInput;
+            _playerInputAction.Gameplay.Interact.started -= OnInteractInput;
 
-            playerInputAction.Gameplay.Disable(); //Disables Gameplay Action Map 
+            _playerInputAction.Gameplay.Disable(); //Disables Gameplay Action Map 
             //(any time after enabling smth or subscribing to using C# events it`s important to disable them/unsubscribe)
         }
 
@@ -112,12 +112,12 @@ namespace Entity.Character.Player.Input
 
         public void SetMovementVector(InputAction.CallbackContext context)
         {
-            movementInputVector = context.ReadValue<Vector2>();
+            MovementInputVector = context.ReadValue<Vector2>();
         }
 
         protected virtual void Update()
         {
-            if (movementInputVector.magnitude > 0)
+            if (MovementInputVector.magnitude > 0)
             {
                 InvokeOnMove();
             }

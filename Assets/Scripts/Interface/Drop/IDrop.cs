@@ -1,4 +1,4 @@
-namespace Interface.Drop
+namespace Gunfighter.Interface.Drop
 {
     public interface IDrop
     {

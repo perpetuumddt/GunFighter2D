@@ -1,9 +1,9 @@
-using Entity.Character.StateMachine;
-using Entity.Character.StateMachine.States;
+using Gunfighter.Entity.Character.StateMachine;
+using Gunfighter.Entity.Character.StateMachine.States;
 using UnityEngine;
-using CharacterController = Entity.Character.Controller.CharacterController;
+using CharacterController = Gunfighter.Entity.Character.Controller.CharacterController;
 
-namespace Entity.Character.Enemy.States
+namespace Gunfighter.Entity.Character.Enemy.States
 {
     public class EnemyDeathState : CharacterDeathState
     {

@@ -16,9 +16,9 @@ namespace Plugins.CodeAssist.Editor.Logger
 
 
         // Change 'new LoggerConfiguration().MinimumLevel.Debug();' if you change these values
-        const Serilog.Events.LogEventLevel fileMinLevel = Serilog.Events.LogEventLevel.Debug;
-        const Serilog.Events.LogEventLevel outputWindowMinLevel = Serilog.Events.LogEventLevel.Information;
-        static LoggingLevelSwitch? fileLevelSwitch, outputWindowLevelSwitch;
+        const Serilog.Events.LogEventLevel FileMinLevel = Serilog.Events.LogEventLevel.Debug;
+        const Serilog.Events.LogEventLevel OutputWindowMinLevel = Serilog.Events.LogEventLevel.Information;
+        static LoggingLevelSwitch? _fileLevelSwitch, _outputWindowLevelSwitch;
 
         //static bool IsInitialized { get; set; }
 
@@ -110,8 +110,8 @@ namespace Plugins.CodeAssist.Editor.Logger
             FilePath = GetFilePath(solutionDir);
             VSFilePath = GetVSFilePath(solutionDir);
 
-            fileLevelSwitch = new LoggingLevelSwitch(fileMinLevel);
-            outputWindowLevelSwitch = new LoggingLevelSwitch(outputWindowMinLevel);
+            _fileLevelSwitch = new LoggingLevelSwitch(FileMinLevel);
+            _outputWindowLevelSwitch = new LoggingLevelSwitch(OutputWindowMinLevel);
 
             var config = new LoggerConfiguration()
                 .MinimumLevel.Debug()
@@ -124,16 +124,16 @@ namespace Plugins.CodeAssist.Editor.Logger
                 , shared: true
                 , persistentFileRollingInterval: PersistentFileRollingInterval.Day
                 , preserveLogFilename: true
-                , levelSwitch: fileLevelSwitch
+                , levelSwitch: _fileLevelSwitch
                 , rollOnEachProcessRun: isFirst
                 );
 
             _outputWindowSink ??= outputWindowSink.Value;
             if (_outputWindowSink != null)
-                config = config.WriteTo.Sink(_outputWindowSink, outputWindowMinLevel, outputWindowLevelSwitch);
+                config = config.WriteTo.Sink(_outputWindowSink, OutputWindowMinLevel, _outputWindowLevelSwitch);
 
             _memorySink ??= new MemorySink(outputTemplate);
-            config = config.WriteTo.Sink(_memorySink, fileMinLevel, null);
+            config = config.WriteTo.Sink(_memorySink, FileMinLevel, null);
 
             Serilog.Log.Logger = config.CreateLogger();
             //switchableLogger.Set(config.CreateLogger(), disposePrev: true);
@@ -148,14 +148,14 @@ namespace Plugins.CodeAssist.Editor.Logger
             // Since we don't use LogEventLevel.Fatal, we can use it for disabling sinks
 
             var isLoggingToFile = OptionsIsLoggingToFile;
-            var targetFileLevel = isLoggingToFile ? fileMinLevel : Serilog.Events.LogEventLevel.Fatal;
-            if (fileLevelSwitch != null)
-                fileLevelSwitch.MinimumLevel = targetFileLevel;
+            var targetFileLevel = isLoggingToFile ? FileMinLevel : Serilog.Events.LogEventLevel.Fatal;
+            if (_fileLevelSwitch != null)
+                _fileLevelSwitch.MinimumLevel = targetFileLevel;
 
             var isLoggingToOutputWindow = OptionsIsLoggingToOutputWindow;
-            var targetOutputWindowLevel = isLoggingToOutputWindow ? outputWindowMinLevel : Serilog.Events.LogEventLevel.Fatal;
-            if (outputWindowLevelSwitch != null)
-                outputWindowLevelSwitch.MinimumLevel = targetOutputWindowLevel;
+            var targetOutputWindowLevel = isLoggingToOutputWindow ? OutputWindowMinLevel : Serilog.Events.LogEventLevel.Fatal;
+            if (_outputWindowLevelSwitch != null)
+                _outputWindowLevelSwitch.MinimumLevel = targetOutputWindowLevel;
         }
 
         //**-- UI for these two

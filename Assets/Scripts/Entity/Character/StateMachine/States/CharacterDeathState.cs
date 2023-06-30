@@ -1,10 +1,10 @@
-using CharacterController = Entity.Character.Controller.CharacterController;
+using CharacterController = Gunfighter.Entity.Character.Controller.CharacterController;
 
-namespace Entity.Character.StateMachine.States
+namespace Gunfighter.Entity.Character.StateMachine.States
 {
-    public class CharacterDeathState : State<CharacterController>
+    public class CharacterDeathState : State<Controller.CharacterController>
     {
-        protected string _animParameter = "isDeath";
+        protected string AnimParameter = "isDeath";
     
     
 
@@ -16,13 +16,13 @@ namespace Entity.Character.StateMachine.States
         {
             base.Execute();
             Data.CharacterData.InvokeOnDeath(Data.CharacterData);
-            StateMachine.CurrentState.Data.CharacterAnimationController.SetActiveBoolAnim(_animParameter, true);
+            StateMachine.CurrentState.Data.CharacterAnimationController.SetActiveBoolAnim(AnimParameter, true);
         }
 
         public override void StopExecution()
         {
             base.StopExecution();
-            StateMachine.CurrentState.Data.CharacterAnimationController.SetActiveBoolAnim(_animParameter, false);
+            StateMachine.CurrentState.Data.CharacterAnimationController.SetActiveBoolAnim(AnimParameter, false);
         }
 
         public override void Initialize(params object[] param)

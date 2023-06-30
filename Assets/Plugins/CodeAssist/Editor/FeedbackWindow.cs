@@ -9,11 +9,11 @@ namespace Plugins.CodeAssist.Editor
     public class FeedbackWindow : EditorWindow
     {
 
-        GUIStyle? styleLabel;
+        GUIStyle? _styleLabel;
 
         public static void Display()
         {
-            NetMQInitializer.Publisher?.SendRequestInternalLog();
+            NetMqInitializer.Publisher?.SendRequestInternalLog();
 
             // Get existing open window or if none, make a new one:
             var window = GetWindow<FeedbackWindow>();
@@ -21,7 +21,7 @@ namespace Plugins.CodeAssist.Editor
 
             Serilog.Log.Debug("Displaying feedback window");
 
-            NetMQInitializer.Publisher?.SendAnalyticsEvent("Gui", "FeedbackWindow_Display");
+            NetMqInitializer.Publisher?.SendAnalyticsEvent("Gui", "FeedbackWindow_Display");
         }
 
 
@@ -41,18 +41,18 @@ namespace Plugins.CodeAssist.Editor
             if (!string.IsNullOrEmpty(Logger.ELogger.VsInternalLog))
                 logContent += Logger.ELogger.VsInternalLog;
 
-            styleLabel ??= new GUIStyle(GUI.skin.label)
+            _styleLabel ??= new GUIStyle(GUI.skin.label)
             {
                 wordWrap = true,
                 alignment = TextAnchor.MiddleCenter,
             };
             
             if (errorCount > 0)
-                EditorGUILayout.LabelField($"{errorCount} error(s) found in logs. Please submit a feedback (via e-mail, Discord or GitHub) with the logs if possible.", styleLabel, GUILayout.ExpandWidth(true));
+                EditorGUILayout.LabelField($"{errorCount} error(s) found in logs. Please submit a feedback (via e-mail, Discord or GitHub) with the logs if possible.", _styleLabel, GUILayout.ExpandWidth(true));
             else if (warningCount > 0)
-                EditorGUILayout.LabelField($"{warningCount} warnings(s) found in logs. Please submit a feedback (via e-mail, Discord or GitHub) with the logs if possible.", styleLabel, GUILayout.ExpandWidth(true));
+                EditorGUILayout.LabelField($"{warningCount} warnings(s) found in logs. Please submit a feedback (via e-mail, Discord or GitHub) with the logs if possible.", _styleLabel, GUILayout.ExpandWidth(true));
             else
-                EditorGUILayout.LabelField("No errors found in logs. Please submit a feedback (via e-mail, Discord or GitHub) describing what went wrong or unexpected.", styleLabel, GUILayout.ExpandWidth(true));
+                EditorGUILayout.LabelField("No errors found in logs. Please submit a feedback (via e-mail, Discord or GitHub) describing what went wrong or unexpected.", _styleLabel, GUILayout.ExpandWidth(true));
 
             if (GUILayout.Button("Send e-mail"))
             {
@@ -92,7 +92,7 @@ namespace Plugins.CodeAssist.Editor
                 GUIUtility.systemCopyBuffer = logContent;
             }
 
-            EditorGUILayout.LabelField("Recent logs:", styleLabel, GUILayout.ExpandWidth(true));
+            EditorGUILayout.LabelField("Recent logs:", _styleLabel, GUILayout.ExpandWidth(true));
             EditorGUILayout.SelectableLabel(logContent, EditorStyles.textArea, GUILayout.ExpandHeight(true));
         }
 

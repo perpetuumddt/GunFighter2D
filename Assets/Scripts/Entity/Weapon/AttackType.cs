@@ -1,4 +1,4 @@
-namespace Entity.Weapon
+namespace Gunfighter.Entity.Weapon
 {
     public enum AttackType
     {

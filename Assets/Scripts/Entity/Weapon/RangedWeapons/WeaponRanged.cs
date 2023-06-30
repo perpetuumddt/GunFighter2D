@@ -1,17 +1,18 @@
 using System;
 using System.Collections;
-using Entity.Projectile;
-using General.Objects_Pool;
-using ScriptableObjects.Data.Weapon;
+using Gunfighter.Entity.Projectile;
+using Gunfighter.General.Objects_Pool;
+using Gunfighter.ScriptableObjects.Data.Weapon;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Random = UnityEngine.Random;
 
-namespace Entity.Weapon.RangedWeapons
+namespace Gunfighter.Entity.Weapon.RangedWeapons
 {
     public class WeaponRanged : Weapon
     {
-        protected Coroutine _shootCoroutine;
-        protected Coroutine _reloadCoroutine;
+        protected Coroutine ShootCoroutine;
+        protected Coroutine ReloadCoroutine;
 
         [SerializeField]
         private int poolCount = 0;
@@ -19,47 +20,47 @@ namespace Entity.Weapon.RangedWeapons
         private bool autoExpand = true;
         [SerializeField]
         private BulletScript bulletPrefab;
-        [SerializeField]
-        private Transform _shotPoint;
-        [SerializeField]
-        protected ParticleSystem _shootPS;
+        [FormerlySerializedAs("_shotPoint")] [SerializeField]
+        private Transform shotPoint;
+        [FormerlySerializedAs("_shootPS")] [SerializeField]
+        protected ParticleSystem shootPS;
 
-        private PoolMono<BulletScript> pool;
+        private PoolMono<BulletScript> _pool;
 
         private Transform _bulletPool;
 
-        protected bool CanShoot => !_reloading && !_isOnShootingCooldown && _ammoLeftInClip > 0;
-        protected bool _reloading;
-        protected bool _isOnShootingCooldown;
+        protected bool CanShoot => !Reloading && !IsOnShootingCooldown && ammoLeftInClip > 0;
+        protected bool Reloading;
+        protected bool IsOnShootingCooldown;
 
-        [SerializeField]
-        protected int _ammoLeftInClip;
-        [SerializeField]
-        protected int _clipSize;
+        [FormerlySerializedAs("_ammoLeftInClip")] [SerializeField]
+        protected int ammoLeftInClip;
+        [FormerlySerializedAs("_clipSize")] [SerializeField]
+        protected int clipSize;
 
-        public int AmmoLeftInClip { get => _ammoLeftInClip; private set { _ammoLeftInClip = value; InvokeOnAmmoLeftChanged(value); } }
-        public int ClipSize { get => _clipSize; private set { _clipSize = value; InvokeOnWeaponSetup(value); } }
-        public bool ReloadPerforming { get => _reloading; private set { _reloading = value; InvokeOnReloadPerforming(value); } }
+        public int AmmoLeftInClip { get => ammoLeftInClip; private set { ammoLeftInClip = value; InvokeOnAmmoLeftChanged(value); } }
+        public int ClipSize { get => clipSize; private set { clipSize = value; InvokeOnWeaponSetup(value); } }
+        public bool ReloadPerforming { get => Reloading; private set { Reloading = value; InvokeOnReloadPerforming(value); } }
 
         public event Action<int> OnAmmoLeftChanged;
         public event Action<int> OnWeaponSetup;
         public event Action<bool> OnReloadPerforming;
 
-        protected WeaponRangedData _weaponRangedData;
+        protected WeaponRangedData WeaponRangedData;
     
 
         private void Awake()
         {
-            this._weaponRangedData = (WeaponRangedData)_weaponData;
-            AmmoLeftInClip = _weaponRangedData.AmmoCountInClip;
-            ClipSize = _weaponRangedData.AmmoCountInClip;
+            this.WeaponRangedData = (WeaponRangedData)weaponData;
+            AmmoLeftInClip = WeaponRangedData.AmmoCountInClip;
+            ClipSize = WeaponRangedData.AmmoCountInClip;
         }
         public void Start()
         {
             _bulletPool = GameObject.FindGameObjectWithTag("BulletPool").transform;
-            _shotPoint.rotation = Quaternion.Euler(0, 0, 90);
-            this.pool = new PoolMono<BulletScript>(this.bulletPrefab, this.poolCount, this._bulletPool);
-            this.pool.autoExpand = this.autoExpand;
+            shotPoint.rotation = Quaternion.Euler(0, 0, 90);
+            this._pool = new PoolMono<BulletScript>(this.bulletPrefab, this.poolCount, this._bulletPool);
+            this._pool.AutoExpand = this.autoExpand;
         }
 
         public override void Initialize(SpriteRenderer spriteRenderer)
@@ -71,32 +72,32 @@ namespace Entity.Weapon.RangedWeapons
         {
             base.Finilize();
         
-            if (_reloadCoroutine != null)
-                StopCoroutine(_reloadCoroutine);
+            if (ReloadCoroutine != null)
+                StopCoroutine(ReloadCoroutine);
             ReloadPerforming = false;
         }
 
         public virtual void CreateBullet(int angleDeviation = 0)
         {
-            var bullet = this.pool.GetFreeElement();
-            bullet.transform.position = _shotPoint.position;
-            bullet.transform.rotation = _shotPoint.rotation * Quaternion.Euler(Vector3.forward * angleDeviation);
+            var bullet = this._pool.GetFreeElement();
+            bullet.transform.position = shotPoint.position;
+            bullet.transform.rotation = shotPoint.rotation * Quaternion.Euler(Vector3.forward * angleDeviation);
             bullet.SetBulletDamage(WeaponData.Damage);
         }
     
         private IEnumerator Shoot()
         {
-            _isOnShootingCooldown = true;
-            _shootPS.Play();
-            for(int i=0;  i<_weaponRangedData.BulletsInOneShot; i++)
+            IsOnShootingCooldown = true;
+            shootPS.Play();
+            for(int i=0;  i<WeaponRangedData.BulletsInOneShot; i++)
             {
-                int bulletAngleDeviation = _weaponRangedData.SpreadAngle / 2 - Random.Range(0, ((WeaponRangedData)_weaponData).SpreadAngle) ;
+                int bulletAngleDeviation = WeaponRangedData.SpreadAngle / 2 - Random.Range(0, ((WeaponRangedData)weaponData).SpreadAngle) ;
                 CreateBullet(angleDeviation:bulletAngleDeviation);
             }
 
             AmmoLeftInClip--;
-            yield return new WaitForSeconds(_weaponRangedData.AttackSpeed);
-            _isOnShootingCooldown = false;
+            yield return new WaitForSeconds(WeaponRangedData.AttackSpeed);
+            IsOnShootingCooldown = false;
         }
 
         public override void DoAttack(AttackType attackType)
@@ -105,19 +106,19 @@ namespace Entity.Weapon.RangedWeapons
             if (CanShoot)
             {
                 base.DoAttack(attackType);
-                if (_shootCoroutine != null)
+                if (ShootCoroutine != null)
                 {
-                    StopCoroutine(_shootCoroutine);
+                    StopCoroutine(ShootCoroutine);
                 }
-                _shootCoroutine = StartCoroutine(Shoot());
+                ShootCoroutine = StartCoroutine(Shoot());
             }
         }
 
         private IEnumerator Reload()
         {
             ReloadPerforming = true;
-            yield return new WaitForSeconds(_weaponRangedData.ReloadTime);
-            AmmoLeftInClip = _weaponRangedData.AmmoCountInClip;
+            yield return new WaitForSeconds(WeaponRangedData.ReloadTime);
+            AmmoLeftInClip = WeaponRangedData.AmmoCountInClip;
             ReloadPerforming = false;
         
         }
@@ -125,7 +126,7 @@ namespace Entity.Weapon.RangedWeapons
         {
             if ((AmmoLeftInClip == 0 || manual) && !ReloadPerforming)
             {
-                _reloadCoroutine = StartCoroutine(Reload());
+                ReloadCoroutine = StartCoroutine(Reload());
             }
         }
 

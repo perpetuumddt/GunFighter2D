@@ -1,4 +1,4 @@
-namespace Entity.Character.StateMachine
+namespace Gunfighter.Entity.Character.StateMachine
 {
     public class StateMachine<T>
     {

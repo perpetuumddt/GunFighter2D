@@ -1,31 +1,34 @@
 using System.Threading.Tasks;
-using Entity.Character.Player.PlayerController;
-using Interface.Collect;
-using Interface.Detect;
-using ScriptableObjects;
+using Gunfighter.Entity.Character.Player.PlayerController;
+using Gunfighter.Interface.Collect;
+using Gunfighter.Interface.Detect;
+using Gunfighter.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace General.Drop
+namespace Gunfighter.General.Drop
 {
     public class CoinController : MonoBehaviour, IDetectable, ICollectable
     {
-        [SerializeField]
-        private ScriptableObjectIntVariable _playerCoinCounter; 
+        [FormerlySerializedAs("_playerCoinCounter")] [SerializeField]
+        private ScriptableObjectIntVariable playerCoinCounter; 
 
-        [SerializeField]
-        private ScriptableObjectIntVariable _coinAmount;
+        [FormerlySerializedAs("_coinAmount")] [SerializeField]
+        private ScriptableObjectIntVariable coinAmount;
 
-        [SerializeField]
-        private SpriteRenderer _spriteRenderer;
+        [FormerlySerializedAs("_spriteRenderer")] [SerializeField]
+        private SpriteRenderer spriteRenderer;
 
-        [SerializeField]
-        private ParticleSystem _collectedPS;
+        [FormerlySerializedAs("_collectedPS")] [SerializeField]
+        private ParticleSystem collectedPS;
 
-        [SerializeField]
-        private Transform CoinsPool;
+        [FormerlySerializedAs("CoinsPool")] [SerializeField]
+        private Transform coinsPool;
 
         //public event ObjectDetectedHandler OnObjectDetectedEvent;
         //public event ObjectDetectedHandler OnObjectDetectedReleasedEvent;
+
+        public GameObject GameObject { get; }
 
         public void Detected(GameObject detectionSource)
         {
@@ -39,9 +42,9 @@ namespace General.Drop
 
         public async void DoCollect()
         {
-            _playerCoinCounter.IncreaseVariable(_coinAmount.Variable);
-            _spriteRenderer.enabled = false;
-            _collectedPS.Play();
+            playerCoinCounter.IncreaseVariable(coinAmount.Variable);
+            spriteRenderer.enabled = false;
+            collectedPS.Play();
             await Task.Delay(1000);
             this.gameObject.SetActive(false);
         }

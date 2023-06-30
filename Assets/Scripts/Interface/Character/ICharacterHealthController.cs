@@ -1,13 +1,13 @@
 ﻿using System;
 
-namespace Interface.Character
+namespace Gunfighter.Interface.Character
 {
     public interface ICharacterHealthController
     {
         int CurrentHealth { get; }
         event Action<bool> OnHealthZero;
         event Action<int> OnUpdateHealth;
-        void UpdateHealth(int _currentHealth);
+        void UpdateHealth(int currentHealth);
         void DestroyOnDeath();
         void ReplenishHealth(int health);
     }

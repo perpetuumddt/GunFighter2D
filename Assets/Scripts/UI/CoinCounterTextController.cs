@@ -1,34 +1,35 @@
-using ScriptableObjects;
+using Gunfighter.ScriptableObjects;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace UI
+namespace Gunfighter.UI
 {
     public class CoinCounterTextController : MonoBehaviour
     {
-        [SerializeField]
-        private ScriptableObjectIntVariable _coinCounter;
+        [FormerlySerializedAs("_coinCounter")] [SerializeField]
+        private ScriptableObjectIntVariable coinCounter;
 
-        [SerializeField]
-        private TextMeshProUGUI _textMeshPro;
+        [FormerlySerializedAs("_textMeshPro")] [SerializeField]
+        private TextMeshProUGUI textMeshPro;
 
         private void Awake()
         {
-            ChangeText(_coinCounter.Variable);
+            ChangeText(coinCounter.Variable);
         }
         private void OnEnable()
         {
-            _coinCounter.OnVariableChanged += ChangeText;
+            coinCounter.OnVariableChanged += ChangeText;
         }
 
         private void OnDisable()
         {
-            _coinCounter.OnVariableChanged -= ChangeText;
+            coinCounter.OnVariableChanged -= ChangeText;
         }
 
-        private void ChangeText(int NewCoinCounter)
+        private void ChangeText(int newCoinCounter)
         {
-            _textMeshPro.text = NewCoinCounter.ToString();
+            textMeshPro.text = newCoinCounter.ToString();
         }
     }
 }

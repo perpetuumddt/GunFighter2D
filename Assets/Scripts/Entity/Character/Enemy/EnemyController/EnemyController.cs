@@ -1,18 +1,18 @@
-using Entity.Character.Enemy.States;
-using Entity.Character.StateMachine;
-using CharacterController = Entity.Character.Controller.CharacterController;
+using Gunfighter.Entity.Character.Enemy.States;
+using Gunfighter.Entity.Character.StateMachine;
+using CharacterController = Gunfighter.Entity.Character.Controller.CharacterController;
 
-namespace Entity.Character.Enemy.EnemyController
+namespace Gunfighter.Entity.Character.Enemy.EnemyController
 {
-    public class EnemyController : CharacterController
+    public class EnemyController : Controller.CharacterController
     {
 
         private void Awake()
         {
-            _stateMachine = new StateMachine<CharacterController>();
-            _stateMachine.CurrentState = new EnemyWalkState(this, _stateMachine);
-            _stateMachine.CurrentState.Initialize();
-            _stateMachine.CurrentState.Execute();
+            StateMachine = new StateMachine<CharacterController>();
+            StateMachine.CurrentState = new EnemyWalkState(this, StateMachine);
+            StateMachine.CurrentState.Initialize();
+            StateMachine.CurrentState.Execute();
         }
     }
 }

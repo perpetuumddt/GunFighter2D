@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-namespace Plugins.PixelPerfectCamera.PixelArtCamera.Example
+namespace Gunfighter.Plugins.PixelPerfectCamera.PixelArtCamera.Example
 {
 	public class CameraPan : MonoBehaviour {
 

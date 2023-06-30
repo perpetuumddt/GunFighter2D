@@ -1,4 +1,4 @@
-namespace Interface.Interact
+namespace Gunfighter.Interface.Interact
 {
     public interface IInteractor
     {

@@ -1,13 +1,13 @@
-using ScriptableObjects.Data.Character.Player;
+using Gunfighter.ScriptableObjects.Data.Character.Player;
 using UnityEditor;
 using UnityEngine;
 
-namespace Editor
+namespace Gunfighter.Editor
 {
     [CustomEditor(typeof(PlayerData))]
-    public class PlayerDataEditor : UnityEditor.Editor
+    public class PlayerDataEditor : global::UnityEditor.Editor
     {
-        private Vector2 scroll;
+        private Vector2 _scroll;
     
         public override void OnInspectorGUI()
         {
@@ -16,7 +16,7 @@ namespace Editor
 
             PlayerData data = (PlayerData)target;
 
-            scroll = EditorGUILayout.BeginScrollView(scroll, GUILayout.MaxHeight(300));
+            _scroll = EditorGUILayout.BeginScrollView(_scroll, GUILayout.MaxHeight(300));
 
             for (int i = 1; i < 25; i++)
             {

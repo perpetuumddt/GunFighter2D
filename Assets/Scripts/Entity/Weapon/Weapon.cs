@@ -1,16 +1,17 @@
-using ScriptableObjects.Data.Weapon;
+using Gunfighter.ScriptableObjects.Data.Weapon;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace Entity.Weapon
+namespace Gunfighter.Entity.Weapon
 {
     public class Weapon : MonoBehaviour
     {
-        [SerializeField]
-        protected WeaponData _weaponData;
+        [FormerlySerializedAs("_weaponData")] [SerializeField]
+        protected WeaponData weaponData;
 
-        public float Damage => _weaponData.Damage;
+        public float Damage => weaponData.Damage;
 
-        public WeaponData WeaponData => _weaponData;
+        public WeaponData WeaponData => weaponData;
 
         public virtual void DoAttack(AttackType attackType)
         {

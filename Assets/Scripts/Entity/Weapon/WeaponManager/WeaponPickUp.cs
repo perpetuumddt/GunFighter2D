@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Entity.Weapon.WeaponManager
+namespace Gunfighter.Entity.Weapon.WeaponManager
 {
     public class WeaponPickUp : MonoBehaviour
     {

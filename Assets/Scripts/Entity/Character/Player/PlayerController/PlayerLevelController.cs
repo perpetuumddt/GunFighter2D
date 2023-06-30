@@ -1,8 +1,8 @@
 using System;
-using ScriptableObjects.Data.Character.Player;
+using Gunfighter.ScriptableObjects.Data.Character.Player;
 using UnityEngine;
 
-namespace Entity.Character.Player.PlayerController
+namespace Gunfighter.Entity.Character.Player.PlayerController
 {
     public class PlayerLevelController
     {

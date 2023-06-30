@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Entity.Weapon.Ammo
+namespace Gunfighter.Entity.Weapon.Ammo
 {
     public class AmmoData : MonoBehaviour
     {

@@ -11,32 +11,32 @@ namespace Plugins.NavMeshPlus_master.NavMeshComponents.Scripts
     }
     internal class NavMeshExtensionMeta
     {
-        public int order;
+        public int Order;
 
         public NavMeshExtensionMeta(int order, NavMeshExtension extension)
         {
-            this.order = order;
-            this.extension = extension;
+            this.Order = order;
+            this.Extension = extension;
         }
 
-        public NavMeshExtension extension;
+        public NavMeshExtension Extension;
     }
     internal class NavMeshExtensionsProvider : INavMeshExtensionsProvider
     {
         List<NavMeshExtensionMeta> _extensions = new List<NavMeshExtensionMeta>();
-        static Comparer<NavMeshExtensionMeta> Comparer = Comparer<NavMeshExtensionMeta>.Create((x, y) => x.order > y.order ? 1 : x.order < y.order ? -1 : 0);
-        public NavMeshExtension this[int index] => _extensions[index].extension;
+        static Comparer<NavMeshExtensionMeta> _comparer = Comparer<NavMeshExtensionMeta>.Create((x, y) => x.Order > y.Order ? 1 : x.Order < y.Order ? -1 : 0);
+        public NavMeshExtension this[int index] => _extensions[index].Extension;
 
         public int Count => _extensions.Count;
 
         public void Add(NavMeshExtension extension, int order)
         {
             var meta = new NavMeshExtensionMeta(order, extension);
-            var at = _extensions.BinarySearch(meta, Comparer);
+            var at = _extensions.BinarySearch(meta, _comparer);
             if (at < 0)
             {
                 _extensions.Add(meta);
-                _extensions.Sort(Comparer);
+                _extensions.Sort(_comparer);
             }
             else
             {
@@ -46,7 +46,7 @@ namespace Plugins.NavMeshPlus_master.NavMeshComponents.Scripts
 
         public void Remove(NavMeshExtension extension)
         {
-            _extensions.RemoveAll(x => x.extension = extension);
+            _extensions.RemoveAll(x => x.Extension = extension);
         }
     }
 }

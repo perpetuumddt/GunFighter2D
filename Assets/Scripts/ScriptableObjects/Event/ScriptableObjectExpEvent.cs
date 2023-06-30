@@ -1,23 +1,23 @@
-using ScriptableObjects.Data.Character;
-using ScriptableObjects.Data.Character.Enemies;
+using Gunfighter.ScriptableObjects.Data.Character;
+using Gunfighter.ScriptableObjects.Data.Character.Enemies;
 using UnityEngine;
 using UnityEngine.Events;
-using CharacterController = Entity.Character.Controller.CharacterController;
+using CharacterController = Gunfighter.Entity.Character.Controller.CharacterController;
 
-namespace ScriptableObjects.Event
+namespace Gunfighter.ScriptableObjects.Event
 {
     [CreateAssetMenu(menuName = "Data/Event/Exp Event Channel")]
     public class ScriptableObjectExpEvent : ScriptableObject
     {
-        public UnityAction<int> OnEventRaised;
+        public UnityAction<int> EventRaised;
 
         public void RaiseEvent(GameObject obj)
         {
             CharacterData charData = obj.GetComponent<CharacterController>().CharacterData;
             int exp = ((EnemyData)charData).BaseXpReward;
-            if (OnEventRaised != null)
+            if (EventRaised != null)
             {
-                OnEventRaised.Invoke(exp);
+                EventRaised.Invoke(exp);
             }
         }
     }

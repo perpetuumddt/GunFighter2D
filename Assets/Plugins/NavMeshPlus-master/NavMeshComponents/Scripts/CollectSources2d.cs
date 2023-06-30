@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 using UnityEngine.Tilemaps;
 
 namespace Plugins.NavMeshPlus_master.NavMeshComponents.Scripts
@@ -9,27 +10,27 @@ namespace Plugins.NavMeshPlus_master.NavMeshComponents.Scripts
     [AddComponentMenu("Navigation/NavMesh CollectSources2d", 30)]
     public class CollectSources2d: NavMeshExtension
     {
-        [SerializeField]
-        bool m_OverrideByGrid;
-        public bool overrideByGrid { get { return m_OverrideByGrid; } set { m_OverrideByGrid = value; } }
+        [FormerlySerializedAs("m_OverrideByGrid")] [SerializeField]
+        bool mOverrideByGrid;
+        public bool OverrideByGrid { get { return mOverrideByGrid; } set { mOverrideByGrid = value; } }
 
-        [SerializeField]
-        GameObject m_UseMeshPrefab;
-        public GameObject useMeshPrefab { get { return m_UseMeshPrefab; } set { m_UseMeshPrefab = value; } }
+        [FormerlySerializedAs("m_UseMeshPrefab")] [SerializeField]
+        GameObject mUseMeshPrefab;
+        public GameObject UseMeshPrefab { get { return mUseMeshPrefab; } set { mUseMeshPrefab = value; } }
 
-        [SerializeField]
-        bool m_CompressBounds;
-        public bool compressBounds { get { return m_CompressBounds; } set { m_CompressBounds = value; } }
+        [FormerlySerializedAs("m_CompressBounds")] [SerializeField]
+        bool mCompressBounds;
+        public bool CompressBounds { get { return mCompressBounds; } set { mCompressBounds = value; } }
 
-        [SerializeField]
-        Vector3 m_OverrideVector = Vector3.one;
-        public Vector3 overrideVector { get { return m_OverrideVector; } set { m_OverrideVector = value; } }
+        [FormerlySerializedAs("m_OverrideVector")] [SerializeField]
+        Vector3 mOverrideVector = Vector3.one;
+        public Vector3 OverrideVector { get { return mOverrideVector; } set { mOverrideVector = value; } }
 
         public override void CalculateWorldBounds(NavMeshSurface surface, List<NavMeshBuildSource> sources, NavMeshBuilderState navNeshState)
         {
-            if (surface.collectObjects != CollectObjects.Volume)
+            if (surface.CollectObjects != CollectObjects.Volume)
             {
-                navNeshState.worldBounds.Encapsulate(CalculateGridWorldBounds(surface, navNeshState.worldToLocal, navNeshState.worldBounds));
+                navNeshState.WorldBounds.Encapsulate(CalculateGridWorldBounds(surface, navNeshState.WorldToLocal, navNeshState.WorldBounds));
             }
         }
 
@@ -45,7 +46,7 @@ namespace Plugins.NavMeshPlus_master.NavMeshComponents.Scripts
             {
                 var lbounds = NavMeshSurface.GetWorldBounds(worldToLocal * tilemap.transform.localToWorldMatrix, tilemap.localBounds);
                 bounds.Encapsulate(lbounds);
-                if (!surface.hideEditorLogs)
+                if (!surface.HideEditorLogs)
                 {
                     Debug.Log($"From Local Bounds [{tilemap.name}]: {tilemap.localBounds}");
                     Debug.Log($"To World Bounds: {bounds}");
@@ -56,7 +57,7 @@ namespace Plugins.NavMeshPlus_master.NavMeshComponents.Scripts
 
         public override void CollectSources(NavMeshSurface surface, List<NavMeshBuildSource> sources, NavMeshBuilderState navNeshState)
         {
-            if (!surface.hideEditorLogs)
+            if (!surface.HideEditorLogs)
             {
                 if (!Mathf.Approximately(transform.eulerAngles.x, 270f))
                 {
@@ -64,25 +65,25 @@ namespace Plugins.NavMeshPlus_master.NavMeshComponents.Scripts
                 }
                 if (Application.isPlaying)
                 {
-                    if (surface.useGeometry == NavMeshCollectGeometry.PhysicsColliders && Time.frameCount <= 1)
+                    if (surface.UseGeometry == NavMeshCollectGeometry.PhysicsColliders && Time.frameCount <= 1)
                     {
                         Debug.LogWarning("Use Geometry - Physics Colliders option in NavMeshSurface may cause inaccurate mesh bake if executed before Physics update.");
                     }
                 }
             }
             var builder = navNeshState.GetExtraState<NavMeshBuilder2dState>();
-            builder.defaultArea = surface.defaultArea;
-            builder.layerMask = surface.layerMask;
-            builder.agentID = surface.agentTypeID;
-            builder.useMeshPrefab = useMeshPrefab;
-            builder.overrideByGrid = overrideByGrid;
-            builder.compressBounds = compressBounds;
-            builder.overrideVector = overrideVector;
-            builder.CollectGeometry = surface.useGeometry;
-            builder.CollectObjects = (CollectObjects)(int)surface.collectObjects;
-            builder.parent = surface.gameObject;
-            builder.hideEditorLogs = surface.hideEditorLogs;
-            builder.SetRoot(navNeshState.roots);
+            builder.DefaultArea = surface.DefaultArea;
+            builder.LayerMask = surface.LayerMask;
+            builder.AgentID = surface.AgentTypeID;
+            builder.UseMeshPrefab = UseMeshPrefab;
+            builder.OverrideByGrid = OverrideByGrid;
+            builder.CompressBounds = CompressBounds;
+            builder.OverrideVector = OverrideVector;
+            builder.CollectGeometry = surface.UseGeometry;
+            builder.CollectObjects = (CollectObjects)(int)surface.CollectObjects;
+            builder.Parent = surface.gameObject;
+            builder.HideEditorLogs = surface.HideEditorLogs;
+            builder.SetRoot(navNeshState.Roots);
             NavMeshBuilder2d.CollectSources(sources, builder);
         }
     }

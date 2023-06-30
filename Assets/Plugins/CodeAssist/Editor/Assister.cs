@@ -28,12 +28,12 @@ namespace Plugins.CodeAssist.Editor
         [MenuItem("Tools/" + Title + "/Synchronize", false, 2)]
         static void Sync()
         {
-            EditorCoroutines.EditorCoroutineUtility.StartCoroutine(SyncAux(), NetMQInitializer.Publisher);
+            EditorCoroutines.EditorCoroutineUtility.StartCoroutine(SyncAux(), NetMqInitializer.Publisher);
 
             //NetMQInitializer.Publisher.SendConnect();
             //Serilog.Log.Information("Code Assist is looking for more IDEs to connect to...");
 
-            NetMQInitializer.Publisher?.SendAnalyticsEvent("Gui", "Synchronize_MenuItem");
+            NetMqInitializer.Publisher?.SendAnalyticsEvent("Gui", "Synchronize_MenuItem");
         }
 
 
@@ -49,7 +49,7 @@ namespace Plugins.CodeAssist.Editor
         {
             Application.OpenURL("http://unitycodeassist.netlify.app/compare");
 
-            NetMQInitializer.Publisher?.SendAnalyticsEvent("Gui", "CompareVersions_MenuItem");
+            NetMqInitializer.Publisher?.SendAnalyticsEvent("Gui", "CompareVersions_MenuItem");
         }
 
         [MenuItem("Tools/" + Title + "/Get full version", false, 32)]
@@ -57,21 +57,21 @@ namespace Plugins.CodeAssist.Editor
         {
             Application.OpenURL("http://u3d.as/2N2H");
 
-            NetMQInitializer.Publisher?.SendAnalyticsEvent("Gui", "FullVersion_MenuItem");
+            NetMqInitializer.Publisher?.SendAnalyticsEvent("Gui", "FullVersion_MenuItem");
         }
 #endif // MERYEL_UCA_LITE_VERSION
 
 
         static IEnumerator SyncAux()
         {
-            var clientCount = NetMQInitializer.Publisher?.clients.Count ?? 0;
-            NetMQInitializer.Publisher?.SendConnect();
+            var clientCount = NetMqInitializer.Publisher?.Clients.Count ?? 0;
+            NetMqInitializer.Publisher?.SendConnect();
             Serilog.Log.Information("Code Assist is looking for more IDEs to connect to...");
 
             //yield return new WaitForSeconds(3);
             yield return new EditorCoroutines.EditorWaitForSeconds(3);
 
-            var newClientCount = NetMQInitializer.Publisher?.clients.Count ?? 0;
+            var newClientCount = NetMqInitializer.Publisher?.Clients.Count ?? 0;
 
             var dif = newClientCount - clientCount;
 
@@ -222,17 +222,17 @@ namespace Plugins.CodeAssist.Editor
             Serilog.Log.Debug(nameof(SendTagsAndLayers));
 
             var tags = UnityEditorInternal.InternalEditorUtility.tags;
-            NetMQInitializer.Publisher?.SendTags(tags);
+            NetMqInitializer.Publisher?.SendTags(tags);
 
             var names = UnityEditorInternal.InternalEditorUtility.layers;
             var indices = names.Select(l => LayerMask.NameToLayer(l).ToString()).ToArray();
-            NetMQInitializer.Publisher?.SendLayers(indices, names);
+            NetMqInitializer.Publisher?.SendLayers(indices, names);
 
             var sls = SortingLayer.layers;
             var sortingNames = sls.Select(sl => sl.name).ToArray();
             var sortingIds = sls.Select(sl => sl.id.ToString()).ToArray();
             var sortingValues = sls.Select(sl => sl.value.ToString()).ToArray();
-            NetMQInitializer.Publisher?.SendSortingLayers(sortingNames, sortingIds, sortingValues);
+            NetMqInitializer.Publisher?.SendSortingLayers(sortingNames, sortingIds, sortingValues);
         }
 
     }

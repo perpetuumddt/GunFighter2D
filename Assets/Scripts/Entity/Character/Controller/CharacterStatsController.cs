@@ -1,16 +1,17 @@
-using ScriptableObjects.Data.Character;
+using Gunfighter.ScriptableObjects.Data.Character;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace Entity.Character.Controller
+namespace Gunfighter.Entity.Character.Controller
 {
     public class CharacterStatsController : MonoBehaviour
     {
-        [SerializeField]
-        private CharacterData _characterData;
-        public CharacterData CharacterData => _characterData;
+        [FormerlySerializedAs("_characterData")] [SerializeField]
+        private CharacterData characterData;
+        public CharacterData CharacterData => characterData;
 
-        public float Health => _characterData.DefaultMaxHealth;
-        public float MovementSpeed => _characterData.MovementSpeed;
+        public float Health => characterData.DefaultMaxHealth;
+        public float MovementSpeed => characterData.MovementSpeed;
 
 
         public virtual void UpdateStats()

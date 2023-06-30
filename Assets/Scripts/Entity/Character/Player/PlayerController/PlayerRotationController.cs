@@ -1,6 +1,6 @@
-using Entity.Character.Controller;
+using Gunfighter.Entity.Character.Controller;
 
-namespace Entity.Character.Player.PlayerController
+namespace Gunfighter.Entity.Character.Player.PlayerController
 {
     public class PlayerRotationController : CharacterRotationController
     {

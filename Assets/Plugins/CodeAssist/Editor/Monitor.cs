@@ -15,21 +15,21 @@ namespace Plugins.CodeAssist.Editor
     [InitializeOnLoad]
     public static class Monitor
     {
-        private readonly static string tagManagerFilePath;
-        private static System.DateTime previousTagManagerLastWrite;
+        private readonly static string TagManagerFilePath;
+        private static System.DateTime _previousTagManagerLastWrite;
 
-        private static bool isAppFocused;
+        private static bool _isAppFocused;
 
-        private static int dirtyCounter;
-        private static readonly Dictionary<GameObject, int> dirtyDict;
+        private static int _dirtyCounter;
+        private static readonly Dictionary<GameObject, int> DirtyDict;
 
         static Monitor()
         {
-            tagManagerFilePath = CommonTools.GetTagManagerFilePath();
-            previousTagManagerLastWrite = System.IO.File.GetLastWriteTime(tagManagerFilePath);
+            TagManagerFilePath = CommonTools.GetTagManagerFilePath();
+            _previousTagManagerLastWrite = System.IO.File.GetLastWriteTime(TagManagerFilePath);
 
-            dirtyDict = new Dictionary<GameObject, int>();
-            dirtyCounter = 0;
+            DirtyDict = new Dictionary<GameObject, int>();
+            _dirtyCounter = 0;
 
             EditorApplication.hierarchyChanged += OnHierarchyChanged;
             EditorApplication.update += OnUpdate;
@@ -58,18 +58,18 @@ namespace Plugins.CodeAssist.Editor
 
         static void OnUpdate()
         {
-            var currentTagManagerLastWrite = System.IO.File.GetLastWriteTime(tagManagerFilePath);
-            if (currentTagManagerLastWrite != previousTagManagerLastWrite)
+            var currentTagManagerLastWrite = System.IO.File.GetLastWriteTime(TagManagerFilePath);
+            if (currentTagManagerLastWrite != _previousTagManagerLastWrite)
             {
-                previousTagManagerLastWrite = currentTagManagerLastWrite;
+                _previousTagManagerLastWrite = currentTagManagerLastWrite;
                 OnTagsOrLayersModified();
             }
 
-            if (isAppFocused != UnityEditorInternal.InternalEditorUtility.isApplicationActive)
+            if (_isAppFocused != UnityEditorInternal.InternalEditorUtility.isApplicationActive)
             {
-                isAppFocused = UnityEditorInternal.InternalEditorUtility.isApplicationActive;
-                OnOnUnityEditorFocusChanged(isAppFocused);
-                Serilog.Log.Debug("On focus {State}", isAppFocused);
+                _isAppFocused = UnityEditorInternal.InternalEditorUtility.isApplicationActive;
+                OnOnUnityEditorFocusChanged(_isAppFocused);
+                Serilog.Log.Debug("On focus {State}", _isAppFocused);
             }
         }
 
@@ -85,10 +85,10 @@ namespace Plugins.CodeAssist.Editor
             Serilog.Log.Debug("Monitor {Event}", nameof(OnHierarchyChanged));
 
             // For requesting active doc's GO
-            NetMQInitializer.Publisher?.SendHandshake();
+            NetMqInitializer.Publisher?.SendHandshake();
 
-            if (ScriptFinder.GetActiveGameObject(out var activeGO))
-                NetMQInitializer.Publisher?.SendGameObject(activeGO);
+            if (ScriptFinder.GetActiveGameObject(out var activeGo))
+                NetMqInitializer.Publisher?.SendGameObject(activeGo);
             //Assister.SendTagsAndLayers(); Don't send tags & layers here
         }
 
@@ -159,8 +159,8 @@ namespace Plugins.CodeAssist.Editor
 
         public static void SetDirty(GameObject go)
         {
-            dirtyCounter++;
-            dirtyDict[go] = dirtyCounter;
+            _dirtyCounter++;
+            DirtyDict[go] = _dirtyCounter;
         }
 
         static void FlushAllDirty()
@@ -168,16 +168,16 @@ namespace Plugins.CodeAssist.Editor
             // Sending order is important, must send them in the same order as they are added to/modified in the collection
             // Using dict instead of hashset because of that. Dict value is used as add/modify order
 
-            var sortedDict = from entry in dirtyDict orderby entry.Value descending select entry;
+            var sortedDict = from entry in DirtyDict orderby entry.Value descending select entry;
 
             foreach (var entry in sortedDict)
             {
                 var go = entry.Key;
-                NetMQInitializer.Publisher?.SendGameObject(go);
+                NetMqInitializer.Publisher?.SendGameObject(go);
             }
 
-            dirtyDict.Clear();
-            dirtyCounter = 0;
+            DirtyDict.Clear();
+            _dirtyCounter = 0;
         }
 
 
@@ -191,7 +191,7 @@ namespace Plugins.CodeAssist.Editor
 
             var typeStr = type.ToString();
 
-            NetMQInitializer.Publisher?.SendErrorReport(condition, stackTrace, typeStr);
+            NetMqInitializer.Publisher?.SendErrorReport(condition, stackTrace, typeStr);
         }
 
     }

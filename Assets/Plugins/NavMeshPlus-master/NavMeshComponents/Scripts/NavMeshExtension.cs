@@ -14,12 +14,12 @@ namespace Plugins.NavMeshPlus_master.NavMeshComponents.Scripts
         {
             get
             {
-                if (m_navMeshOwner == null)
-                    m_navMeshOwner = GetComponent<NavMeshSurface>();
-                return m_navMeshOwner;
+                if (_mNavMeshOwner == null)
+                    _mNavMeshOwner = GetComponent<NavMeshSurface>();
+                return _mNavMeshOwner;
             }
         }
-        NavMeshSurface m_navMeshOwner;
+        NavMeshSurface _mNavMeshOwner;
 
         protected virtual void Awake()
         {

@@ -1,22 +1,23 @@
 ﻿using System;
-using Entity.Character.Controller;
-using General;
-using ScriptableObjects.Data.Character.Enemies;
+using Gunfighter.Entity.Character.Controller;
+using Gunfighter.General;
+using Gunfighter.ScriptableObjects.Data.Character.Enemies;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace Entity.Character.Enemy.EnemyController
+namespace Gunfighter.Entity.Character.Enemy.EnemyController
 {
     public class EnemyHealthController : CharacterHealthController
     {
-        [SerializeField]
-        private EnemyData _enemyData;
+        [FormerlySerializedAs("_enemyData")] [SerializeField]
+        private EnemyData enemyData;
 
         private EnemyManager _enemyManager;
 
         private void Awake()
         {
-            ChangeMaxHealth(_enemyData.DefaultMaxHealth);
-            CurrentHealth = _enemyData.DefaultMaxHealth;
+            ChangeMaxHealth(enemyData.DefaultMaxHealth);
+            CurrentHealth = enemyData.DefaultMaxHealth;
         }
 
         private void Start()

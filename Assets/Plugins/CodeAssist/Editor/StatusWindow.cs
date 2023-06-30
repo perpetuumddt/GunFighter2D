@@ -9,7 +9,7 @@ namespace Plugins.CodeAssist.Editor
 {
     public class StatusWindow : EditorWindow
     {
-        GUIStyle? styleLabel;
+        GUIStyle? _styleLabel;
 
         public static void Display()
         {
@@ -17,11 +17,11 @@ namespace Plugins.CodeAssist.Editor
             var window = GetWindow<StatusWindow>();
             window.Show();
 
-            NetMQInitializer.Publisher?.SendConnectionInfo();
+            NetMqInitializer.Publisher?.SendConnectionInfo();
 
             Serilog.Log.Debug("Displaying status window");
 
-            NetMQInitializer.Publisher?.SendAnalyticsEvent("Gui", "StatusWindow_Display");
+            NetMqInitializer.Publisher?.SendAnalyticsEvent("Gui", "StatusWindow_Display");
         }
 
         private void OnEnable()
@@ -34,9 +34,9 @@ namespace Plugins.CodeAssist.Editor
 
         private void OnGUI()
         {
-            var hasAnyClient = NetMQInitializer.Publisher?.clients.Any() == true;
+            var hasAnyClient = NetMqInitializer.Publisher?.Clients.Any() == true;
 
-            styleLabel ??= new GUIStyle(GUI.skin.label)
+            _styleLabel ??= new GUIStyle(GUI.skin.label)
             {
                 wordWrap = true,
                 alignment = TextAnchor.MiddleLeft,
@@ -44,25 +44,25 @@ namespace Plugins.CodeAssist.Editor
 
             if (hasAnyClient)
             {
-                EditorGUILayout.LabelField($"Code Assist is working!", styleLabel, GUILayout.ExpandWidth(true));
+                EditorGUILayout.LabelField($"Code Assist is working!", _styleLabel, GUILayout.ExpandWidth(true));
 
-                foreach (var client in NetMQInitializer.Publisher!.clients)
+                foreach (var client in NetMqInitializer.Publisher!.Clients)
                 {
-                    EditorGUILayout.LabelField($"Connected to {client.ContactInfo}", styleLabel, GUILayout.ExpandWidth(true));
+                    EditorGUILayout.LabelField($"Connected to {client.ContactInfo}", _styleLabel, GUILayout.ExpandWidth(true));
                 }
             }
             else
             {
-                EditorGUILayout.LabelField($"Code Assist isn't working!", styleLabel, GUILayout.ExpandWidth(true));
+                EditorGUILayout.LabelField($"Code Assist isn't working!", _styleLabel, GUILayout.ExpandWidth(true));
 
-                EditorGUILayout.LabelField($"No IDE found", styleLabel, GUILayout.ExpandWidth(true));
+                EditorGUILayout.LabelField($"No IDE found", _styleLabel, GUILayout.ExpandWidth(true));
             }
 
 #if MERYEL_UCA_LITE_VERSION
 
-            EditorGUILayout.LabelField($"", styleLabel, GUILayout.ExpandWidth(true));
-            EditorGUILayout.LabelField($"This is the lite version of Code Assist with limited features.", styleLabel, GUILayout.ExpandWidth(true));
-            EditorGUILayout.LabelField($"To unlock all of the features, get the full version.", styleLabel, GUILayout.ExpandWidth(true));
+            EditorGUILayout.LabelField($"", _styleLabel, GUILayout.ExpandWidth(true));
+            EditorGUILayout.LabelField($"This is the lite version of Code Assist with limited features.", _styleLabel, GUILayout.ExpandWidth(true));
+            EditorGUILayout.LabelField($"To unlock all of the features, get the full version.", _styleLabel, GUILayout.ExpandWidth(true));
 
             if (GUILayout.Button("Get full version"))
             {

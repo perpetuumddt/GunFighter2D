@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Interface.Detect
+namespace Gunfighter.Interface.Detect
 {
     public delegate void ObjectDetectedHandler(GameObject sourse, GameObject detectedObject);
 

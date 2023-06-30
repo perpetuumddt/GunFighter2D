@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Entity.Character.Enemy.States
+namespace Gunfighter.Entity.Character.Enemy.States
 {
     public class EnemyAttackState : MonoBehaviour
     {

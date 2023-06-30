@@ -1,12 +1,13 @@
-using Entity.Character.Controller;
+using Gunfighter.Entity.Character.Controller;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace Entity.Character.Player.PlayerController
+namespace Gunfighter.Entity.Character.Player.PlayerController
 {
     public class PlayerMovementController : CharacterMovementController
     {
-        [SerializeField]
-        private Rigidbody2D _rigidbody;
+        [FormerlySerializedAs("_rigidbody")] [SerializeField]
+        private Rigidbody2D rigidbody;
         private Vector2 _currentVelocity;
 
         public override void DoMove(params object[] param)
@@ -17,7 +18,7 @@ namespace Entity.Character.Player.PlayerController
         private void SetVelocity(float velocityX, float velocityY)
         {
             _currentVelocity.Set(velocityX, velocityY);
-            _rigidbody.velocity = _currentVelocity;
+            rigidbody.velocity = _currentVelocity;
         }
     }
 }

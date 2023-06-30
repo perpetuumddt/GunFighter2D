@@ -2,19 +2,19 @@ using System;
 using System.IO;
 using UnityEngine;
 
-namespace SaveSystem
+namespace Gunfighter.SaveSystem
 {
     public class FileDataHandler
     {
-        private string dataDirPath;
-        private string dataFileName;
+        private string _dataDirPath;
+        private string _dataFileName;
 
-        public string FullFilePath => Path.Combine(dataDirPath, dataFileName);
+        public string FullFilePath => Path.Combine(_dataDirPath, _dataFileName);
     
         public FileDataHandler(string dataDirPath, string dataFileName)
         {
-            this.dataDirPath = dataDirPath;
-            this.dataFileName = dataFileName;
+            this._dataDirPath = dataDirPath;
+            this._dataFileName = dataFileName;
         }
 
         public GameSaveData Load()

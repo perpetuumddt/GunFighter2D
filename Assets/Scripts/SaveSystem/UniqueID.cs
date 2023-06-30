@@ -1,35 +1,36 @@
 using System;
-using General;
+using Gunfighter.General;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace SaveSystem
+namespace Gunfighter.SaveSystem
 {
     [System.Serializable]
     [ExecuteInEditMode]
     public class UniqueID : MonoBehaviour
     {
-        [SerializeField, ReadOnly] private string _id;
-        [SerializeField] private static SerializableDictionary<string, GameObject> idDatabase 
+        [FormerlySerializedAs("_id")] [SerializeField, ReadOnly] private string id;
+        [SerializeField] private static SerializableDictionary<string, GameObject> _idDatabase 
             = new SerializableDictionary<string,GameObject>();
-        public string ID => _id;
+        public string ID => id;
 
         private void Awake()
         {
-            if (idDatabase == null)
-                idDatabase = new SerializableDictionary<string, GameObject>();
-            if (idDatabase.ContainsKey(_id)) Generate();
-            else idDatabase.Add(_id, this.gameObject);
+            if (_idDatabase == null)
+                _idDatabase = new SerializableDictionary<string, GameObject>();
+            if (_idDatabase.ContainsKey(id)) Generate();
+            else _idDatabase.Add(id, this.gameObject);
         }
 
         private void OnDestroy()
         {
-            if (idDatabase.ContainsKey(_id)) idDatabase.Remove(_id);
+            if (_idDatabase.ContainsKey(id)) _idDatabase.Remove(id);
         }
 
         private void Generate()
         {
-            _id = Guid.NewGuid().ToString();
-            idDatabase.Add(_id, this.gameObject);
+            id = Guid.NewGuid().ToString();
+            _idDatabase.Add(id, this.gameObject);
         }
     }
 }

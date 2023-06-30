@@ -86,20 +86,20 @@ namespace Plugins.CodeAssist.Editor.EditorCoroutines
                 return;
             }
 
-            if(coroutine.m_Owner == null)
+            if(coroutine.MOwner == null)
             {
                 Debug.LogError("The EditorCoroutine is ownerless. Please use EditorCoroutineEditor.StopCoroutine to terminate such coroutines.");
                 return;
             }
 
-            if (!coroutine.m_Owner.IsAlive)
+            if (!coroutine.MOwner.IsAlive)
                 return; //The EditorCoroutine's owner was already terminated execution will cease next time it is processed
 
-            var owner = coroutine.m_Owner.Target as EditorWindow;
+            var owner = coroutine.MOwner.Target as EditorWindow;
 
             if (owner == null || owner != null && owner != window)
             {
-                Debug.LogErrorFormat("The EditorCoroutine is owned by another object: {0}.", coroutine.m_Owner.Target);
+                Debug.LogErrorFormat("The EditorCoroutine is owned by another object: {0}.", coroutine.MOwner.Target);
                 return;
             }
 

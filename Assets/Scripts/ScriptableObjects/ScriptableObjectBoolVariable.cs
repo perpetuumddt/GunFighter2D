@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace ScriptableObjects
+namespace Gunfighter.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "Bool Variable", menuName = "Data/Variables/New Bool Variable")]
 

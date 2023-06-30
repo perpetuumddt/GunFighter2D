@@ -1,14 +1,15 @@
-using ScriptableObjects.Data.Weapon;
+using Gunfighter.ScriptableObjects.Data.Weapon;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace Entity.Weapon
+namespace Gunfighter.Entity.Weapon
 {
     public class WeaponEffectData : WeaponData
     {
-        [SerializeField]
-        private string _effect;
+        [FormerlySerializedAs("_effect")] [SerializeField]
+        private string effect;
 
-        [SerializeField]
-        private float _effectDuration;
+        [FormerlySerializedAs("_effectDuration")] [SerializeField]
+        private float effectDuration;
     }
 }

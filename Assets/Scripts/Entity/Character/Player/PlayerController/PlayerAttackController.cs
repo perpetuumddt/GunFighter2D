@@ -1,30 +1,31 @@
 ﻿using System;
-using Entity.Character.Controller;
-using Entity.Weapon;
-using Entity.Weapon.RangedWeapons;
-using Entity.Weapon.WeaponManager;
-using ScriptableObjects;
-using ScriptableObjects.Data.Weapon;
+using Gunfighter.Entity.Character.Controller;
+using Gunfighter.Entity.Weapon;
+using Gunfighter.Entity.Weapon.RangedWeapons;
+using Gunfighter.Entity.Weapon.WeaponManager;
+using Gunfighter.ScriptableObjects;
+using Gunfighter.ScriptableObjects.Data.Weapon;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace Entity.Character.Player.PlayerController
+namespace Gunfighter.Entity.Character.Player.PlayerController
 {
     public class PlayerAttackController : CharacterAttackController
     {
-        [SerializeField]
-        private Animator _reloadUIAnimator;
+        [FormerlySerializedAs("_reloadUIAnimator")] [SerializeField]
+        private Animator reloadUIAnimator;
 
-        [SerializeField]
-        protected WeaponManager _weaponManager;
+        [FormerlySerializedAs("_weaponManager")] [SerializeField]
+        protected WeaponManager weaponManager;
 
-        [SerializeField]
-        protected WeaponController _weaponController;
+        [FormerlySerializedAs("_weaponController")] [SerializeField]
+        protected WeaponController weaponController;
 
-        [SerializeField]
-        private SpriptableObjectWeaponEvent _weaponEvent;
+        [FormerlySerializedAs("_weaponEvent")] [SerializeField]
+        private SpriptableObjectWeaponEvent weaponEvent;
 
-        [SerializeField]
-        private CharacterInputHandler _inputHandler;
+        [FormerlySerializedAs("_inputHandler")] [SerializeField]
+        private CharacterInputHandler inputHandler;
 
         private WeaponWorldViewController _weaponWorldViewController;
 
@@ -33,42 +34,42 @@ namespace Entity.Character.Player.PlayerController
     
         private void OnEnable()
         {
-            _weaponEvent.OnSetActivePickupWeapon += SetActiveChangeWeapon;
-            _weaponController.OnReload += PlayReloadUIAnimation;
+            weaponEvent.OnSetActivePickupWeapon += SetActiveChangeWeapon;
+            weaponController.OnReload += PlayReloadUIAnimation;
         }
 
         private void OnDisable()
         {
-            _weaponEvent.OnSetActivePickupWeapon -= SetActiveChangeWeapon;
-            _weaponController.OnReload -= PlayReloadUIAnimation;
+            weaponEvent.OnSetActivePickupWeapon -= SetActiveChangeWeapon;
+            weaponController.OnReload -= PlayReloadUIAnimation;
         }
 
         public override void DoAttack(AttackType attackType)
         {
             base.DoAttack(attackType);
-            _weaponController.CurrentWeapon.DoAttack(attackType);
+            weaponController.CurrentWeapon.DoAttack(attackType);
             InvokeOnAttack();
         }
 
         public override void Reload()
         {
             base.Reload();
-            if(_weaponController.CurrentWeapon is WeaponRanged)
-                ((WeaponRanged)_weaponController.CurrentWeapon).HandleReload(manual:true);
+            if(weaponController.CurrentWeapon is WeaponRanged)
+                ((WeaponRanged)weaponController.CurrentWeapon).HandleReload(manual:true);
         }
 
 
         public override void ChangeWeapon()
         {
             base.ChangeWeapon();
-            _weaponManager.ChangeWeapon(_weaponWorldViewController.GetWeapon(),_weaponWorldViewController.GetWeaponData());
+            weaponManager.ChangeWeapon(_weaponWorldViewController.GetWeapon(),_weaponWorldViewController.GetWeaponData());
         }
 
         public override void SwapWeapon()
         {
             base.SwapWeapon();
-            _weaponManager.SwapWeapon();
-            InvokeOnWeaponChanged(_weaponManager.CurrentWeapon.WeaponData);
+            weaponManager.SwapWeapon();
+            InvokeOnWeaponChanged(weaponManager.CurrentWeapon.WeaponData);
         }
 
         public void SetActiveChangeWeapon(bool isActive, WeaponWorldViewController weaponWorldViewController)
@@ -76,11 +77,11 @@ namespace Entity.Character.Player.PlayerController
             if(isActive)
             {
                 _weaponWorldViewController = weaponWorldViewController;
-                _inputHandler.OnInteract += ChangeWeapon;
+                inputHandler.OnInteract += ChangeWeapon;
             }
             else
             {
-                _inputHandler.OnInteract -= ChangeWeapon;
+                inputHandler.OnInteract -= ChangeWeapon;
                 _weaponWorldViewController = null;
             }
         }
@@ -99,11 +100,11 @@ namespace Entity.Character.Player.PlayerController
         {
             if (value)
             {
-                _reloadUIAnimator.Play("ReloadUIAnimation");
+                reloadUIAnimator.Play("ReloadUIAnimation");
             }
             else
             {
-                _reloadUIAnimator.Play("None");
+                reloadUIAnimator.Play("None");
             }
         
         }    

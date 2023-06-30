@@ -1,11 +1,11 @@
 using System.Threading.Tasks;
-using Entity.Character.Player.Input;
-using Entity.Character.StateMachine;
-using Entity.Character.StateMachine.States;
+using Gunfighter.Entity.Character.Player.Input;
+using Gunfighter.Entity.Character.StateMachine;
+using Gunfighter.Entity.Character.StateMachine.States;
 using UnityEngine;
-using CharacterController = Entity.Character.Controller.CharacterController;
+using CharacterController = Gunfighter.Entity.Character.Controller.CharacterController;
 
-namespace Entity.Character.Player.States
+namespace Gunfighter.Entity.Character.Player.States
 {
     public class PlayerRollState : CharacterRollState
     {
@@ -47,7 +47,7 @@ namespace Entity.Character.Player.States
 
         private async void Roll(PlayerInputHandler inputHandler)
         {
-            var rollDirection = inputHandler.movementInputVector;
+            var rollDirection = inputHandler.MovementInputVector;
             StateMachine.CurrentState.Data.CharacterRotationController.CheckRollingDirection();
             while (_duration > 0f)
             {

@@ -1,17 +1,18 @@
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace UI
+namespace Gunfighter.UI
 {
     public class ScreenUIController : MonoBehaviour
     {
-        [SerializeField]
-        private CanvasGroup _canvasGroup;
+        [FormerlySerializedAs("_canvasGroup")] [SerializeField]
+        private CanvasGroup canvasGroup;
 
         public void SetActive(bool isActive)
         {
-            _canvasGroup.alpha = isActive ? 1 : 0;
-            _canvasGroup.interactable = isActive;
-            _canvasGroup.blocksRaycasts = isActive;
+            canvasGroup.alpha = isActive ? 1 : 0;
+            canvasGroup.interactable = isActive;
+            canvasGroup.blocksRaycasts = isActive;
         }
     }
 }

@@ -2,35 +2,35 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace General.Objects_Pool
+namespace Gunfighter.General.Objects_Pool
 {
     public class PoolMono<T> where T : MonoBehaviour
     {
-        public T prefab { get; }
-        public bool autoExpand { get; set; }
-        public Transform container { get; }
+        public T Prefab { get; }
+        public bool AutoExpand { get; set; }
+        public Transform Container { get; }
 
-        private List<T> pool;
+        private List<T> _pool;
 
         public PoolMono(T prefab, int count)
         { 
-            this.prefab = prefab;
-            this.container = null;
+            this.Prefab = prefab;
+            this.Container = null;
 
             this.CreatePool(count);
         }
 
         public PoolMono(T prefab, int count, Transform container) 
         {
-            this.prefab = prefab;
-            this.container = container;
+            this.Prefab = prefab;
+            this.Container = container;
 
             this.CreatePool(count);
         }
 
         private void CreatePool(int count)
         {
-            this.pool = new List<T>();
+            this._pool = new List<T>();
 
             for(int i =0;i< count;i++) 
             {
@@ -40,15 +40,15 @@ namespace General.Objects_Pool
 
         private T CreateObject(bool isActiveByDefault = false)
         {
-            var createdObject = UnityEngine.Object.Instantiate(this.prefab, this.container);
+            var createdObject = UnityEngine.Object.Instantiate(this.Prefab, this.Container);
             createdObject.gameObject.SetActive(isActiveByDefault);
-            this.pool.Add(createdObject);
+            this._pool.Add(createdObject);
             return createdObject;
         }
 
         public bool HasFreeElement(out T element)
         {
-            foreach(var mono in pool)
+            foreach(var mono in _pool)
             {
                 if(!mono.gameObject.activeInHierarchy)
                 {
@@ -67,7 +67,7 @@ namespace General.Objects_Pool
             {
                 return element;
             }
-            if(this.autoExpand)
+            if(this.AutoExpand)
             {
                 return this.CreateObject(true);
             }

@@ -1,9 +1,9 @@
-using Entity.Character.StateMachine;
-using Entity.Character.StateMachine.States;
-using Entity.Weapon;
-using CharacterController = Entity.Character.Controller.CharacterController;
+using Gunfighter.Entity.Character.StateMachine;
+using Gunfighter.Entity.Character.StateMachine.States;
+using Gunfighter.Entity.Weapon;
+using CharacterController = Gunfighter.Entity.Character.Controller.CharacterController;
 
-namespace Entity.Character.Player.States
+namespace Gunfighter.Entity.Character.Player.States
 {
     public class PlayerIdleState : CharacterIdleState
     {

@@ -1,8 +1,8 @@
-using General;
+using Gunfighter.General;
 using UnityEditor;
 using UnityEngine;
 
-namespace Editor
+namespace Gunfighter.Editor
 {
     /// <summary>
     /// This class contains custom drawer for ReadOnly attribute

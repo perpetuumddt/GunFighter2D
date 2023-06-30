@@ -11,27 +11,27 @@ namespace Plugins.NavMeshPlus_master.NavMeshComponents.Editor
     [CustomEditor(typeof(NavMeshModifierVolume))]
     class NavMeshModifierVolumeEditor : UnityEditor.Editor
     {
-        SerializedProperty m_AffectedAgents;
-        SerializedProperty m_Area;
-        SerializedProperty m_Center;
-        SerializedProperty m_Size;
+        SerializedProperty _mAffectedAgents;
+        SerializedProperty _mArea;
+        SerializedProperty _mCenter;
+        SerializedProperty _mSize;
 
-        static Color s_HandleColor = new Color(187f, 138f, 240f, 210f) / 255;
-        static Color s_HandleColorDisabled = new Color(187f * 0.75f, 138f * 0.75f, 240f * 0.75f, 100f) / 255;
+        static Color _sHandleColor = new Color(187f, 138f, 240f, 210f) / 255;
+        static Color _sHandleColorDisabled = new Color(187f * 0.75f, 138f * 0.75f, 240f * 0.75f, 100f) / 255;
 
-        BoxBoundsHandle m_BoundsHandle = new BoxBoundsHandle();
+        BoxBoundsHandle _mBoundsHandle = new BoxBoundsHandle();
 
-        bool editingCollider
+        bool EditingCollider
         {
             get { return EditMode.editMode == EditMode.SceneViewEditMode.Collider && EditMode.IsOwner(this); }
         }
 
         void OnEnable()
         {
-            m_AffectedAgents = serializedObject.FindProperty("m_AffectedAgents");
-            m_Area = serializedObject.FindProperty("m_Area");
-            m_Center = serializedObject.FindProperty("m_Center");
-            m_Size = serializedObject.FindProperty("m_Size");
+            _mAffectedAgents = serializedObject.FindProperty("m_AffectedAgents");
+            _mArea = serializedObject.FindProperty("m_Area");
+            _mCenter = serializedObject.FindProperty("m_Center");
+            _mSize = serializedObject.FindProperty("m_Size");
 
             NavMeshVisualizationSettings.showNavigation++;
         }
@@ -44,7 +44,7 @@ namespace Plugins.NavMeshPlus_master.NavMeshComponents.Editor
         Bounds GetBounds()
         {
             var navModifier = (NavMeshModifierVolume)target;
-            return new Bounds(navModifier.transform.position, navModifier.size);
+            return new Bounds(navModifier.transform.position, navModifier.Size);
         }
 
         public override void OnInspectorGUI()
@@ -54,11 +54,11 @@ namespace Plugins.NavMeshPlus_master.NavMeshComponents.Editor
             EditMode.DoEditModeInspectorModeButton(EditMode.SceneViewEditMode.Collider, "Edit Volume",
                 EditorGUIUtility.IconContent("EditCollider"), GetBounds, this);
 
-            EditorGUILayout.PropertyField(m_Size);
-            EditorGUILayout.PropertyField(m_Center);
+            EditorGUILayout.PropertyField(_mSize);
+            EditorGUILayout.PropertyField(_mCenter);
 
-            NavMeshComponentsGUIUtility.AreaPopup("Area Type", m_Area);
-            NavMeshComponentsGUIUtility.AgentMaskPopup("Affected Agents", m_AffectedAgents);
+            NavMeshComponentsGUIUtility.AreaPopup("Area Type", _mArea);
+            NavMeshComponentsGUIUtility.AgentMaskPopup("Affected Agents", _mAffectedAgents);
             EditorGUILayout.Space();
 
             serializedObject.ApplyModifiedProperties();
@@ -67,7 +67,7 @@ namespace Plugins.NavMeshPlus_master.NavMeshComponents.Editor
         [DrawGizmo(GizmoType.Selected | GizmoType.Active)]
         static void RenderBoxGizmo(NavMeshModifierVolume navModifier, GizmoType gizmoType)
         {
-            var color = navModifier.enabled ? s_HandleColor : s_HandleColorDisabled;
+            var color = navModifier.enabled ? _sHandleColor : _sHandleColorDisabled;
             var colorTrans = new Color(color.r * 0.75f, color.g * 0.75f, color.b * 0.75f, color.a * 0.15f);
 
             var oldColor = Gizmos.color;
@@ -76,10 +76,10 @@ namespace Plugins.NavMeshPlus_master.NavMeshComponents.Editor
             Gizmos.matrix = navModifier.transform.localToWorldMatrix;
 
             Gizmos.color = colorTrans;
-            Gizmos.DrawCube(navModifier.center, navModifier.size);
+            Gizmos.DrawCube(navModifier.Center, navModifier.Size);
 
             Gizmos.color = color;
-            Gizmos.DrawWireCube(navModifier.center, navModifier.size);
+            Gizmos.DrawWireCube(navModifier.Center, navModifier.Size);
 
             Gizmos.matrix = oldMatrix;
             Gizmos.color = oldColor;
@@ -92,14 +92,14 @@ namespace Plugins.NavMeshPlus_master.NavMeshComponents.Editor
         {
             if (NavMeshVisualizationSettings.showNavigation > 0)
             {
-                var color = navModifier.enabled ? s_HandleColor : s_HandleColorDisabled;
+                var color = navModifier.enabled ? _sHandleColor : _sHandleColorDisabled;
                 var oldColor = Gizmos.color;
                 var oldMatrix = Gizmos.matrix;
 
                 Gizmos.matrix = navModifier.transform.localToWorldMatrix;
 
                 Gizmos.color = color;
-                Gizmos.DrawWireCube(navModifier.center, navModifier.size);
+                Gizmos.DrawWireCube(navModifier.Center, navModifier.Size);
 
                 Gizmos.matrix = oldMatrix;
                 Gizmos.color = oldColor;
@@ -110,25 +110,25 @@ namespace Plugins.NavMeshPlus_master.NavMeshComponents.Editor
 
         void OnSceneGUI()
         {
-            if (!editingCollider)
+            if (!EditingCollider)
                 return;
 
             var vol = (NavMeshModifierVolume)target;
-            var color = vol.enabled ? s_HandleColor : s_HandleColorDisabled;
+            var color = vol.enabled ? _sHandleColor : _sHandleColorDisabled;
             using (new Handles.DrawingScope(color, vol.transform.localToWorldMatrix))
             {
-                m_BoundsHandle.center = vol.center;
-                m_BoundsHandle.size = vol.size;
+                _mBoundsHandle.center = vol.Center;
+                _mBoundsHandle.size = vol.Size;
 
                 EditorGUI.BeginChangeCheck();
-                m_BoundsHandle.DrawHandle();
+                _mBoundsHandle.DrawHandle();
                 if (EditorGUI.EndChangeCheck())
                 {
                     Undo.RecordObject(vol, "Modified NavMesh Modifier Volume");
-                    Vector3 center = m_BoundsHandle.center;
-                    Vector3 size = m_BoundsHandle.size;
-                    vol.center = center;
-                    vol.size = size;
+                    Vector3 center = _mBoundsHandle.center;
+                    Vector3 size = _mBoundsHandle.size;
+                    vol.Center = center;
+                    vol.Size = size;
                     EditorUtility.SetDirty(target);
                 }
             }

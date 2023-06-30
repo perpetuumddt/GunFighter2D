@@ -1,41 +1,42 @@
-using ScriptableObjects.Data.Wave;
+using Gunfighter.ScriptableObjects.Data.Wave;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace General.WaveSystem
+namespace Gunfighter.General.WaveSystem
 {
     public class WaveSystemManager : MonoBehaviour
     {
-        [SerializeField]
-        private WaveData _waveData;
+        [FormerlySerializedAs("_waveData")] [SerializeField]
+        private WaveData waveData;
 
         public int WavesCountLenght()
         {
-            return _waveData._wave.Length;
+            return waveData.wave.Length;
         }
 
         public float WaveDuration(int waveID)
         {
-            return _waveData._wave[waveID]._waveDuration;
+            return waveData.wave[waveID].waveDuration;
         }
 
         public int WaveCounter(int waveID)
         {
-            return _waveData._wave[waveID]._counter;
+            return waveData.wave[waveID].counter;
         }
 
         public int EnemiesOnTheWaveLenght(int waveID)
         {
-            return _waveData._wave[waveID]._enemies.Length;
+            return waveData.wave[waveID].enemies.Length;
         }
 
         public GameObject GetEnemyFromWave(int waveID, int enemyID)
         {
-            return _waveData._wave[waveID]._enemies[enemyID]._enemyPrefab;
+            return waveData.wave[waveID].enemies[enemyID].enemyPrefab;
         }
 
         public int GetEnemyAmountToSpawn(int waveID, int enemyID)
         {
-            return _waveData._wave[waveID]._enemies[enemyID]._enemyCount;
+            return waveData.wave[waveID].enemies[enemyID].enemyCount;
         }
 
         public int GetTotalEnemyAmountToSpawn(int waveID)
@@ -51,7 +52,7 @@ namespace General.WaveSystem
 
         public float GetEnemySpawnRate(int waveID, int enemyID)
         {
-            return _waveData._wave[waveID]._enemies[enemyID]._spawnRate;
+            return waveData.wave[waveID].enemies[enemyID].spawnRate;
         }
     }
 }

@@ -1,38 +1,39 @@
-using Entity.Weapon;
-using Entity.Weapon.RangedWeapons;
+using Gunfighter.Entity.Weapon;
+using Gunfighter.Entity.Weapon.RangedWeapons;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace UI.Ammo
+namespace Gunfighter.UI.Ammo
 {
     public class AmmoDisplayUIController : MonoBehaviour
     {
-        [SerializeField]
-        private GameObject _ammoUnitPrefab;
+        [FormerlySerializedAs("_ammoUnitPrefab")] [SerializeField]
+        private GameObject ammoUnitPrefab;
 
-        [SerializeField]
-        private GameObject _containerElement;
+        [FormerlySerializedAs("_containerElement")] [SerializeField]
+        private GameObject containerElement;
 
-        [SerializeField]
-        private WeaponController _weaponController;
+        [FormerlySerializedAs("_weaponController")] [SerializeField]
+        private WeaponController weaponController;
 
         private AmmoDisplayController _ammoDisplayController;
 
         private void Awake()
         {
-            _ammoDisplayController = new AmmoDisplayController(_ammoUnitPrefab, this.gameObject, _containerElement);
-            SetupAmmo(((WeaponRanged)_weaponController.CurrentWeapon).AmmoLeftInClip);
+            _ammoDisplayController = new AmmoDisplayController(ammoUnitPrefab, this.gameObject, containerElement);
+            SetupAmmo(((WeaponRanged)weaponController.CurrentWeapon).AmmoLeftInClip);
         }
 
         private void OnEnable()
         {
-            _weaponController.OnAmmoLeftChanged += UpdateAmmo;
-            _weaponController.OnWeaponSetup += SetupAmmo;
+            weaponController.OnAmmoLeftChanged += UpdateAmmo;
+            weaponController.OnWeaponSetup += SetupAmmo;
         }
 
         private void OnDisable()
         {
-            _weaponController.OnAmmoLeftChanged -= UpdateAmmo;
-            _weaponController.OnWeaponSetup -= SetupAmmo;
+            weaponController.OnAmmoLeftChanged -= UpdateAmmo;
+            weaponController.OnWeaponSetup -= SetupAmmo;
         }
 
         private void UpdateAmmo(int value)

@@ -1,14 +1,15 @@
-using Entity.Character.Controller;
-using General.Drop;
-using General.Objects_Pool;
+using Gunfighter.Entity.Character.Controller;
+using Gunfighter.General.Drop;
+using Gunfighter.General.Objects_Pool;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace Entity.Character.Enemy.EnemyController
+namespace Gunfighter.Entity.Character.Enemy.EnemyController
 {
     public class EnemyDropController : CharacterDropController
     {
-        [SerializeField]
-        private CoinController _coinToDrop;
+        [FormerlySerializedAs("_coinToDrop")] [SerializeField]
+        private CoinController coinToDrop;
 
         private Transform _coinPool;
 
@@ -19,8 +20,8 @@ namespace Entity.Character.Enemy.EnemyController
         private void Start()
         {
             _coinPool = GameObject.FindGameObjectWithTag("CoinPool").transform;
-            this._pool = new PoolMono<CoinController> (this._coinToDrop,this._poolCount,this._coinPool);
-            this._pool.autoExpand = this._autoExpand;
+            this._pool = new PoolMono<CoinController> (this.coinToDrop,this._poolCount,this._coinPool);
+            this._pool.AutoExpand = this._autoExpand;
         }
 
         public override void DropItem()

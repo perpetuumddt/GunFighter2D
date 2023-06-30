@@ -22,17 +22,17 @@ using GameObject = UnityEngine.GameObject;
 
 namespace Plugins.CodeAssist.Editor
 {
-    public class NetMQPublisher : IProcessor
+    public class NetMqPublisher : IProcessor
     {
-        PublisherSocket? pubSocket;
-        readonly string pubConnString;
+        PublisherSocket? _pubSocket;
+        readonly string _pubConnString;
 
-        Task? pullTask;
-        CancellationTokenSource? pullTaskCancellationTokenSource;
+        Task? _pullTask;
+        CancellationTokenSource? _pullTaskCancellationTokenSource;
 
-        readonly Meryel.UnityCodeAssist.Synchronizer.Model.Manager syncMngr;
+        readonly Meryel.UnityCodeAssist.Synchronizer.Model.Manager _syncMngr;
 
-        public List<Meryel.UnityCodeAssist.Synchronizer.Model.Connect> clients;
+        public List<Meryel.UnityCodeAssist.Synchronizer.Model.Connect> Clients;
 
         Meryel.UnityCodeAssist.Synchronizer.Model.Connect? _self;
 
@@ -45,12 +45,12 @@ namespace Plugins.CodeAssist.Editor
             {
                 ModelVersion = Meryel.UnityCodeAssist.Synchronizer.Model.Utilities.Version,
                 ProjectPath = projectPath,
-                ProjectName = getProjectName(),
+                ProjectName = GetProjectName(),
                 ContactInfo = $"Unity {Application.unityVersion}",
                 AssemblyVersion = Assister.Version,
             };
 
-            string getProjectName()
+            string GetProjectName()
             {
                 string[] s = projectPath.Split('/');
                 string projectName = s[s.Length - 2];
@@ -106,8 +106,8 @@ namespace Plugins.CodeAssist.Editor
             Serilog.Log.Debug("LogginContext end");
         }
 
-        bool isBind = false;
-        public NetMQPublisher()
+        bool _isBind = false;
+        public NetMqPublisher()
         {
             // LogContext();
 
@@ -115,26 +115,26 @@ namespace Plugins.CodeAssist.Editor
 
             InitializeSelf();
 
-            clients = new List<Meryel.UnityCodeAssist.Synchronizer.Model.Connect>();
-            syncMngr = new Meryel.UnityCodeAssist.Synchronizer.Model.Manager(this);
+            Clients = new List<Meryel.UnityCodeAssist.Synchronizer.Model.Connect>();
+            _syncMngr = new Meryel.UnityCodeAssist.Synchronizer.Model.Manager(this);
 
             var (pubSub, pushPull) = Meryel.UnityCodeAssist.Synchronizer.Model.Utilities.GetConnectionString(Self!.ProjectPath);
-            pubConnString = pubSub;
+            _pubConnString = pubSub;
 
             //NetMQConfig.Linger = new TimeSpan(0);
 
             //pub = new Publisher();
-            pubSocket = new PublisherSocket();
+            _pubSocket = new PublisherSocket();
 
-            pubSocket.Options.SendHighWatermark = 1000;
-            Serilog.Log.Debug("NetMQ server initializing, Publisher socket binding... {PubConnString}", pubConnString);
+            _pubSocket.Options.SendHighWatermark = 1000;
+            Serilog.Log.Debug("NetMQ server initializing, Publisher socket binding... {PubConnString}", _pubConnString);
             //pubSocket.Bind("tcp://127.0.0.1:12349");
 
 
             try
             {
-                pubSocket.Bind(pubConnString);
-                isBind = true;
+                _pubSocket.Bind(_pubConnString);
+                _isBind = true;
                 Serilog.Log.Debug("NetMQ server initializing, Publisher socket bound");
             }
             catch (AddressAlreadyInUseException ex)
@@ -142,8 +142,8 @@ namespace Plugins.CodeAssist.Editor
                 Serilog.Log.Warning(ex, "NetMQ.AddressAlreadyInUseException");
                 LogContext();
                 Serilog.Log.Warning("NetMQ.AddressAlreadyInUseException disposing pubSocket");
-                pubSocket.Dispose();
-                pubSocket = null;
+                _pubSocket.Dispose();
+                _pubSocket = null;
                 return;
             }
             catch (System.Net.Sockets.SocketException ex)
@@ -151,8 +151,8 @@ namespace Plugins.CodeAssist.Editor
                 Serilog.Log.Warning(ex, "Socket exception");
                 LogContext();
                 Serilog.Log.Warning("Socket exception disposing pubSocket");
-                pubSocket.Dispose();
-                pubSocket = null;
+                _pubSocket.Dispose();
+                _pubSocket = null;
                 return;
             }
             
@@ -160,7 +160,7 @@ namespace Plugins.CodeAssist.Editor
             //pubSocket.SendReady += PubSocket_SendReady;
             //SendConnect();
 
-            pullTaskCancellationTokenSource  = new CancellationTokenSource();
+            _pullTaskCancellationTokenSource  = new CancellationTokenSource();
             //pullThread = new System.Threading.Thread(async () => await PullAsync(conn.pushPull, pullThreadCancellationTokenSource.Token));
             //pullThread = new System.Threading.Thread(() => InitPull(conn.pushPull, pullTaskCancellationTokenSource.Token));
             //pullThread.Start();
@@ -173,8 +173,8 @@ namespace Plugins.CodeAssist.Editor
             */
 
             
-            pullTask = Task.Factory.StartNew(
-                () => InitPull(pushPull, pullTaskCancellationTokenSource.Token),
+            _pullTask = Task.Factory.StartNew(
+                () => InitPull(pushPull, _pullTaskCancellationTokenSource.Token),
                 System.Threading.Tasks.TaskCreationOptions.LongRunning);
             
             //InitPull(conn.pushPull);
@@ -226,7 +226,7 @@ namespace Plugins.CodeAssist.Editor
                         break;
 
                     //**--optimize here, pass only params
-                    MainThreadDispatcher.Add(() => syncMngr.ProcessMessage(header, content));
+                    MainThreadDispatcher.Add(() => _syncMngr.ProcessMessage(header, content));
                     //syncMngr.ProcessMessage(header.Item1, content.Item1);
                 }
 
@@ -245,36 +245,36 @@ namespace Plugins.CodeAssist.Editor
         {
             // LogContext();
 
-            Serilog.Log.Debug("NetMQ clearing, begin 1, pullTaskCancellationTokenSource: {PullTaskCancellationTokenSource}", pullTaskCancellationTokenSource);
-            pullTaskCancellationTokenSource?.Cancel();
+            Serilog.Log.Debug("NetMQ clearing, begin 1, pullTaskCancellationTokenSource: {PullTaskCancellationTokenSource}", _pullTaskCancellationTokenSource);
+            _pullTaskCancellationTokenSource?.Cancel();
 
-            Serilog.Log.Verbose("NetMQ clearing, begin 2, pubSocket: {PubSocket}", pubSocket);
-            var pubSocketDebugStr = pubSocket?.ToString();
-            Serilog.Log.Debug("NetMQ clearing, begin 3, isBind: {IsBind}", isBind);
-            if (isBind)
+            Serilog.Log.Verbose("NetMQ clearing, begin 2, pubSocket: {PubSocket}", _pubSocket);
+            var pubSocketDebugStr = _pubSocket?.ToString();
+            Serilog.Log.Debug("NetMQ clearing, begin 3, isBind: {IsBind}", _isBind);
+            if (_isBind)
             {
-                pubSocket?.Unbind(pubConnString);
-                isBind = false;
+                _pubSocket?.Unbind(_pubConnString);
+                _isBind = false;
             }
             Serilog.Log.Verbose("NetMQ clearing, begin 4");
-            pubSocket?.Close();
+            _pubSocket?.Close();
             Serilog.Log.Verbose("NetMQ clearing, begin 5");
-            pubSocket?.Dispose();
+            _pubSocket?.Dispose();
             Serilog.Log.Verbose("NetMQ clearing, begin 6");
-            pubSocket = null;
+            _pubSocket = null;
             Serilog.Log.Debug("NetMQ clearing, publisher closed pubSocketDebugStr: {PubSocketDebugStr}", pubSocketDebugStr);
 
             try
             {
                 Serilog.Log.Debug("NetMQ clearing, Task 1 begin");
 
-                if (pullTask != null && !pullTask.Wait(1000))
+                if (_pullTask != null && !_pullTask.Wait(1000))
                     Serilog.Log.Warning("NetMQ clearing, pull task termination failed");
 
                 Serilog.Log.Verbose("NetMQ clearing, Task 2 waited");
 
-                pullTask?.Dispose();
-                pullTask = null;
+                _pullTask?.Dispose();
+                _pullTask = null;
 
                 Serilog.Log.Debug("NetMQ clearing, Task 3 disposed");
             }
@@ -285,8 +285,8 @@ namespace Plugins.CodeAssist.Editor
             }
             finally
             {
-                pullTaskCancellationTokenSource?.Dispose();
-                pullTaskCancellationTokenSource = null;
+                _pullTaskCancellationTokenSource?.Dispose();
+                _pullTaskCancellationTokenSource = null;
                 Serilog.Log.Debug("NetMQ clearing, task cancelled");
             }
 
@@ -333,7 +333,7 @@ namespace Plugins.CodeAssist.Editor
             else
                 Serilog.Log.Debug("Publishing {MessageType}", messageType);
 
-            var publisher = pubSocket;
+            var publisher = _pubSocket;
             if (publisher != null)
                 publisher.SendMoreFrame(messageType).SendFrame(SerializeObject(content));
             else
@@ -539,23 +539,23 @@ namespace Plugins.CodeAssist.Editor
 
         public void SendErrorReport(string errorMessage, string stack, string type)
         {
-            var dataOfER = new Meryel.UnityCodeAssist.Synchronizer.Model.ErrorReport()
+            var dataOfEr = new Meryel.UnityCodeAssist.Synchronizer.Model.ErrorReport()
             {
                 ErrorMessage = errorMessage,
                 ErrorStack = stack,
                 ErrorType = type,
             };
-            SendAux(dataOfER);
+            SendAux(dataOfEr);
         }
 
         public void SendRequestVerboseType(string type, string docPath)
         {
-            var dataOfRVT = new Meryel.UnityCodeAssist.Synchronizer.Model.RequestVerboseType()
+            var dataOfRvt = new Meryel.UnityCodeAssist.Synchronizer.Model.RequestVerboseType()
             {
                 Type = type,
                 DocPath = docPath,
             };
-            SendAux(dataOfRVT);
+            SendAux(dataOfRvt);
         }
 
 
@@ -594,14 +594,14 @@ namespace Plugins.CodeAssist.Editor
                 return;
             }
 
-            if (!clients.Any(c => c.ContactInfo == connect.ContactInfo))
+            if (!Clients.Any(c => c.ContactInfo == connect.ContactInfo))
             {
-                clients.Add(connect);
+                Clients.Add(connect);
             }
 
             SendHandshake();
-            if (ScriptFinder.GetActiveGameObject(out var activeGO))
-                SendGameObject(activeGO);
+            if (ScriptFinder.GetActiveGameObject(out var activeGo))
+                SendGameObject(activeGo);
             Assister.SendTagsAndLayers();
         }
 
@@ -612,11 +612,11 @@ namespace Plugins.CodeAssist.Editor
         }
         void Meryel.UnityCodeAssist.Synchronizer.Model.IProcessor.Process(Meryel.UnityCodeAssist.Synchronizer.Model.Disconnect disconnect)
         {
-            var client = clients.FirstOrDefault(c => c.ContactInfo == disconnect.ContactInfo);
+            var client = Clients.FirstOrDefault(c => c.ContactInfo == disconnect.ContactInfo);
             if (client == null)
                 return;
 
-            clients.Remove(client);
+            Clients.Remove(client);
         }
         void Meryel.UnityCodeAssist.Synchronizer.Model.IProcessor.Process(Meryel.UnityCodeAssist.Synchronizer.Model.ConnectionInfo connectionInfo)
         {
@@ -632,15 +632,15 @@ namespace Plugins.CodeAssist.Editor
                 return;
             }
 
-            if (!clients.Any(c => c.ContactInfo == connectionInfo.ContactInfo))
+            if (!Clients.Any(c => c.ContactInfo == connectionInfo.ContactInfo))
             {
                 SendConnect();
             }
             else
             {
                 SendHandshake();
-                if (ScriptFinder.GetActiveGameObject(out var activeGO))
-                    SendGameObject(activeGO);
+                if (ScriptFinder.GetActiveGameObject(out var activeGo))
+                    SendGameObject(activeGo);
                 Assister.SendTagsAndLayers();
             }
         }

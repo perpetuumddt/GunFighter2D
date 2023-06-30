@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace General
+namespace Gunfighter.General
 {
     /// <summary>
     /// Can be used to mark ReadOnly properties

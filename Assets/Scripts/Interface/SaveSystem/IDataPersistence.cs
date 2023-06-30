@@ -1,6 +1,6 @@
-using SaveSystem;
+using Gunfighter.SaveSystem;
 
-namespace Interface.SaveSystem
+namespace Gunfighter.Interface.SaveSystem
 {
     public interface IDataPersistence
     {

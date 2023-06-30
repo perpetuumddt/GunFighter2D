@@ -30,22 +30,22 @@ namespace Plugins.CodeAssist.Editor.TinyJson
     // - Parsing of abstract classes or interfaces is NOT supported and will throw an exception.
     public static class JsonParser
     {
-        [ThreadStatic] static Stack<List<string>> splitArrayPool;
-        [ThreadStatic] static StringBuilder stringBuilder;
-        [ThreadStatic] static Dictionary<Type, Dictionary<string, FieldInfo>> fieldInfoCache;
-        [ThreadStatic] static Dictionary<Type, Dictionary<string, PropertyInfo>> propertyInfoCache;
+        [ThreadStatic] static Stack<List<string>> _splitArrayPool;
+        [ThreadStatic] static StringBuilder _stringBuilder;
+        [ThreadStatic] static Dictionary<Type, Dictionary<string, FieldInfo>> _fieldInfoCache;
+        [ThreadStatic] static Dictionary<Type, Dictionary<string, PropertyInfo>> _propertyInfoCache;
 
         //public static T FromJson<T>(this string json)
         public static T FromJson<T>(string json)
         {
             // Initialize, if needed, the ThreadStatic variables
-            propertyInfoCache ??= new Dictionary<Type, Dictionary<string, PropertyInfo>>();
-            fieldInfoCache ??= new Dictionary<Type, Dictionary<string, FieldInfo>>();
-            stringBuilder ??= new StringBuilder();
-            splitArrayPool ??= new Stack<List<string>>();
+            _propertyInfoCache ??= new Dictionary<Type, Dictionary<string, PropertyInfo>>();
+            _fieldInfoCache ??= new Dictionary<Type, Dictionary<string, FieldInfo>>();
+            _stringBuilder ??= new StringBuilder();
+            _splitArrayPool ??= new Stack<List<string>>();
 
             //Remove all whitespace not within strings to make parsing simpler
-            stringBuilder.Length = 0;
+            _stringBuilder.Length = 0;
             for (int i = 0; i < json.Length; i++)
             {
                 char c = json[i];
@@ -57,32 +57,32 @@ namespace Plugins.CodeAssist.Editor.TinyJson
                 if (char.IsWhiteSpace(c))
                     continue;
 
-                stringBuilder.Append(c);
+                _stringBuilder.Append(c);
             }
 
             //Parse the thing!
-            return (T)ParseValue(typeof(T), stringBuilder.ToString());
+            return (T)ParseValue(typeof(T), _stringBuilder.ToString());
         }
 
         static int AppendUntilStringEnd(bool appendEscapeCharacter, int startIdx, string json)
         {
-            stringBuilder.Append(json[startIdx]);
+            _stringBuilder.Append(json[startIdx]);
             for (int i = startIdx + 1; i < json.Length; i++)
             {
                 if (json[i] == '\\')
                 {
                     if (appendEscapeCharacter)
-                        stringBuilder.Append(json[i]);
-                    stringBuilder.Append(json[i + 1]);
+                        _stringBuilder.Append(json[i]);
+                    _stringBuilder.Append(json[i + 1]);
                     i++;//Skip next character as it is escaped
                 }
                 else if (json[i] == '"')
                 {
-                    stringBuilder.Append(json[i]);
+                    _stringBuilder.Append(json[i]);
                     return i;
                 }
                 else
-                    stringBuilder.Append(json[i]);
+                    _stringBuilder.Append(json[i]);
             }
             return json.Length - 1;
         }
@@ -90,12 +90,12 @@ namespace Plugins.CodeAssist.Editor.TinyJson
         //Splits { <value>:<value>, <value>:<value> } and [ <value>, <value> ] into a list of <value> strings
         static List<string> Split(string json)
         {
-            List<string> splitArray = splitArrayPool.Count > 0 ? splitArrayPool.Pop() : new List<string>();
+            List<string> splitArray = _splitArrayPool.Count > 0 ? _splitArrayPool.Pop() : new List<string>();
             splitArray.Clear();
             if (json.Length == 2)
                 return splitArray;
             int parseDepth = 0;
-            stringBuilder.Length = 0;
+            _stringBuilder.Length = 0;
             for (int i = 1; i < json.Length - 1; i++)
             {
                 switch (json[i])
@@ -115,17 +115,17 @@ namespace Plugins.CodeAssist.Editor.TinyJson
                     case ':':
                         if (parseDepth == 0)
                         {
-                            splitArray.Add(stringBuilder.ToString());
-                            stringBuilder.Length = 0;
+                            splitArray.Add(_stringBuilder.ToString());
+                            _stringBuilder.Length = 0;
                             continue;
                         }
                         break;
                 }
 
-                stringBuilder.Append(json[i]);
+                _stringBuilder.Append(json[i]);
             }
 
-            splitArray.Add(stringBuilder.ToString());
+            splitArray.Add(_stringBuilder.ToString());
 
             return splitArray;
         }
@@ -205,7 +205,7 @@ namespace Plugins.CodeAssist.Editor.TinyJson
                 Array newArray = Array.CreateInstance(arrayType, elems.Count);
                 for (int i = 0; i < elems.Count; i++)
                     newArray.SetValue(ParseValue(arrayType, elems[i]), i);
-                splitArrayPool.Push(elems);
+                _splitArrayPool.Push(elems);
                 return newArray;
             }
             if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(List<>))
@@ -218,7 +218,7 @@ namespace Plugins.CodeAssist.Editor.TinyJson
                 var list = (IList)type.GetConstructor(new Type[] { typeof(int) }).Invoke(new object[] { elems.Count });
                 for (int i = 0; i < elems.Count; i++)
                     list.Add(ParseValue(listType, elems[i]));
-                splitArrayPool.Push(elems);
+                _splitArrayPool.Push(elems);
                 return list;
             }
             if (type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Dictionary<,>))
@@ -346,15 +346,15 @@ namespace Plugins.CodeAssist.Editor.TinyJson
 
             //Dictionary<string, FieldInfo> nameToField;
             //Dictionary<string, PropertyInfo> nameToProperty;
-            if (!fieldInfoCache.TryGetValue(type, out var nameToField))
+            if (!_fieldInfoCache.TryGetValue(type, out var nameToField))
             {
                 nameToField = CreateMemberNameDictionary(type.GetFields(BindingFlags.Instance | BindingFlags.Public | BindingFlags.FlattenHierarchy));
-                fieldInfoCache.Add(type, nameToField);
+                _fieldInfoCache.Add(type, nameToField);
             }
-            if (!propertyInfoCache.TryGetValue(type, out var nameToProperty))
+            if (!_propertyInfoCache.TryGetValue(type, out var nameToProperty))
             {
                 nameToProperty = CreateMemberNameDictionary(type.GetProperties(BindingFlags.Instance | BindingFlags.Public | BindingFlags.FlattenHierarchy));
-                propertyInfoCache.Add(type, nameToProperty);
+                _propertyInfoCache.Add(type, nameToProperty);
             }
 
             for (int i = 0; i < elems.Count; i += 2)

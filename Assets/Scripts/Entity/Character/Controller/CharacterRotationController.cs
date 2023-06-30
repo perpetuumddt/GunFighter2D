@@ -1,31 +1,31 @@
-using Entity.Character.Player.Input;
+using Gunfighter.Entity.Character.Player.Input;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Entity.Character.Controller
+namespace Gunfighter.Entity.Character.Controller
 {
     public class CharacterRotationController : MonoBehaviour
     {
-        protected bool _lookLeft, _rollLeft;
-        private Camera mainCam;
+        protected bool LookLeft, RollLeft;
+        private Camera _mainCam;
         private PlayerInputHandler _playerInputHandler;
 
         private void Start()
         {
             _playerInputHandler = GetComponent<PlayerInputHandler>();
-            mainCam = FindObjectOfType<Camera>();
+            _mainCam = FindObjectOfType<Camera>();
         }
 
         public void CheckLookingDirection()
         {
-            Vector3 mousePos = mainCam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+            Vector3 mousePos = _mainCam.ScreenToWorldPoint(Mouse.current.position.ReadValue());
             Vector2 rotation = mousePos - transform.position;
 
-            if (!_lookLeft && rotation.x > 0.1f)
+            if (!LookLeft && rotation.x > 0.1f)
             {
                 Flip();
             }
-            if (_lookLeft && rotation.x < -0.1f)
+            if (LookLeft && rotation.x < -0.1f)
             {
                 Flip();
             }
@@ -33,24 +33,24 @@ namespace Entity.Character.Controller
 
         public Vector2 CheckMovementDirection()
         {
-            return _playerInputHandler.movementInputVector;
+            return _playerInputHandler.MovementInputVector;
         }
 
         public void CheckRollingDirection()
         {
-            if (!_rollLeft && CheckMovementDirection().x > 0.1f)
+            if (!RollLeft && CheckMovementDirection().x > 0.1f)
             {
                 Flip();
             }
-            if (_rollLeft && CheckMovementDirection().x < -0.1f)
+            if (RollLeft && CheckMovementDirection().x < -0.1f)
             {
                 Flip();
             }
         }
         public void Flip()
         {
-            _lookLeft = !_lookLeft;
-            _rollLeft = !_rollLeft;
+            LookLeft = !LookLeft;
+            RollLeft = !RollLeft;
             transform.Rotate(0, 180, 0);
         }
     }

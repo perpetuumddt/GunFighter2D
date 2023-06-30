@@ -5,12 +5,12 @@ namespace Plugins.NavMeshPlus_master.NavMeshComponents.Scripts
     class AgentRotateSmooth2d: MonoBehaviour
     {
         public float angularSpeed;
-        private AgentOverride2d override2D;
+        private AgentOverride2d _override2D;
 
         private void Start()
         {
-            override2D = GetComponent<AgentOverride2d>();
-            override2D.agentOverride = new RotateAgentSmoothly(override2D.Agent, override2D, angularSpeed);
+            _override2D = GetComponent<AgentOverride2d>();
+            _override2D.AgentOverride = new RotateAgentSmoothly(_override2D.Agent, _override2D, angularSpeed);
         }
     }
 }

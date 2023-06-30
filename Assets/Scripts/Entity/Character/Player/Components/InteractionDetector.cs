@@ -1,7 +1,7 @@
-using Interface.Detect;
+using Gunfighter.Interface.Detect;
 using UnityEngine;
 
-namespace Entity.Character.Player.Components
+namespace Gunfighter.Entity.Character.Player.Components
 {
     public class InteractionDetector : MonoBehaviour, IDetector
     {

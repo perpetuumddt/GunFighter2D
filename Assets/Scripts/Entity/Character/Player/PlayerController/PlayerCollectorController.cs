@@ -1,9 +1,9 @@
 using System;
-using Entity.Character.Controller;
-using Interface.Collect;
+using Gunfighter.Entity.Character.Controller;
+using Gunfighter.Interface.Collect;
 using UnityEngine;
 
-namespace Entity.Character.Player.PlayerController
+namespace Gunfighter.Entity.Character.Player.PlayerController
 {
     public class PlayerCollectorController : CharacterCollectorController, ICollector
     {
@@ -23,12 +23,12 @@ namespace Entity.Character.Player.PlayerController
 
         private void OnTriggerEnter2D(Collider2D collision)
         {
-            ICollectable _collectable = collision.gameObject.GetComponent<ICollectable>();
-            if (_collectable == null)
+            ICollectable collectable = collision.gameObject.GetComponent<ICollectable>();
+            if (collectable == null)
             {
                 return;
             }
-            Collect(_collectable);
+            Collect(collectable);
         }
 
         private void OnTriggerExit2D(Collider2D collision)

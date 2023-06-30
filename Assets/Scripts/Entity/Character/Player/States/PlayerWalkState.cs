@@ -1,10 +1,10 @@
-using Entity.Character.Player.Input;
-using Entity.Character.StateMachine;
-using Entity.Character.StateMachine.States;
-using Entity.Weapon;
-using CharacterController = Entity.Character.Controller.CharacterController;
+using Gunfighter.Entity.Character.Player.Input;
+using Gunfighter.Entity.Character.StateMachine;
+using Gunfighter.Entity.Character.StateMachine.States;
+using Gunfighter.Entity.Weapon;
+using CharacterController = Gunfighter.Entity.Character.Controller.CharacterController;
 
-namespace Entity.Character.Player.States
+namespace Gunfighter.Entity.Character.Player.States
 {
     public class PlayerWalkState : CharacterWalkState
     {
@@ -66,7 +66,7 @@ namespace Entity.Character.Player.States
         private void Movement(PlayerInputHandler inputHandler)
         {
             StateMachine.CurrentState.Data.CharacterRotationController.CheckLookingDirection();
-            StateMachine.CurrentState.Data.CharacterMovementController.DoMove(inputHandler.movementInputVector.x * _velocity, inputHandler.movementInputVector.y * _velocity);
+            StateMachine.CurrentState.Data.CharacterMovementController.DoMove(inputHandler.MovementInputVector.x * _velocity, inputHandler.MovementInputVector.y * _velocity);
         }
 
         public void Attack(bool isAttacking)

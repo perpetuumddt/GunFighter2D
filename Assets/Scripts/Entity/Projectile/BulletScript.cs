@@ -1,9 +1,10 @@
 ﻿using System.Collections;
 using System.Threading.Tasks;
-using Interface.Damage;
+using Gunfighter.Interface.Damage;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace Entity.Projectile
+namespace Gunfighter.Entity.Projectile
 {
     public class BulletScript : MonoBehaviour
     {
@@ -11,13 +12,13 @@ namespace Entity.Projectile
         private float bulletForce = 10f;
 
         [SerializeField]
-        public int bulletDamage { get; set; }
+        public int BulletDamage { get; set; }
 
         [SerializeField]
         private float bulletLifeTime = 2f;
 
-        [SerializeField]
-        private ParticleSystem _destroyPS;
+        [FormerlySerializedAs("_destroyPS")] [SerializeField]
+        private ParticleSystem destroyPS;
 
 
         private void FixedUpdate()
@@ -37,7 +38,7 @@ namespace Entity.Projectile
         {
             if(collision.collider.CompareTag("Enemy"))
             {
-                collision.transform.GetComponent<IDamageable>().TakeDamage(bulletDamage);
+                collision.transform.GetComponent<IDamageable>().TakeDamage(BulletDamage);
                 Deactivate();
             }
             if(collision.collider.CompareTag("Obstacle"))
@@ -53,12 +54,12 @@ namespace Entity.Projectile
 
         private async void BulletDestroy()
         {
-            _destroyPS.Play();
+            destroyPS.Play();
             await Task.Delay(1000);
             this.gameObject.SetActive(false);
         }
 
         public void SetBulletDamage(int bulletDamage)
-        { this.bulletDamage = bulletDamage;}
+        { this.BulletDamage = bulletDamage;}
     }
 }

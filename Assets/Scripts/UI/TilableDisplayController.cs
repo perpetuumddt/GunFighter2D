@@ -3,31 +3,31 @@ using UnityEngine;
 using UnityEngine.UI;
 using Object = UnityEngine.Object;
 
-namespace UI
+namespace Gunfighter.UI
 {
     public class TilableDisplayController
     {
-        protected GameObject _unitPrefab;
-        protected GameObject _parentGameObj;
-        protected GameObject[] _units;
+        protected GameObject UnitPrefab;
+        protected GameObject ParentGameObj;
+        protected GameObject[] Units;
 
         public TilableDisplayController(GameObject unitPrefab, GameObject parentGameObj)
         {
-            _unitPrefab = unitPrefab;
-            _parentGameObj = parentGameObj;
+            UnitPrefab = unitPrefab;
+            ParentGameObj = parentGameObj;
         }
 
-        public int GetAmmountOfUnits => _units.Length;
+        public int GetAmmountOfUnits => Units.Length;
 
         public GameObject GetUnit(int i)
         {
-            if (i < 0 || i >= _units.Length) throw new ArgumentOutOfRangeException();
-            return _units[i];
+            if (i < 0 || i >= Units.Length) throw new ArgumentOutOfRangeException();
+            return Units[i];
         }
 
         public void UpdateDisplay(int value)
         {
-            for(int i = _units.Length-1; i >= 0; i--) 
+            for(int i = Units.Length-1; i >= 0; i--) 
             {
                 if(i>=value)
                 {
@@ -42,31 +42,31 @@ namespace UI
 
         protected virtual void DrawActiveTile(int i)
         {
-            _units[i].GetComponent<Image>().color = Color.white;
+            Units[i].GetComponent<Image>().color = Color.white;
         }
 
         protected virtual void DrawIncativeTile(int i)
         {
-            _units[i].GetComponent<Image>().color = Color.gray;
+            Units[i].GetComponent<Image>().color = Color.gray;
         }
 
         public void SetupDisplay(int displayLenght)  
         {
             if (displayLenght < 0) { throw new ArgumentOutOfRangeException(); }
 
-            if(_units!=null && _units.Length>0)
+            if(Units!=null && Units.Length>0)
             {
-                foreach (GameObject unit in _units)
+                foreach (GameObject unit in Units)
                 {
                     GameObject.Destroy(unit);
                 }
             }
 
-            _units = new GameObject[displayLenght];
+            Units = new GameObject[displayLenght];
         
             for (int i = 0; i < displayLenght; i++)
             {
-                _units[i] = Object.Instantiate<GameObject>(_unitPrefab, _parentGameObj.transform);
+                Units[i] = Object.Instantiate<GameObject>(UnitPrefab, ParentGameObj.transform);
 
                 SetupUnit(i);
             }

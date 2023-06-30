@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace General
+namespace Gunfighter.General
 {
     public class SetSprite : MonoBehaviour
     {

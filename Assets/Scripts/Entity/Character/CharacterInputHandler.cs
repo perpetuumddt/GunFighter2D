@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-namespace Entity.Character
+namespace Gunfighter.Entity.Character
 {
     public class CharacterInputHandler : MonoBehaviour
     {

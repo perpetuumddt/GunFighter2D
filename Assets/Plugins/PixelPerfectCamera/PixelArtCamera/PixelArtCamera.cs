@@ -5,7 +5,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Plugins.PixelPerfectCamera.PixelArtCamera
+namespace Gunfighter.Plugins.PixelPerfectCamera.PixelArtCamera
 {
 	[ExecuteInEditMode]
 	public class PixelArtCamera : MonoBehaviour {
@@ -22,10 +22,10 @@ namespace Plugins.PixelPerfectCamera.PixelArtCamera
 
 		public Material upscaleMaterial;
 
-		RenderTexture rt;
+		RenderTexture _rt;
 
-		float targetAspectRatio;
-		float currentAspectRatio;
+		float _targetAspectRatio;
+		float _currentAspectRatio;
 	
 		[HideInInspector] public Vector2 finalBlitStretch = Vector2.one;
 
@@ -69,27 +69,27 @@ namespace Plugins.PixelPerfectCamera.PixelArtCamera
 				return;
 			}
 		
-			if (rt != null) {
-				rt.Release();
+			if (_rt != null) {
+				_rt.Release();
 			}
 		
 			screenResolution.x = Screen.width;
 			screenResolution.y = Screen.height;
 
-			targetAspectRatio = (float)pixels.x / (float)pixels.y;
-			currentAspectRatio = (float)Screen.width / (float)Screen.height;
+			_targetAspectRatio = (float)pixels.x / (float)pixels.y;
+			_currentAspectRatio = (float)Screen.width / (float)Screen.height;
 		
 			internalResolution.x = pixels.x;
 			internalResolution.y = pixels.y;
 		
 			// Figure out best pixel resolution for aspect ratio we're on
-			if (currentAspectRatio != targetAspectRatio) {
-				if (currentAspectRatio > targetAspectRatio) {
+			if (_currentAspectRatio != _targetAspectRatio) {
+				if (_currentAspectRatio > _targetAspectRatio) {
 					// Wider screen
-					internalResolution.x = (int)Mathf.Round((float)pixels.y * currentAspectRatio);
+					internalResolution.x = (int)Mathf.Round((float)pixels.y * _currentAspectRatio);
 				} else {
 					// Taller screen
-					internalResolution.y = (int)Mathf.Round((float)pixels.x / currentAspectRatio);
+					internalResolution.y = (int)Mathf.Round((float)pixels.x / _currentAspectRatio);
 				}
 			}
 		
@@ -97,13 +97,13 @@ namespace Plugins.PixelPerfectCamera.PixelArtCamera
 			finalBlitStretch = Vector2.one;
 			if (forceSquarePixels) {
 				float internalResAspect = (float)internalResolution.x / (float)internalResolution.y;
-				if (currentAspectRatio != targetAspectRatio) {
-					if (currentAspectRatio > targetAspectRatio) {
+				if (_currentAspectRatio != _targetAspectRatio) {
+					if (_currentAspectRatio > _targetAspectRatio) {
 						// Wider screen
-						finalBlitStretch.x = (currentAspectRatio / internalResAspect);
+						finalBlitStretch.x = (_currentAspectRatio / internalResAspect);
 					} else {
 						// Taller screen
-						finalBlitStretch.y = (internalResAspect / currentAspectRatio);
+						finalBlitStretch.y = (internalResAspect / _currentAspectRatio);
 					}
 				}
 			}
@@ -140,24 +140,24 @@ namespace Plugins.PixelPerfectCamera.PixelArtCamera
 		}
 
 		void OnPreRender() {
-			if ((float)Screen.width / (float)Screen.height != currentAspectRatio) {
+			if ((float)Screen.width / (float)Screen.height != _currentAspectRatio) {
 				SetupRenderTexture();
 			}
-			rt = RenderTexture.GetTemporary(internalResolution.x, internalResolution.y, 16, RenderTextureFormat.ARGB32);
+			_rt = RenderTexture.GetTemporary(internalResolution.x, internalResolution.y, 16, RenderTextureFormat.ARGB32);
 			if (smooth || useUpscaleShader) {
-				rt.filterMode = FilterMode.Bilinear;
+				_rt.filterMode = FilterMode.Bilinear;
 			} else {
-				rt.filterMode = FilterMode.Point;
+				_rt.filterMode = FilterMode.Point;
 			}
 			// if (windowboxing) {
 			// 	rt.filterMode = FilterMode.Point;
 			// }
 			if (requireStencilBuffer) {
-				rt.depth = 32;
+				_rt.depth = 32;
 			}
 			if (mainCamera != null) {
 				// Render to our small internal texture
-				mainCamera.targetTexture = rt;
+				mainCamera.targetTexture = _rt;
 			}
 		}
 		void OnPostRender() {
@@ -176,23 +176,23 @@ namespace Plugins.PixelPerfectCamera.PixelArtCamera
 			Graphics.Blit(rt, null, stretch, (stretch - Vector2.one) / -2f);
 			// Graphics.Blit(rt, null, new Vector2(upscaledResolution.x / (float)Screen.width, upscaledResolution.y / (float)Screen.height), new Vector2(0f, 0f));
 		} else */if (smooth) {
-				Graphics.Blit(rt, null, finalBlitStretch, (finalBlitStretch - Vector2.one) / -2f);
+				Graphics.Blit(_rt, null, finalBlitStretch, (finalBlitStretch - Vector2.one) / -2f);
 			} else if (useUpscaleShader) {
 				upscaleMaterial.SetVector("_DestinationResolution", new Vector4(Screen.width, Screen.height, 0, 0));
-				Graphics.Blit(rt, null, upscaleMaterial);
+				Graphics.Blit(_rt, null, upscaleMaterial);
 			} else {
 				// draw to buffer at least as big as the screen
 				int scaleMultiple = Mathf.CeilToInt((float)Screen.width / (float)internalResolution.x);
 				upscaledResolution.x = internalResolution.x * scaleMultiple;
 				upscaledResolution.y = internalResolution.y * scaleMultiple;
 				RenderTexture largeRt = RenderTexture.GetTemporary(upscaledResolution.x, upscaledResolution.y);
-				Graphics.Blit(rt, largeRt);
+				Graphics.Blit(_rt, largeRt);
 			
 				// Scale down to screen		
 				Graphics.Blit(largeRt, null, finalBlitStretch, (finalBlitStretch - Vector2.one) / -2f);
 				RenderTexture.ReleaseTemporary(largeRt);
 			}
-			RenderTexture.ReleaseTemporary(rt);
+			RenderTexture.ReleaseTemporary(_rt);
 		
 		}
 	}

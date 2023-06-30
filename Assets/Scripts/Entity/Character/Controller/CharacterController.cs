@@ -1,50 +1,51 @@
-using Entity.Character.StateMachine;
-using ScriptableObjects.Data.Character;
+using Gunfighter.Entity.Character.StateMachine;
+using Gunfighter.ScriptableObjects.Data.Character;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace Entity.Character.Controller
+namespace Gunfighter.Entity.Character.Controller
 {
     public class CharacterController : MonoBehaviour
     {
-        [SerializeField]
-        private CharacterAnimationController _characterAnimationController;
-        public CharacterAnimationController CharacterAnimationController => _characterAnimationController;
+        [FormerlySerializedAs("_characterAnimationController")] [SerializeField]
+        private CharacterAnimationController characterAnimationController;
+        public CharacterAnimationController CharacterAnimationController => characterAnimationController;
 
-        [SerializeField]
-        private CharacterMovementController _characterMovementController;
-        public CharacterMovementController CharacterMovementController => _characterMovementController;
+        [FormerlySerializedAs("_characterMovementController")] [SerializeField]
+        private CharacterMovementController characterMovementController;
+        public CharacterMovementController CharacterMovementController => characterMovementController;
 
-        [SerializeField]
-        private CharacterInputHandler _characterInputHandler;
-        public CharacterInputHandler CharacterInputHandler => _characterInputHandler;
+        [FormerlySerializedAs("_characterInputHandler")] [SerializeField]
+        private CharacterInputHandler characterInputHandler;
+        public CharacterInputHandler CharacterInputHandler => characterInputHandler;
 
-        [SerializeField]
-        private CharacterAttackController _characterAttackController;
-        public CharacterAttackController CharacterAttackController => _characterAttackController;
+        [FormerlySerializedAs("_characterAttackController")] [SerializeField]
+        private CharacterAttackController characterAttackController;
+        public CharacterAttackController CharacterAttackController => characterAttackController;
 
-        [SerializeField]
-        private CharacterRotationController _characterRotationController;
-        public CharacterRotationController CharacterRotationController => _characterRotationController;
+        [FormerlySerializedAs("_characterRotationController")] [SerializeField]
+        private CharacterRotationController characterRotationController;
+        public CharacterRotationController CharacterRotationController => characterRotationController;
 
-        [SerializeField]
-        private CharacterHealthController _characterHealthController;
-        public CharacterHealthController CharacterHealthController => _characterHealthController;
+        [FormerlySerializedAs("_characterHealthController")] [SerializeField]
+        private CharacterHealthController characterHealthController;
+        public CharacterHealthController CharacterHealthController => characterHealthController;
 
-        [SerializeField]
-        private CharacterDropController _characterDropController;
-        public CharacterDropController CharacterDropController => _characterDropController;
+        [FormerlySerializedAs("_characterDropController")] [SerializeField]
+        private CharacterDropController characterDropController;
+        public CharacterDropController CharacterDropController => characterDropController;
 
-        [SerializeField]
-        private CharacterCollectorController _characterCollectorController;
-        public CharacterCollectorController CharacterCollectorController => _characterCollectorController;
+        [FormerlySerializedAs("_characterCollectorController")] [SerializeField]
+        private CharacterCollectorController characterCollectorController;
+        public CharacterCollectorController CharacterCollectorController => characterCollectorController;
 
 
-        [SerializeField] 
-        private CharacterData _characterData;
+        [FormerlySerializedAs("_characterData")] [SerializeField] 
+        private CharacterData characterData;
 
-        public CharacterData CharacterData => _characterData;
+        public CharacterData CharacterData => characterData;
     
-        protected StateMachine<CharacterController> _stateMachine;
+        protected StateMachine<CharacterController> StateMachine;
 
     
     }

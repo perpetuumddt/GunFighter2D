@@ -1,8 +1,8 @@
 using System;
-using Entity.Weapon;
+using Gunfighter.Entity.Weapon;
 using UnityEngine;
 
-namespace ScriptableObjects
+namespace Gunfighter.ScriptableObjects
 {
     [CreateAssetMenu(fileName = "Weapon Event", menuName = "Data/Event/New Weapon Event")]
     public class SpriptableObjectWeaponEvent : ScriptableObject

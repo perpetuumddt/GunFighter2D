@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.Serialization;
 
 namespace Plugins.NavMeshPlus_master.NavMeshComponents.Scripts
 {
@@ -10,93 +11,93 @@ namespace Plugins.NavMeshPlus_master.NavMeshComponents.Scripts
     [HelpURL("https://github.com/Unity-Technologies/NavMeshPlus#documentation-draft")]
     public class NavMeshLink : MonoBehaviour
     {
-        [SerializeField]
-        int m_AgentTypeID;
-        public int agentTypeID { get { return m_AgentTypeID; } set { m_AgentTypeID = value; UpdateLink(); } }
+        [FormerlySerializedAs("m_AgentTypeID")] [SerializeField]
+        int mAgentTypeID;
+        public int AgentTypeID { get { return mAgentTypeID; } set { mAgentTypeID = value; UpdateLink(); } }
 
-        [SerializeField]
-        Vector3 m_StartPoint = new Vector3(0.0f, 0.0f, -2.5f);
-        public Vector3 startPoint { get { return m_StartPoint; } set { m_StartPoint = value; UpdateLink(); } }
+        [FormerlySerializedAs("m_StartPoint")] [SerializeField]
+        Vector3 mStartPoint = new Vector3(0.0f, 0.0f, -2.5f);
+        public Vector3 StartPoint { get { return mStartPoint; } set { mStartPoint = value; UpdateLink(); } }
 
-        [SerializeField]
-        Vector3 m_EndPoint = new Vector3(0.0f, 0.0f, 2.5f);
-        public Vector3 endPoint { get { return m_EndPoint; } set { m_EndPoint = value; UpdateLink(); } }
+        [FormerlySerializedAs("m_EndPoint")] [SerializeField]
+        Vector3 mEndPoint = new Vector3(0.0f, 0.0f, 2.5f);
+        public Vector3 EndPoint { get { return mEndPoint; } set { mEndPoint = value; UpdateLink(); } }
 
-        [SerializeField]
-        float m_Width;
-        public float width { get { return m_Width; } set { m_Width = value; UpdateLink(); } }
+        [FormerlySerializedAs("m_Width")] [SerializeField]
+        float mWidth;
+        public float Width { get { return mWidth; } set { mWidth = value; UpdateLink(); } }
 
-        [SerializeField]
-        int m_CostModifier = -1;
-        public int costModifier { get { return m_CostModifier; } set { m_CostModifier = value; UpdateLink(); } }
+        [FormerlySerializedAs("m_CostModifier")] [SerializeField]
+        int mCostModifier = -1;
+        public int CostModifier { get { return mCostModifier; } set { mCostModifier = value; UpdateLink(); } }
 
-        [SerializeField]
-        bool m_Bidirectional = true;
-        public bool bidirectional { get { return m_Bidirectional; } set { m_Bidirectional = value; UpdateLink(); } }
+        [FormerlySerializedAs("m_Bidirectional")] [SerializeField]
+        bool mBidirectional = true;
+        public bool Bidirectional { get { return mBidirectional; } set { mBidirectional = value; UpdateLink(); } }
 
-        [SerializeField]
-        bool m_AutoUpdatePosition;
-        public bool autoUpdate { get { return m_AutoUpdatePosition; } set { SetAutoUpdate(value); } }
+        [FormerlySerializedAs("m_AutoUpdatePosition")] [SerializeField]
+        bool mAutoUpdatePosition;
+        public bool AutoUpdate { get { return mAutoUpdatePosition; } set { SetAutoUpdate(value); } }
 
-        [SerializeField]
-        int m_Area;
-        public int area { get { return m_Area; } set { m_Area = value; UpdateLink(); } }
+        [FormerlySerializedAs("m_Area")] [SerializeField]
+        int mArea;
+        public int Area { get { return mArea; } set { mArea = value; UpdateLink(); } }
 
-        NavMeshLinkInstance m_LinkInstance = new NavMeshLinkInstance();
+        NavMeshLinkInstance _mLinkInstance = new NavMeshLinkInstance();
 
-        Vector3 m_LastPosition = Vector3.zero;
-        Quaternion m_LastRotation = Quaternion.identity;
+        Vector3 _mLastPosition = Vector3.zero;
+        Quaternion _mLastRotation = Quaternion.identity;
 
-        static readonly List<NavMeshLink> s_Tracked = new List<NavMeshLink>();
+        static readonly List<NavMeshLink> STracked = new List<NavMeshLink>();
 
         void OnEnable()
         {
             AddLink();
-            if (m_AutoUpdatePosition && m_LinkInstance.valid)
+            if (mAutoUpdatePosition && _mLinkInstance.valid)
                 AddTracking(this);
         }
 
         void OnDisable()
         {
             RemoveTracking(this);
-            m_LinkInstance.Remove();
+            _mLinkInstance.Remove();
         }
 
         public void UpdateLink()
         {
-            m_LinkInstance.Remove();
+            _mLinkInstance.Remove();
             AddLink();
         }
 
         static void AddTracking(NavMeshLink link)
         {
 #if UNITY_EDITOR
-            if (s_Tracked.Contains(link))
+            if (STracked.Contains(link))
             {
                 Debug.LogError("Link is already tracked: " + link);
                 return;
             }
 #endif
 
-            if (s_Tracked.Count == 0)
+            if (STracked.Count == 0)
                 NavMesh.onPreUpdate += UpdateTrackedInstances;
 
-            s_Tracked.Add(link);
+            STracked.Add(link);
         }
 
         static void RemoveTracking(NavMeshLink link)
         {
-            s_Tracked.Remove(link);
+            STracked.Remove(link);
 
-            if (s_Tracked.Count == 0)
+            if (STracked.Count == 0)
                 NavMesh.onPreUpdate -= UpdateTrackedInstances;
         }
 
         void SetAutoUpdate(bool value)
         {
-            if (m_AutoUpdatePosition == value)
+            if (mAutoUpdatePosition == value)
                 return;
-            m_AutoUpdatePosition = value;
+            mAutoUpdatePosition = value;
             if (value)
                 AddTracking(this);
             else
@@ -106,7 +107,7 @@ namespace Plugins.NavMeshPlus_master.NavMeshComponents.Scripts
         void AddLink()
         {
 #if UNITY_EDITOR
-            if (m_LinkInstance.valid)
+            if (_mLinkInstance.valid)
             {
                 Debug.LogError("Link is already added: " + this);
                 return;
@@ -114,25 +115,25 @@ namespace Plugins.NavMeshPlus_master.NavMeshComponents.Scripts
 #endif
 
             var link = new NavMeshLinkData();
-            link.startPosition = m_StartPoint;
-            link.endPosition = m_EndPoint;
-            link.width = m_Width;
-            link.costModifier = m_CostModifier;
-            link.bidirectional = m_Bidirectional;
-            link.area = m_Area;
-            link.agentTypeID = m_AgentTypeID;
-            m_LinkInstance = NavMesh.AddLink(link, transform.position, transform.rotation);
-            if (m_LinkInstance.valid)
-                m_LinkInstance.owner = this;
+            link.startPosition = mStartPoint;
+            link.endPosition = mEndPoint;
+            link.width = mWidth;
+            link.costModifier = mCostModifier;
+            link.bidirectional = mBidirectional;
+            link.area = mArea;
+            link.agentTypeID = mAgentTypeID;
+            _mLinkInstance = NavMesh.AddLink(link, transform.position, transform.rotation);
+            if (_mLinkInstance.valid)
+                _mLinkInstance.owner = this;
 
-            m_LastPosition = transform.position;
-            m_LastRotation = transform.rotation;
+            _mLastPosition = transform.position;
+            _mLastRotation = transform.rotation;
         }
 
         bool HasTransformChanged()
         {
-            if (m_LastPosition != transform.position) return true;
-            if (m_LastRotation != transform.rotation) return true;
+            if (_mLastPosition != transform.position) return true;
+            if (_mLastRotation != transform.rotation) return true;
             return false;
         }
 
@@ -143,7 +144,7 @@ namespace Plugins.NavMeshPlus_master.NavMeshComponents.Scripts
 
         static void UpdateTrackedInstances()
         {
-            foreach (var instance in s_Tracked)
+            foreach (var instance in STracked)
             {
                 if (instance.HasTransformChanged())
                     instance.UpdateLink();
@@ -153,18 +154,18 @@ namespace Plugins.NavMeshPlus_master.NavMeshComponents.Scripts
 #if UNITY_EDITOR
         void OnValidate()
         {
-            m_Width = Mathf.Max(0.0f, m_Width);
+            mWidth = Mathf.Max(0.0f, mWidth);
 
-            if (!m_LinkInstance.valid)
+            if (!_mLinkInstance.valid)
                 return;
 
             UpdateLink();
 
-            if (!m_AutoUpdatePosition)
+            if (!mAutoUpdatePosition)
             {
                 RemoveTracking(this);
             }
-            else if (!s_Tracked.Contains(this))
+            else if (!STracked.Contains(this))
             {
                 AddTracking(this);
             }

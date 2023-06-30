@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace UnityEditor
+namespace Gunfighter.UnityEditor
 {
     public class ReadOnlyInspectorAttribute : PropertyAttribute
     {

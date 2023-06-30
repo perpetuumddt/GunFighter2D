@@ -1,33 +1,34 @@
 using System;
 using System.Collections;
-using Entity.Character.Controller;
-using ScriptableObjects.Data.Character.Player;
+using Gunfighter.Entity.Character.Controller;
+using Gunfighter.ScriptableObjects.Data.Character.Player;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-namespace Entity.Character.Player.PlayerController
+namespace Gunfighter.Entity.Character.Player.PlayerController
 {
     public class PlayerHealthController : CharacterHealthController
     {
-        private float invincibilityDurationSeconds = 1.5f;
-        private float invincibilityDeltaTime = 0.15f;
-        private bool isInvincible;
+        private float _invincibilityDurationSeconds = 1.5f;
+        private float _invincibilityDeltaTime = 0.15f;
+        private bool _isInvincible;
     
-        [SerializeField]
-        public PlayerData _playerData;
+        [FormerlySerializedAs("_playerData")] [SerializeField]
+        public PlayerData playerData;
 
 
         private void Awake()
         {
-            ChangeMaxHealth(_playerData.DefaultMaxHealth);
-            CurrentHealth = _playerData.DefaultMaxHealth;
+            ChangeMaxHealth(playerData.DefaultMaxHealth);
+            CurrentHealth = playerData.DefaultMaxHealth;
         }
 
 
-        public override void UpdateHealth(int _currentHealth)
+        public override void UpdateHealth(int currentHealth)
         {
             base.UpdateHealth(this.CurrentHealth);
 
-            if(_currentHealth <= 0)
+            if(currentHealth <= 0)
             {
                 InvokeOnHealthZero();
             }
@@ -36,7 +37,7 @@ namespace Entity.Character.Player.PlayerController
         public override void TakeDamage(int damage)
         {
             if (damage < 0) throw new ArgumentOutOfRangeException();
-            if (!isInvincible)
+            if (!_isInvincible)
             {
                 _currentHealth = CurrentHealth - damage;
                 StartCoroutine(BecomeTemporarilyInvincible());
@@ -54,8 +55,8 @@ namespace Entity.Character.Player.PlayerController
     
         private IEnumerator BecomeTemporarilyInvincible()
         {
-            isInvincible = true;
-            for (float i = 0; i < invincibilityDurationSeconds; i += invincibilityDeltaTime)
+            _isInvincible = true;
+            for (float i = 0; i < _invincibilityDurationSeconds; i += _invincibilityDeltaTime)
             {
                 // 1.5/0.15 = 10 invulnerability frames 
                 if (this.transform.localScale == Vector3.one)
@@ -66,10 +67,10 @@ namespace Entity.Character.Player.PlayerController
                 {
                     ScaleModelTo(Vector3.one);
                 }
-                yield return new WaitForSeconds(invincibilityDeltaTime);
+                yield return new WaitForSeconds(_invincibilityDeltaTime);
             }
             ScaleModelTo(Vector3.one);
-            isInvincible = false;
+            _isInvincible = false;
         }
 
         private void ScaleModelTo(Vector3 scale)
