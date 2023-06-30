@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ShortCactoidData
   m_EditorClassIdentifier: 
   _name: ShortCactoid
-  _health: 3
+  _defaultMaxHealth: 3
   _movementSpeed: 3
   _damage: 1
   _baseXpReward: 10
