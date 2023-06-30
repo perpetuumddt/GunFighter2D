@@ -1,15 +1,16 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.IO;
-using UnityEngine;
-using UnityEditor;
+using System.Threading;
+using Meryel.UnityCodeAssist.Synchronizer.Model;
 using NetMQ;
 using NetMQ.Sockets;
-using System.Threading;
+using Plugins.CodeAssist.Editor.Logger;
+using UnityEngine;
 using Task = System.Threading.Tasks.Task;
 //using CancellationToken = System.Threading;
 using Application = UnityEngine.Application;
+using GameObject = UnityEngine.GameObject;
 
 
 #nullable enable
@@ -19,37 +20,37 @@ using Application = UnityEngine.Application;
 // can also do this for better clear, sometimes it gets locked
 // https://answers.unity.com/questions/704066/callback-before-unity-reloads-editor-assemblies.html#
 
-namespace Meryel.UnityCodeAssist.Editor
+namespace Plugins.CodeAssist.Editor
 {
-    public class NetMQPublisher : Synchronizer.Model.IProcessor
+    public class NetMqPublisher : IProcessor
     {
-        PublisherSocket? pubSocket;
-        readonly string pubConnString;
+        PublisherSocket? _pubSocket;
+        readonly string _pubConnString;
 
-        Task? pullTask;
-        CancellationTokenSource? pullTaskCancellationTokenSource;
+        Task? _pullTask;
+        CancellationTokenSource? _pullTaskCancellationTokenSource;
 
-        readonly Synchronizer.Model.Manager syncMngr;
+        readonly Meryel.UnityCodeAssist.Synchronizer.Model.Manager _syncMngr;
 
-        public List<Synchronizer.Model.Connect> clients;
+        public List<Meryel.UnityCodeAssist.Synchronizer.Model.Connect> Clients;
 
-        Synchronizer.Model.Connect? _self;
+        Meryel.UnityCodeAssist.Synchronizer.Model.Connect? _self;
 
-        Synchronizer.Model.Connect Self => _self!;
+        Meryel.UnityCodeAssist.Synchronizer.Model.Connect Self => _self!;
 
         void InitializeSelf()
         {
             var projectPath = CommonTools.GetProjectPath();
-            _self = new Synchronizer.Model.Connect()
+            _self = new Meryel.UnityCodeAssist.Synchronizer.Model.Connect()
             {
-                ModelVersion = Synchronizer.Model.Utilities.Version,
+                ModelVersion = Meryel.UnityCodeAssist.Synchronizer.Model.Utilities.Version,
                 ProjectPath = projectPath,
-                ProjectName = getProjectName(),
+                ProjectName = GetProjectName(),
                 ContactInfo = $"Unity {Application.unityVersion}",
                 AssemblyVersion = Assister.Version,
             };
 
-            string getProjectName()
+            string GetProjectName()
             {
                 string[] s = projectPath.Split('/');
                 string projectName = s[s.Length - 2];
@@ -105,8 +106,8 @@ namespace Meryel.UnityCodeAssist.Editor
             Serilog.Log.Debug("LogginContext end");
         }
 
-        bool isBind = false;
-        public NetMQPublisher()
+        bool _isBind = false;
+        public NetMqPublisher()
         {
             // LogContext();
 
@@ -114,26 +115,26 @@ namespace Meryel.UnityCodeAssist.Editor
 
             InitializeSelf();
 
-            clients = new List<Synchronizer.Model.Connect>();
-            syncMngr = new Synchronizer.Model.Manager(this);
+            Clients = new List<Meryel.UnityCodeAssist.Synchronizer.Model.Connect>();
+            _syncMngr = new Meryel.UnityCodeAssist.Synchronizer.Model.Manager(this);
 
-            var (pubSub, pushPull) = Synchronizer.Model.Utilities.GetConnectionString(Self!.ProjectPath);
-            pubConnString = pubSub;
+            var (pubSub, pushPull) = Meryel.UnityCodeAssist.Synchronizer.Model.Utilities.GetConnectionString(Self!.ProjectPath);
+            _pubConnString = pubSub;
 
             //NetMQConfig.Linger = new TimeSpan(0);
 
             //pub = new Publisher();
-            pubSocket = new PublisherSocket();
+            _pubSocket = new PublisherSocket();
 
-            pubSocket.Options.SendHighWatermark = 1000;
-            Serilog.Log.Debug("NetMQ server initializing, Publisher socket binding... {PubConnString}", pubConnString);
+            _pubSocket.Options.SendHighWatermark = 1000;
+            Serilog.Log.Debug("NetMQ server initializing, Publisher socket binding... {PubConnString}", _pubConnString);
             //pubSocket.Bind("tcp://127.0.0.1:12349");
 
 
             try
             {
-                pubSocket.Bind(pubConnString);
-                isBind = true;
+                _pubSocket.Bind(_pubConnString);
+                _isBind = true;
                 Serilog.Log.Debug("NetMQ server initializing, Publisher socket bound");
             }
             catch (AddressAlreadyInUseException ex)
@@ -141,8 +142,8 @@ namespace Meryel.UnityCodeAssist.Editor
                 Serilog.Log.Warning(ex, "NetMQ.AddressAlreadyInUseException");
                 LogContext();
                 Serilog.Log.Warning("NetMQ.AddressAlreadyInUseException disposing pubSocket");
-                pubSocket.Dispose();
-                pubSocket = null;
+                _pubSocket.Dispose();
+                _pubSocket = null;
                 return;
             }
             catch (System.Net.Sockets.SocketException ex)
@@ -150,8 +151,8 @@ namespace Meryel.UnityCodeAssist.Editor
                 Serilog.Log.Warning(ex, "Socket exception");
                 LogContext();
                 Serilog.Log.Warning("Socket exception disposing pubSocket");
-                pubSocket.Dispose();
-                pubSocket = null;
+                _pubSocket.Dispose();
+                _pubSocket = null;
                 return;
             }
             
@@ -159,7 +160,7 @@ namespace Meryel.UnityCodeAssist.Editor
             //pubSocket.SendReady += PubSocket_SendReady;
             //SendConnect();
 
-            pullTaskCancellationTokenSource  = new CancellationTokenSource();
+            _pullTaskCancellationTokenSource  = new CancellationTokenSource();
             //pullThread = new System.Threading.Thread(async () => await PullAsync(conn.pushPull, pullThreadCancellationTokenSource.Token));
             //pullThread = new System.Threading.Thread(() => InitPull(conn.pushPull, pullTaskCancellationTokenSource.Token));
             //pullThread.Start();
@@ -172,8 +173,8 @@ namespace Meryel.UnityCodeAssist.Editor
             */
 
             
-            pullTask = Task.Factory.StartNew(
-                () => InitPull(pushPull, pullTaskCancellationTokenSource.Token),
+            _pullTask = Task.Factory.StartNew(
+                () => InitPull(pushPull, _pullTaskCancellationTokenSource.Token),
                 System.Threading.Tasks.TaskCreationOptions.LongRunning);
             
             //InitPull(conn.pushPull);
@@ -225,7 +226,7 @@ namespace Meryel.UnityCodeAssist.Editor
                         break;
 
                     //**--optimize here, pass only params
-                    MainThreadDispatcher.Add(() => syncMngr.ProcessMessage(header, content));
+                    MainThreadDispatcher.Add(() => _syncMngr.ProcessMessage(header, content));
                     //syncMngr.ProcessMessage(header.Item1, content.Item1);
                 }
 
@@ -244,36 +245,36 @@ namespace Meryel.UnityCodeAssist.Editor
         {
             // LogContext();
 
-            Serilog.Log.Debug("NetMQ clearing, begin 1, pullTaskCancellationTokenSource: {PullTaskCancellationTokenSource}", pullTaskCancellationTokenSource);
-            pullTaskCancellationTokenSource?.Cancel();
+            Serilog.Log.Debug("NetMQ clearing, begin 1, pullTaskCancellationTokenSource: {PullTaskCancellationTokenSource}", _pullTaskCancellationTokenSource);
+            _pullTaskCancellationTokenSource?.Cancel();
 
-            Serilog.Log.Verbose("NetMQ clearing, begin 2, pubSocket: {PubSocket}", pubSocket);
-            var pubSocketDebugStr = pubSocket?.ToString();
-            Serilog.Log.Debug("NetMQ clearing, begin 3, isBind: {IsBind}", isBind);
-            if (isBind)
+            Serilog.Log.Verbose("NetMQ clearing, begin 2, pubSocket: {PubSocket}", _pubSocket);
+            var pubSocketDebugStr = _pubSocket?.ToString();
+            Serilog.Log.Debug("NetMQ clearing, begin 3, isBind: {IsBind}", _isBind);
+            if (_isBind)
             {
-                pubSocket?.Unbind(pubConnString);
-                isBind = false;
+                _pubSocket?.Unbind(_pubConnString);
+                _isBind = false;
             }
             Serilog.Log.Verbose("NetMQ clearing, begin 4");
-            pubSocket?.Close();
+            _pubSocket?.Close();
             Serilog.Log.Verbose("NetMQ clearing, begin 5");
-            pubSocket?.Dispose();
+            _pubSocket?.Dispose();
             Serilog.Log.Verbose("NetMQ clearing, begin 6");
-            pubSocket = null;
+            _pubSocket = null;
             Serilog.Log.Debug("NetMQ clearing, publisher closed pubSocketDebugStr: {PubSocketDebugStr}", pubSocketDebugStr);
 
             try
             {
                 Serilog.Log.Debug("NetMQ clearing, Task 1 begin");
 
-                if (pullTask != null && !pullTask.Wait(1000))
+                if (_pullTask != null && !_pullTask.Wait(1000))
                     Serilog.Log.Warning("NetMQ clearing, pull task termination failed");
 
                 Serilog.Log.Verbose("NetMQ clearing, Task 2 waited");
 
-                pullTask?.Dispose();
-                pullTask = null;
+                _pullTask?.Dispose();
+                _pullTask = null;
 
                 Serilog.Log.Debug("NetMQ clearing, Task 3 disposed");
             }
@@ -284,8 +285,8 @@ namespace Meryel.UnityCodeAssist.Editor
             }
             finally
             {
-                pullTaskCancellationTokenSource?.Dispose();
-                pullTaskCancellationTokenSource = null;
+                _pullTaskCancellationTokenSource?.Dispose();
+                _pullTaskCancellationTokenSource = null;
                 Serilog.Log.Debug("NetMQ clearing, task cancelled");
             }
 
@@ -317,7 +318,7 @@ namespace Meryel.UnityCodeAssist.Editor
             return str;
         }
 
-        void SendAux(Synchronizer.Model.IMessage message, bool logContent = true)
+        void SendAux(Meryel.UnityCodeAssist.Synchronizer.Model.IMessage message, bool logContent = true)
         {
             if (message == null)
                 return;
@@ -332,7 +333,7 @@ namespace Meryel.UnityCodeAssist.Editor
             else
                 Serilog.Log.Debug("Publishing {MessageType}", messageType);
 
-            var publisher = pubSocket;
+            var publisher = _pubSocket;
             if (publisher != null)
                 publisher.SendMoreFrame(messageType).SendFrame(SerializeObject(content));
             else
@@ -348,7 +349,7 @@ namespace Meryel.UnityCodeAssist.Editor
 
         public void SendDisconnect()
         {
-            var disconnect = new Synchronizer.Model.Disconnect()
+            var disconnect = new Meryel.UnityCodeAssist.Synchronizer.Model.Disconnect()
             {
                 ModelVersion = Self.ModelVersion,
                 ProjectPath = Self.ProjectPath,
@@ -362,7 +363,7 @@ namespace Meryel.UnityCodeAssist.Editor
 
         public void SendConnectionInfo()
         {
-            var connectionInfo = new Synchronizer.Model.ConnectionInfo()
+            var connectionInfo = new Meryel.UnityCodeAssist.Synchronizer.Model.ConnectionInfo()
             {
                 ModelVersion = Self.ModelVersion,
                 ProjectPath = Self.ProjectPath,
@@ -376,21 +377,21 @@ namespace Meryel.UnityCodeAssist.Editor
 
         public void SendHandshake()
         {
-            var handshake = new Synchronizer.Model.Handshake();
+            var handshake = new Meryel.UnityCodeAssist.Synchronizer.Model.Handshake();
 
             SendAux(handshake);
         }
 
         public void SendRequestInternalLog()
         {
-            var requestInternalLog = new Synchronizer.Model.RequestInternalLog();
+            var requestInternalLog = new Meryel.UnityCodeAssist.Synchronizer.Model.RequestInternalLog();
 
             SendAux(requestInternalLog);
         }
 
         public void SendInternalLog()
         {
-            var internalLog = new Synchronizer.Model.InternalLog()
+            var internalLog = new Meryel.UnityCodeAssist.Synchronizer.Model.InternalLog()
             {
                 LogContent = Logger.ELogger.GetInternalLogContent(),
             };
@@ -401,7 +402,7 @@ namespace Meryel.UnityCodeAssist.Editor
 
         void SendStringArrayAux(string id, string[] array)
         {
-            var stringArray = new Synchronizer.Model.StringArray()
+            var stringArray = new Meryel.UnityCodeAssist.Synchronizer.Model.StringArray()
             {
                 Id = id,
                 Array = array,
@@ -412,14 +413,14 @@ namespace Meryel.UnityCodeAssist.Editor
 
         void SendStringArrayContainerAux(params (string id, string[] array)[] container)
         {
-            var stringArrayContainer = new Synchronizer.Model.StringArrayContainer()
+            var stringArrayContainer = new Meryel.UnityCodeAssist.Synchronizer.Model.StringArrayContainer()
             {
-                Container = new Synchronizer.Model.StringArray[container.Length],
+                Container = new Meryel.UnityCodeAssist.Synchronizer.Model.StringArray[container.Length],
             };
 
             for (int i = 0; i < container.Length; i++)
             {
-                stringArrayContainer.Container[i] = new Synchronizer.Model.StringArray
+                stringArrayContainer.Container[i] = new Meryel.UnityCodeAssist.Synchronizer.Model.StringArray
                 {
                     Id = container[i].id,
                     Array = container[i].array
@@ -428,7 +429,7 @@ namespace Meryel.UnityCodeAssist.Editor
         }
 
         public void SendTags(string[] tags) =>
-            SendStringArrayAux(Synchronizer.Model.Ids.Tags, tags);
+            SendStringArrayAux(Meryel.UnityCodeAssist.Synchronizer.Model.Ids.Tags, tags);
             
         /*
         {
@@ -462,8 +463,8 @@ namespace Meryel.UnityCodeAssist.Editor
             //SendStringArrayAux(Synchronizer.Model.Ids.Layers, layerNames);
             //SendStringArrayAux(Synchronizer.Model.Ids.LayerIndices, layerIndices);
             SendStringArrayContainerAux(
-                (Synchronizer.Model.Ids.Layers, layerNames),
-                (Synchronizer.Model.Ids.LayerIndices, layerIndices)
+                (Meryel.UnityCodeAssist.Synchronizer.Model.Ids.Layers, layerNames),
+                (Meryel.UnityCodeAssist.Synchronizer.Model.Ids.LayerIndices, layerIndices)
                 );
         }
 
@@ -474,15 +475,15 @@ namespace Meryel.UnityCodeAssist.Editor
             //SendStringArrayAux(Synchronizer.Model.Ids.SortingLayerValues, sortingLayerValues);
 
             SendStringArrayContainerAux(
-                (Synchronizer.Model.Ids.SortingLayers, sortingLayers),
-                (Synchronizer.Model.Ids.SortingLayerIds, sortingLayerIds),
-                (Synchronizer.Model.Ids.SortingLayerValues, sortingLayerValues)
+                (Meryel.UnityCodeAssist.Synchronizer.Model.Ids.SortingLayers, sortingLayers),
+                (Meryel.UnityCodeAssist.Synchronizer.Model.Ids.SortingLayerIds, sortingLayerIds),
+                (Meryel.UnityCodeAssist.Synchronizer.Model.Ids.SortingLayerValues, sortingLayerValues)
                 );
         }
 
         public void SendScriptMissing(string component)
         {
-            var scriptMissing = new Synchronizer.Model.ScriptMissing()
+            var scriptMissing = new Meryel.UnityCodeAssist.Synchronizer.Model.ScriptMissing()
             {
                 Component = component,
             };
@@ -528,7 +529,7 @@ namespace Meryel.UnityCodeAssist.Editor
 
         public void SendAnalyticsEvent(string type, string content)
         {
-            var dataOfAe = new Synchronizer.Model.AnalyticsEvent()
+            var dataOfAe = new Meryel.UnityCodeAssist.Synchronizer.Model.AnalyticsEvent()
             {
                 EventType = type,
                 EventContent = content
@@ -538,34 +539,34 @@ namespace Meryel.UnityCodeAssist.Editor
 
         public void SendErrorReport(string errorMessage, string stack, string type)
         {
-            var dataOfER = new Synchronizer.Model.ErrorReport()
+            var dataOfEr = new Meryel.UnityCodeAssist.Synchronizer.Model.ErrorReport()
             {
                 ErrorMessage = errorMessage,
                 ErrorStack = stack,
                 ErrorType = type,
             };
-            SendAux(dataOfER);
+            SendAux(dataOfEr);
         }
 
         public void SendRequestVerboseType(string type, string docPath)
         {
-            var dataOfRVT = new Synchronizer.Model.RequestVerboseType()
+            var dataOfRvt = new Meryel.UnityCodeAssist.Synchronizer.Model.RequestVerboseType()
             {
                 Type = type,
                 DocPath = docPath,
             };
-            SendAux(dataOfRVT);
+            SendAux(dataOfRvt);
         }
 
 
 
-        string Synchronizer.Model.IProcessor.Serialize<T>(T value)
+        string Meryel.UnityCodeAssist.Synchronizer.Model.IProcessor.Serialize<T>(T value)
         {
             //return System.Text.Json.JsonSerializer.Serialize<T>(value);
             //return Newtonsoft.Json.JsonConvert.SerializeObject(value);
             return SerializeObject(value);
         }
-        T Synchronizer.Model.IProcessor.Deserialize<T>(string data)
+        T Meryel.UnityCodeAssist.Synchronizer.Model.IProcessor.Deserialize<T>(string data)
         {
             //return System.Text.Json.JsonSerializer.Deserialize<T>(data)!;
             //return Newtonsoft.Json.JsonConvert.DeserializeObject<T>(data)!;
@@ -579,7 +580,7 @@ namespace Meryel.UnityCodeAssist.Editor
         //**--make sure all Synchronizer.Model.IProcessor.Process methods are thread-safe
 
         // a new client has connected
-        void Synchronizer.Model.IProcessor.Process(Synchronizer.Model.Connect connect)
+        void Meryel.UnityCodeAssist.Synchronizer.Model.IProcessor.Process(Meryel.UnityCodeAssist.Synchronizer.Model.Connect connect)
         {
             if (connect.ModelVersion != Self.ModelVersion)
             {
@@ -593,31 +594,31 @@ namespace Meryel.UnityCodeAssist.Editor
                 return;
             }
 
-            if (!clients.Any(c => c.ContactInfo == connect.ContactInfo))
+            if (!Clients.Any(c => c.ContactInfo == connect.ContactInfo))
             {
-                clients.Add(connect);
+                Clients.Add(connect);
             }
 
             SendHandshake();
-            if (ScriptFinder.GetActiveGameObject(out var activeGO))
-                SendGameObject(activeGO);
+            if (ScriptFinder.GetActiveGameObject(out var activeGo))
+                SendGameObject(activeGo);
             Assister.SendTagsAndLayers();
         }
 
         // a new client is online and requesting connection
-        void Synchronizer.Model.IProcessor.Process(Synchronizer.Model.RequestConnect requestConnect)
+        void Meryel.UnityCodeAssist.Synchronizer.Model.IProcessor.Process(Meryel.UnityCodeAssist.Synchronizer.Model.RequestConnect requestConnect)
         {
             SendConnect();
         }
-        void Synchronizer.Model.IProcessor.Process(Synchronizer.Model.Disconnect disconnect)
+        void Meryel.UnityCodeAssist.Synchronizer.Model.IProcessor.Process(Meryel.UnityCodeAssist.Synchronizer.Model.Disconnect disconnect)
         {
-            var client = clients.FirstOrDefault(c => c.ContactInfo == disconnect.ContactInfo);
+            var client = Clients.FirstOrDefault(c => c.ContactInfo == disconnect.ContactInfo);
             if (client == null)
                 return;
 
-            clients.Remove(client);
+            Clients.Remove(client);
         }
-        void Synchronizer.Model.IProcessor.Process(Synchronizer.Model.ConnectionInfo connectionInfo)
+        void Meryel.UnityCodeAssist.Synchronizer.Model.IProcessor.Process(Meryel.UnityCodeAssist.Synchronizer.Model.ConnectionInfo connectionInfo)
         {
             if (connectionInfo.ModelVersion != Self.ModelVersion)
             {
@@ -631,19 +632,19 @@ namespace Meryel.UnityCodeAssist.Editor
                 return;
             }
 
-            if (!clients.Any(c => c.ContactInfo == connectionInfo.ContactInfo))
+            if (!Clients.Any(c => c.ContactInfo == connectionInfo.ContactInfo))
             {
                 SendConnect();
             }
             else
             {
                 SendHandshake();
-                if (ScriptFinder.GetActiveGameObject(out var activeGO))
-                    SendGameObject(activeGO);
+                if (ScriptFinder.GetActiveGameObject(out var activeGo))
+                    SendGameObject(activeGo);
                 Assister.SendTagsAndLayers();
             }
         }
-        void Synchronizer.Model.IProcessor.Process(Synchronizer.Model.RequestConnectionInfo requestConnectionInfo)
+        void Meryel.UnityCodeAssist.Synchronizer.Model.IProcessor.Process(Meryel.UnityCodeAssist.Synchronizer.Model.RequestConnectionInfo requestConnectionInfo)
         {
             SendConnectionInfo();
         }
@@ -660,27 +661,27 @@ namespace Meryel.UnityCodeAssist.Editor
         {
 
         }*/
-        void Synchronizer.Model.IProcessor.Process(Synchronizer.Model.StringArray stringArray)
+        void Meryel.UnityCodeAssist.Synchronizer.Model.IProcessor.Process(Meryel.UnityCodeAssist.Synchronizer.Model.StringArray stringArray)
         {
             Serilog.Log.Warning("Unity/Server shouldn't call Synchronizer.Model.IProcessor.Process(Synchronizer.Model.StringArray)");
         }
 
-        void Synchronizer.Model.IProcessor.Process(Synchronizer.Model.StringArrayContainer stringArrayContainer)
+        void Meryel.UnityCodeAssist.Synchronizer.Model.IProcessor.Process(Meryel.UnityCodeAssist.Synchronizer.Model.StringArrayContainer stringArrayContainer)
         {
             Serilog.Log.Warning("Unity/Server shouldn't call Synchronizer.Model.IProcessor.Process(Synchronizer.Model.StringArrayContainer)");
         }
 
-        void Synchronizer.Model.IProcessor.Process(Synchronizer.Model.GameObject gameObject)
+        void Meryel.UnityCodeAssist.Synchronizer.Model.IProcessor.Process(Meryel.UnityCodeAssist.Synchronizer.Model.GameObject gameObject)
         {
             Serilog.Log.Warning("Unity/Server shouldn't call Synchronizer.Model.IProcessor.Process(Synchronizer.Model.GameObject)");
         }
 
-        void Synchronizer.Model.IProcessor.Process(Synchronizer.Model.ComponentData component)
+        void Meryel.UnityCodeAssist.Synchronizer.Model.IProcessor.Process(Meryel.UnityCodeAssist.Synchronizer.Model.ComponentData component)
         {
             Serilog.Log.Warning("Unity/Server shouldn't call Synchronizer.Model.IProcessor.Process(Synchronizer.Model.ComponentData)");
         }
 
-        void Synchronizer.Model.IProcessor.Process(Synchronizer.Model.RequestScript requestScript)
+        void Meryel.UnityCodeAssist.Synchronizer.Model.IProcessor.Process(Meryel.UnityCodeAssist.Synchronizer.Model.RequestScript requestScript)
         {
             if (requestScript.DeclaredTypes == null || requestScript.DeclaredTypes.Length == 0)
                 return;
@@ -705,38 +706,38 @@ namespace Meryel.UnityCodeAssist.Editor
             }
         }
 
-        void Synchronizer.Model.IProcessor.Process(Synchronizer.Model.ScriptMissing scriptMissing)
+        void Meryel.UnityCodeAssist.Synchronizer.Model.IProcessor.Process(Meryel.UnityCodeAssist.Synchronizer.Model.ScriptMissing scriptMissing)
         {
             Serilog.Log.Warning("Unity/Server shouldn't call Synchronizer.Model.IProcessor.Process(Synchronizer.Model.ScriptMissing)");
         }
 
 
-        void Synchronizer.Model.IProcessor.Process(Synchronizer.Model.Handshake handshake)
+        void Meryel.UnityCodeAssist.Synchronizer.Model.IProcessor.Process(Meryel.UnityCodeAssist.Synchronizer.Model.Handshake handshake)
         {
             // Do nothing
         }
 
-        void Synchronizer.Model.IProcessor.Process(Synchronizer.Model.RequestInternalLog requestInternalLog)
+        void Meryel.UnityCodeAssist.Synchronizer.Model.IProcessor.Process(Meryel.UnityCodeAssist.Synchronizer.Model.RequestInternalLog requestInternalLog)
         {
             SendInternalLog();
         }
 
-        void Synchronizer.Model.IProcessor.Process(Synchronizer.Model.InternalLog internalLog)
+        void Meryel.UnityCodeAssist.Synchronizer.Model.IProcessor.Process(Meryel.UnityCodeAssist.Synchronizer.Model.InternalLog internalLog)
         {
             Logger.ELogger.VsInternalLog = internalLog.LogContent;
         }
 
-        void Synchronizer.Model.IProcessor.Process(Synchronizer.Model.AnalyticsEvent analyticsEvent)
+        void Meryel.UnityCodeAssist.Synchronizer.Model.IProcessor.Process(Meryel.UnityCodeAssist.Synchronizer.Model.AnalyticsEvent analyticsEvent)
         {
             Serilog.Log.Warning("Unity/Server shouldn't call Synchronizer.Model.IProcessor.Process(Synchronizer.Model.AnalyticsEvent)");
         }
 
-        void Synchronizer.Model.IProcessor.Process(Synchronizer.Model.ErrorReport errorReport)
+        void Meryel.UnityCodeAssist.Synchronizer.Model.IProcessor.Process(Meryel.UnityCodeAssist.Synchronizer.Model.ErrorReport errorReport)
         {
             Serilog.Log.Warning("Unity/Server shouldn't call Synchronizer.Model.IProcessor.Process(Synchronizer.Model.ErrorReport)");
         }
 
-        void Synchronizer.Model.IProcessor.Process(Synchronizer.Model.RequestVerboseType requestVerboseType)
+        void Meryel.UnityCodeAssist.Synchronizer.Model.IProcessor.Process(Meryel.UnityCodeAssist.Synchronizer.Model.RequestVerboseType requestVerboseType)
         {
             Serilog.Log.Warning("Unity/Server shouldn't call Synchronizer.Model.IProcessor.Process(Synchronizer.Model.RequestVerboseType)");
         }

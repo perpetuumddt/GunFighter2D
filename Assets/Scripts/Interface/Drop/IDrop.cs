@@ -1,9 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public interface IDrop
+namespace Gunfighter.Interface.Drop
 {
-    public void DoDrop();
+    public interface IDrop
+    {
+        public void DoDrop();
     
+    }
 }

@@ -1,32 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-[CreateAssetMenu(fileName = "WeaponRangedData", menuName = "Data/Weapon Data/New Weapon Ranged Data")]
-public class WeaponRangedData : WeaponData
+namespace Gunfighter.ScriptableObjects.Data.Weapon
 {
-    [SerializeField]
-    private float _reloadTime;
-    public float ReloadTime => _reloadTime;
+    [CreateAssetMenu(fileName = "WeaponRangedData", menuName = "Data/Weapon Data/New Weapon Ranged Data")]
+    public class WeaponRangedData : WeaponData
+    {
+        [FormerlySerializedAs("_reloadTime")] [SerializeField]
+        private float reloadTime;
+        public float ReloadTime => reloadTime;
     
-    [SerializeField]
-    private int _ammoCountInClip;
-    public int AmmoCountInClip => _ammoCountInClip;
+        [FormerlySerializedAs("_ammoCountInClip")] [SerializeField]
+        private int ammoCountInClip;
+        public int AmmoCountInClip => ammoCountInClip;
 
 
-    [SerializeField]
-    private int _ammoMaxCount;
-    public int AmmoMaxCount => _ammoMaxCount;
+        [FormerlySerializedAs("_ammoMaxCount")] [SerializeField]
+        private int ammoMaxCount;
+        public int AmmoMaxCount => ammoMaxCount;
 
 
-    [SerializeField]
-    private int _spreadAngle;
-    public int SpreadAngle => _spreadAngle;
+        [FormerlySerializedAs("_spreadAngle")] [SerializeField]
+        private int spreadAngle;
+        public int SpreadAngle => spreadAngle;
 
 
-    [SerializeField] 
-    private int _bulletsInOneShot;
-    public int BulletsInOneShot => _bulletsInOneShot;
+        [FormerlySerializedAs("_bulletsInOneShot")] [SerializeField] 
+        private int bulletsInOneShot;
+        public int BulletsInOneShot => bulletsInOneShot;
 
+    }
 }

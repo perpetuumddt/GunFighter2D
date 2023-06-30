@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public interface IInteractor
+namespace Gunfighter.Interface.Interact
 {
-    void Interact(IInteractable interactable);
+    public interface IInteractor
+    {
+        void Interact(IInteractable interactable);
+    }
 }

@@ -1,13 +1,15 @@
-﻿using UnityEditor;
-using UnityEngine;
+﻿using UnityEngine;
 
-public interface IDetectable
+namespace Gunfighter.Interface.Detect
 {
-    //event ObjectDetectedHandler OnObjectDetectedEvent;
-    //event ObjectDetectedHandler OnObjectDetectedReleasedEvent;
+    public interface IDetectable
+    {
+        //event ObjectDetectedHandler OnObjectDetectedEvent;
+        //event ObjectDetectedHandler OnObjectDetectedReleasedEvent;
 
-    GameObject gameObject { get;}
+        GameObject GameObject { get;}
 
-    void Detected(GameObject detectionSource);
-    void DetectionReleased(GameObject detectionSource);
+        void Detected(GameObject detectionSource);
+        void DetectionReleased(GameObject detectionSource);
+    }
 }

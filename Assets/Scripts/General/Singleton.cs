@@ -1,29 +1,32 @@
 using UnityEngine;
+
 //https://www.youtube.com/watch?v=ErJgQY5smnw
-public abstract class Singleton<T> : MonoBehaviour where T : Component
+namespace Gunfighter.General
 {
-    private static T _instance;
-
-    private static bool _mApplicationIsQuitting = false;
-
-    public static T GetInstance()
+    public abstract class Singleton<T> : MonoBehaviour where T : Component
     {
-        if (_mApplicationIsQuitting) { return null; }
+        private static T _instance;
 
-        if (_instance == null)
+        private static bool _mApplicationIsQuitting = false;
+
+        public static T GetInstance()
         {
-            _instance = FindObjectOfType<T>();
+            if (_mApplicationIsQuitting) { return null; }
+
             if (_instance == null)
             {
-                GameObject obj = new GameObject();
-                obj.name = typeof(T).Name;
-                _instance = obj.AddComponent<T>();
+                _instance = FindObjectOfType<T>();
+                if (_instance == null)
+                {
+                    GameObject obj = new GameObject();
+                    obj.name = typeof(T).Name;
+                    _instance = obj.AddComponent<T>();
+                }
             }
+            return _instance;
         }
-        return _instance;
-    }
 
-    /* IMPORTANT!!! To use Awake in a derived class you need to do it this way
+        /* IMPORTANT!!! To use Awake in a derived class you need to do it this way
  * protected override void Awake()
  * {
  *     base.Awake();
@@ -31,22 +34,23 @@ public abstract class Singleton<T> : MonoBehaviour where T : Component
  * }
  * */
 
-    protected virtual void Awake()
-    {
-        if (_instance == null)
+        protected virtual void Awake()
         {
-            _instance = this as T;
-            DontDestroyOnLoad(gameObject);
+            if (_instance == null)
+            {
+                _instance = this as T;
+                DontDestroyOnLoad(gameObject);
+            }
+            else if (_instance != this as T)
+            {
+                Destroy(gameObject);
+            }
+            else { DontDestroyOnLoad(gameObject); }
         }
-        else if (_instance != this as T)
-        {
-            Destroy(gameObject);
-        }
-        else { DontDestroyOnLoad(gameObject); }
-    }
 
-    private void OnApplicationQuit()
-    {
-        _mApplicationIsQuitting = true;
+        private void OnApplicationQuit()
+        {
+            _mApplicationIsQuitting = true;
+        }
     }
 }

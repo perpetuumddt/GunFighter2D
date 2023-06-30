@@ -1,25 +1,28 @@
 ﻿using System;
-using UnityEditor;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class CharacterData : ScriptableObject
+namespace Gunfighter.ScriptableObjects.Data.Character
 {
-    [SerializeField]
-    private string _name;
-    public string Name => _name;
-
-    [SerializeField]
-    private int _defaultMaxHealth;
-    public int DefaultMaxHealth => _defaultMaxHealth;
-
-    [SerializeField]
-    private float _movementSpeed;
-    public float MovementSpeed => _movementSpeed;
-    
-    public event Action<CharacterData> OnDeath;
-
-    public void InvokeOnDeath(CharacterData data)
+    public class CharacterData : ScriptableObject
     {
-        OnDeath?.Invoke(data);
+        [FormerlySerializedAs("_name")] [SerializeField]
+        private string name;
+        public string Name => name;
+
+        [FormerlySerializedAs("_defaultMaxHealth")] [SerializeField]
+        private int defaultMaxHealth;
+        public int DefaultMaxHealth => defaultMaxHealth;
+
+        [FormerlySerializedAs("_movementSpeed")] [SerializeField]
+        private float movementSpeed;
+        public float MovementSpeed => movementSpeed;
+    
+        public event Action<CharacterData> OnDeath;
+
+        public void InvokeOnDeath(CharacterData data)
+        {
+            OnDeath?.Invoke(data);
+        }
     }
 }

@@ -1,8 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public class ReadOnlyInspectorAttribute : PropertyAttribute
+namespace Gunfighter.UnityEditor
 {
+    public class ReadOnlyInspectorAttribute : PropertyAttribute
+    {
     
+    }
 }

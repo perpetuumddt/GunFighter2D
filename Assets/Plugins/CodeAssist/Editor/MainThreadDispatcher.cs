@@ -1,35 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Concurrent;
-using UnityEngine;
-using UnityEditor;
-
-
 #nullable enable
 
 
-namespace Meryel.UnityCodeAssist.Editor
+using System.Collections.Concurrent;
+using UnityEditor;
+
+namespace Plugins.CodeAssist.Editor
 {
 
     [InitializeOnLoad]
     public static class MainThreadDispatcher
     {
-        readonly static ConcurrentBag<System.Action> actions;
+        readonly static ConcurrentBag<System.Action> Actions;
 
         static MainThreadDispatcher()
         {
-            actions = new ConcurrentBag<System.Action>();
+            Actions = new ConcurrentBag<System.Action>();
             EditorApplication.update += Update;
         }
 
         static void Update()
         {
-            while (actions.TryTake(out var action))
+            while (Actions.TryTake(out var action))
             {
                 action.Invoke();
             }
         }
 
-        public static void Add(System.Action action) => actions.Add(action);
+        public static void Add(System.Action action) => Actions.Add(action);
     }
 }

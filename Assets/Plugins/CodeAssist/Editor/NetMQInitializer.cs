@@ -1,19 +1,17 @@
-﻿using System;
-using UnityEngine;
+﻿#nullable enable
+
+
+using System;
 using UnityEditor;
 
-
-#nullable enable
-
-
-namespace Meryel.UnityCodeAssist.Editor
+namespace Plugins.CodeAssist.Editor
 {
     [InitializeOnLoad]
-    public static class NetMQInitializer
+    public static class NetMqInitializer
     {
-        public static NetMQPublisher? Publisher;
+        public static NetMqPublisher? Publisher;
         
-        static NetMQInitializer()
+        static NetMqInitializer()
         {
             EditorApplication.quitting += EditorApplication_quitting;
             AssemblyReloadEvents.beforeAssemblyReload += AssemblyReloadEvents_beforeAssemblyReload;
@@ -32,7 +30,7 @@ namespace Meryel.UnityCodeAssist.Editor
             NetMQ.NetMQConfig.Cleanup(true);
 
             Serilog.Log.Debug("NetMQ constructing");
-            Publisher = new NetMQPublisher();
+            Publisher = new NetMqPublisher();
             
             RunOnShutdown(OnShutDown);
             Serilog.Log.Debug("NetMQ initialized");
@@ -70,13 +68,13 @@ namespace Meryel.UnityCodeAssist.Editor
 
         private static void RunOnceOnUpdate(Action action)
         {
-            void callback()
+            void Callback()
             {
-                EditorApplication.update -= callback;
+                EditorApplication.update -= Callback;
                 action();
             }
 
-            EditorApplication.update += callback;
+            EditorApplication.update += Callback;
         }
 
         private static void RunOnShutdown(Action action)
