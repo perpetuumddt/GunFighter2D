@@ -5818,15 +5818,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f88f1386dd63147198d003daff00d37d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-<<<<<<< HEAD
-  screenResolution: {x: 1920, y: 1080}
-  internalResolution: {x: 427, y: 240}
-  upscaledResolution: {x: 2135, y: 1200}
-=======
   screenResolution: {x: 616, y: 347}
   internalResolution: {x: 426, y: 240}
   upscaledResolution: {x: 0, y: 0}
->>>>>>> 04e5e10d625cc84e86fa21ce46196f43b0ea7c57
   smooth: 0
   forceSquarePixels: 0
   pixels: {x: 320, y: 240}
@@ -5850,7 +5844,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _target: {fileID: 2009276173}
-  smoothing: 10
+  smoothing: 5
 --- !u!1 &600053577
 GameObject:
   m_ObjectHideFlags: 0
