@@ -4,7 +4,7 @@
  */
 
 //namespace Unity.EditorCoroutines.Editor
-namespace Meryel.UnityCodeAssist.Editor.EditorCoroutines
+namespace Plugins.CodeAssist.Editor.EditorCoroutines
 {
     /// <summary>
     /// Suspends the <see cref="EditorCoroutine">EditorCoroutine</see> execution for the given amount of seconds, using unscaled time. 

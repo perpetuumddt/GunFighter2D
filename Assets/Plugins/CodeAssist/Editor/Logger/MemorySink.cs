@@ -1,16 +1,14 @@
+#nullable enable
+
+
 using System;
 using System.Collections.Concurrent;
 using System.IO;
 using System.Text;
 using Serilog.Core;
 using Serilog.Events;
-using Serilog.Formatting;
 
-
-#nullable enable
-
-
-namespace Meryel.UnityCodeAssist.Editor.Logger
+namespace Plugins.CodeAssist.Editor.Logger
 {
     //**--
     // remove this in unity???
@@ -19,23 +17,23 @@ namespace Meryel.UnityCodeAssist.Editor.Logger
     // or maybe move it to a external process like com.unity.process-server
     public class MemorySink : ILogEventSink
     {
-        readonly ConcurrentQueue<LogEvent> logs;
-        readonly ConcurrentQueue<LogEvent[]> warningLogs;
-        readonly ConcurrentQueue<LogEvent[]> errorLogs;
+        readonly ConcurrentQueue<LogEvent> _logs;
+        readonly ConcurrentQueue<LogEvent[]> _warningLogs;
+        readonly ConcurrentQueue<LogEvent[]> _errorLogs;
 
-        const int logsLimit = 30;
-        const int warningLimit = 5;
-        const int errorLimit = 3;
+        const int LogsLimit = 30;
+        const int WarningLimit = 5;
+        const int ErrorLimit = 3;
 
-        readonly string outputTemplate;
+        readonly string _outputTemplate;
 
         public MemorySink(string outputTemplate)
         {
-            this.outputTemplate = outputTemplate;
+            this._outputTemplate = outputTemplate;
 
-            logs = new ConcurrentQueue<LogEvent>();
-            warningLogs = new ConcurrentQueue<LogEvent[]>();
-            errorLogs = new ConcurrentQueue<LogEvent[]>();
+            _logs = new ConcurrentQueue<LogEvent>();
+            _warningLogs = new ConcurrentQueue<LogEvent[]>();
+            _errorLogs = new ConcurrentQueue<LogEvent[]>();
         }
 
         public void Emit(LogEvent logEvent)
@@ -43,37 +41,37 @@ namespace Meryel.UnityCodeAssist.Editor.Logger
             if (logEvent == null)
                 return;
 
-            logs.Enqueue(logEvent);
-            if (logs.Count > logsLimit)
-                logs.TryDequeue(out _);
+            _logs.Enqueue(logEvent);
+            if (_logs.Count > LogsLimit)
+                _logs.TryDequeue(out _);
 
             if (logEvent.Level == LogEventLevel.Warning)
             {
-                var warningAndLeadingLogs = logs.ToArray();
-                warningLogs.Enqueue(warningAndLeadingLogs);
-                if (warningLogs.Count > warningLimit)
-                    warningLogs.TryDequeue(out _);
+                var warningAndLeadingLogs = _logs.ToArray();
+                _warningLogs.Enqueue(warningAndLeadingLogs);
+                if (_warningLogs.Count > WarningLimit)
+                    _warningLogs.TryDequeue(out _);
             }
 
             if (logEvent.Level == LogEventLevel.Error)
             {
-                var errorAndLeadingLogs = logs.ToArray();
-                errorLogs.Enqueue(errorAndLeadingLogs);
-                if (errorLogs.Count > errorLimit)
-                    errorLogs.TryDequeue(out _);
+                var errorAndLeadingLogs = _logs.ToArray();
+                _errorLogs.Enqueue(errorAndLeadingLogs);
+                if (_errorLogs.Count > ErrorLimit)
+                    _errorLogs.TryDequeue(out _);
             }
         }
 
-        public bool HasError => !errorLogs.IsEmpty;
-        public bool HasWarning => !warningLogs.IsEmpty;
-        public int ErrorCount => errorLogs.Count;
-        public int WarningCount => warningLogs.Count;
+        public bool HasError => !_errorLogs.IsEmpty;
+        public bool HasWarning => !_warningLogs.IsEmpty;
+        public int ErrorCount => _errorLogs.Count;
+        public int WarningCount => _warningLogs.Count;
 
         public string Export()
         {
             IFormatProvider? formatProvider = null;
             var formatter = new Serilog.Formatting.Display.MessageTemplateTextFormatter(
-                outputTemplate, formatProvider);
+                _outputTemplate, formatProvider);
 
             var result = string.Empty;
 
@@ -81,9 +79,9 @@ namespace Meryel.UnityCodeAssist.Editor.Logger
             {
                 var encoding = new UTF8Encoding(encoderShouldEmitUTF8Identifier: false);
                 using var output = new StreamWriter(outputStream, encoding);
-                if (!errorLogs.IsEmpty)
+                if (!_errorLogs.IsEmpty)
                 {
-                    var errorArray = errorLogs.ToArray();
+                    var errorArray = _errorLogs.ToArray();
                     foreach (var error in errorArray)
                     {
                         foreach (var logEvent in error)
@@ -93,9 +91,9 @@ namespace Meryel.UnityCodeAssist.Editor.Logger
                     }
                 }
 
-                if (!warningLogs.IsEmpty)
+                if (!_warningLogs.IsEmpty)
                 {
-                    var warningArray = warningLogs.ToArray();
+                    var warningArray = _warningLogs.ToArray();
                     foreach (var warning in warningArray)
                     {
                         foreach (var logEvent in warning)
@@ -105,9 +103,9 @@ namespace Meryel.UnityCodeAssist.Editor.Logger
                     }
                 }
 
-                if (!logs.IsEmpty)
+                if (!_logs.IsEmpty)
                 {
-                    var logArray = logs.ToArray();
+                    var logArray = _logs.ToArray();
                     foreach (var logEvent in logArray)
                     {
                         formatter.Format(logEvent, output);

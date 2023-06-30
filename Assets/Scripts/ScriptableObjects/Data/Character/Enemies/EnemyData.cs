@@ -1,14 +1,16 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-[CreateAssetMenu(fileName = "EnemyData", menuName = "Data/Character Data/New Enemy Data")]
-public class EnemyData : CharacterData
+namespace Gunfighter.ScriptableObjects.Data.Character.Enemies
 {
-    [SerializeField] private int _damage;
-    public int Damage => _damage;
+    [CreateAssetMenu(fileName = "EnemyData", menuName = "Data/Character Data/New Enemy Data")]
+    public class EnemyData : CharacterData
+    {
+        [FormerlySerializedAs("_damage")] [SerializeField] private int damage;
+        public int Damage => damage;
 
-    [SerializeField] private int _baseXpReward;
+        [FormerlySerializedAs("_baseXpReward")] [SerializeField] private int baseXpReward;
 
-    public int BaseXpReward => _baseXpReward;
+        public int BaseXpReward => baseXpReward;
+    }
 }

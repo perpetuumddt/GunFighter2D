@@ -1,28 +1,30 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-[CreateAssetMenu(fileName = "Wave Data", menuName = "Data/Level Data/New Wave Data")]
-
-public class WaveData : ScriptableObject
+namespace Gunfighter.ScriptableObjects.Data.Wave
 {
+    [CreateAssetMenu(fileName = "Wave Data", menuName = "Data/Level Data/New Wave Data")]
 
-    [Serializable]
-    public struct Enemies
+    public class WaveData : ScriptableObject
     {
-        public GameObject _enemyPrefab;
-        public int _enemyCount;
-        public float _spawnRate;
-    }
 
-    [Serializable]
-    public struct Waves
-    {
-        public int _counter;
-        public Enemies[] _enemies;
-        public float _waveDuration;
-    }
+        [Serializable]
+        public struct Enemies
+        {
+            [FormerlySerializedAs("_enemyPrefab")] public GameObject enemyPrefab;
+            [FormerlySerializedAs("_enemyCount")] public int enemyCount;
+            [FormerlySerializedAs("_spawnRate")] public float spawnRate;
+        }
 
-    public Waves[] _wave;
+        [Serializable]
+        public struct Waves
+        {
+            [FormerlySerializedAs("_counter")] public int counter;
+            [FormerlySerializedAs("_enemies")] public Enemies[] enemies;
+            [FormerlySerializedAs("_waveDuration")] public float waveDuration;
+        }
+
+        [FormerlySerializedAs("_wave")] public Waves[] wave;
+    }
 }

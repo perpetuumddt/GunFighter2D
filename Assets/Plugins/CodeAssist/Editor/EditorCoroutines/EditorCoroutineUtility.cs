@@ -7,7 +7,7 @@ using System.Collections;
 using UnityEngine;
 
 //namespace Unity.EditorCoroutines.Editor
-namespace Meryel.UnityCodeAssist.Editor.EditorCoroutines
+namespace Plugins.CodeAssist.Editor.EditorCoroutines
 {
     public static class EditorCoroutineUtility
     {

@@ -1,9 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using Gunfighter.SaveSystem;
 
-public interface IDataPersistence
+namespace Gunfighter.Interface.SaveSystem
 {
-    public void Save(ref GameSaveData gameSaveData);
-    public void Load(GameSaveData gameSaveData);
+    public interface IDataPersistence
+    {
+        public void Save(ref GameSaveData gameSaveData);
+        public void Load(GameSaveData gameSaveData);
+    }
 }

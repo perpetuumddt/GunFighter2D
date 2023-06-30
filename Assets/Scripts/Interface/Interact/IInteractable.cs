@@ -1,10 +1,9 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public interface IInteractable
+namespace Gunfighter.Interface.Interact
 {
-    void DoInteract();
-    void ActivateInteraction();
-    void DeactivateInteraction();
+    public interface IInteractable
+    {
+        void DoInteract();
+        void ActivateInteraction();
+        void DeactivateInteraction();
+    }
 }

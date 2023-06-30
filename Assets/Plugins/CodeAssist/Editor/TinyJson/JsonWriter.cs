@@ -9,7 +9,7 @@ using System.Runtime.Serialization;
 using System.Text;
 
 //namespace TinyJson
-namespace Meryel.UnityCodeAssist.Editor.TinyJson
+namespace Plugins.CodeAssist.Editor.TinyJson
 {
     //Really simple JSON writer
     //- Outputs JSON structures from an object

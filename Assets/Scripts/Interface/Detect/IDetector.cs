@@ -1,17 +1,18 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
-public delegate void ObjectDetectedHandler(GameObject sourse, GameObject detectedObject);
-
-public interface IDetector
+namespace Gunfighter.Interface.Detect
 {
-    event ObjectDetectedHandler OnObjectDetectedEvent;
-    event ObjectDetectedHandler OnObjectDetectioReleasedEvent;
+    public delegate void ObjectDetectedHandler(GameObject sourse, GameObject detectedObject);
 
-    void Detect(IDetectable detectableObject);
-    void Detect(GameObject detectedObject);
+    public interface IDetector
+    {
+        event ObjectDetectedHandler OnObjectDetectedEvent;
+        event ObjectDetectedHandler OnObjectDetectioReleasedEvent;
 
-    void ReleaseDetection(IDetectable detectableObject);
-    void ReleaseDetection(GameObject detectedObject);
+        void Detect(IDetectable detectableObject);
+        void Detect(GameObject detectedObject);
+
+        void ReleaseDetection(IDetectable detectableObject);
+        void ReleaseDetection(GameObject detectedObject);
+    }
 }

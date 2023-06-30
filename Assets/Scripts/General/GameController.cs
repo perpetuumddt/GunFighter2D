@@ -1,25 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+using Gunfighter.ScriptableObjects;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-public class GameController : MonoBehaviour
+namespace Gunfighter.General
 {
-    [SerializeField]
-    private ScriptableObjectBoolVariable _isPause;
-
-    private void OnEnable()
+    public class GameController : MonoBehaviour
     {
-        _isPause.OnVariableChanged += PauseGame;
-    }
+        [FormerlySerializedAs("_isPause")] [SerializeField]
+        private ScriptableObjectBoolVariable isPause;
 
-    private void OnDisable()
-    {
-        _isPause.OnVariableChanged -= PauseGame;
-    }
+        private void OnEnable()
+        {
+            isPause.OnVariableChanged += PauseGame;
+        }
 
-    private void PauseGame(bool isPause)
-    {
-        Time.timeScale = isPause ? 0f : 1f;
+        private void OnDisable()
+        {
+            isPause.OnVariableChanged -= PauseGame;
+        }
+
+        private void PauseGame(bool isPause)
+        {
+            Time.timeScale = isPause ? 0f : 1f;
+        }
     }
 }

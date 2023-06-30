@@ -1,75 +1,77 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PoolMono<T> where T : MonoBehaviour
+namespace Gunfighter.General.Objects_Pool
 {
-    public T prefab { get; }
-    public bool autoExpand { get; set; }
-    public Transform container { get; }
-
-    private List<T> pool;
-
-    public PoolMono(T prefab, int count)
-    { 
-        this.prefab = prefab;
-        this.container = null;
-
-        this.CreatePool(count);
-    }
-
-    public PoolMono(T prefab, int count, Transform container) 
+    public class PoolMono<T> where T : MonoBehaviour
     {
-        this.prefab = prefab;
-        this.container = container;
+        public T Prefab { get; }
+        public bool AutoExpand { get; set; }
+        public Transform Container { get; }
 
-        this.CreatePool(count);
-    }
+        private List<T> _pool;
 
-    private void CreatePool(int count)
-    {
-        this.pool = new List<T>();
+        public PoolMono(T prefab, int count)
+        { 
+            this.Prefab = prefab;
+            this.Container = null;
 
-        for(int i =0;i< count;i++) 
-        {
-            this.CreateObject();
+            this.CreatePool(count);
         }
-    }
 
-    private T CreateObject(bool isActiveByDefault = false)
-    {
-        var createdObject = UnityEngine.Object.Instantiate(this.prefab, this.container);
-        createdObject.gameObject.SetActive(isActiveByDefault);
-        this.pool.Add(createdObject);
-        return createdObject;
-    }
-
-    public bool HasFreeElement(out T element)
-    {
-        foreach(var mono in pool)
+        public PoolMono(T prefab, int count, Transform container) 
         {
-            if(!mono.gameObject.activeInHierarchy)
+            this.Prefab = prefab;
+            this.Container = container;
+
+            this.CreatePool(count);
+        }
+
+        private void CreatePool(int count)
+        {
+            this._pool = new List<T>();
+
+            for(int i =0;i< count;i++) 
             {
-                element = mono;
-                mono.gameObject.SetActive(true);
-                return true;
+                this.CreateObject();
             }
         }
-        element = null;
-        return false;
-    }
 
-    public T GetFreeElement()
-    {
-        if(this.HasFreeElement(out var element))
+        private T CreateObject(bool isActiveByDefault = false)
         {
-            return element;
+            var createdObject = UnityEngine.Object.Instantiate(this.Prefab, this.Container);
+            createdObject.gameObject.SetActive(isActiveByDefault);
+            this._pool.Add(createdObject);
+            return createdObject;
         }
-        if(this.autoExpand)
+
+        public bool HasFreeElement(out T element)
         {
-            return this.CreateObject(true);
+            foreach(var mono in _pool)
+            {
+                if(!mono.gameObject.activeInHierarchy)
+                {
+                    element = mono;
+                    mono.gameObject.SetActive(true);
+                    return true;
+                }
+            }
+            element = null;
+            return false;
         }
-        throw new Exception($"There is no free elements in pool of type {typeof(T)}");
+
+        public T GetFreeElement()
+        {
+            if(this.HasFreeElement(out var element))
+            {
+                return element;
+            }
+            if(this.AutoExpand)
+            {
+                return this.CreateObject(true);
+            }
+            throw new Exception($"There is no free elements in pool of type {typeof(T)}");
+        }
     }
 }

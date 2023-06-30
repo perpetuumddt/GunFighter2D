@@ -1,17 +1,12 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Linq;
-using UnityEngine;
-using UnityEditor;
-using UnityEditor.SceneManagement;
-
-
 #nullable enable
 
 
-namespace Meryel.UnityCodeAssist.Editor
+using System;
+using System.Reflection;
+using UnityEditor;
+using UnityEngine;
+
+namespace Plugins.CodeAssist.Editor
 {
 
     public class ScriptFinder //: MonoBehaviour
@@ -91,7 +86,7 @@ namespace Meryel.UnityCodeAssist.Editor
 
             var obj = GetObjectOfType(type, out var requestVerboseType);
             if (requestVerboseType)
-                NetMQInitializer.Publisher?.SendRequestVerboseType(typeName, docPath);
+                NetMqInitializer.Publisher?.SendRequestVerboseType(typeName, docPath);
 
             if (obj != null && obj is GameObject go)
             {
@@ -123,17 +118,17 @@ namespace Meryel.UnityCodeAssist.Editor
 
             UnityEngine.Object? obj;
 
-            obj = getObjectToSend(Selection.activeGameObject, type);
+            obj = GetObjectToSend(Selection.activeGameObject, type);
             if (obj != null)
                 return obj;
 
 
-            obj = getObjectToSend(Selection.activeTransform, type);
+            obj = GetObjectToSend(Selection.activeTransform, type);
             if (obj != null)
                 return obj;
 
 
-            obj = getObjectToSend(Selection.activeObject, type);
+            obj = GetObjectToSend(Selection.activeObject, type);
             if (obj != null)
                 return obj;
             
@@ -145,7 +140,7 @@ namespace Meryel.UnityCodeAssist.Editor
                 //**--sort
                 foreach (var filtered in filteredArray)
                 {
-                    obj = getObjectToSend(filtered, type);
+                    obj = GetObjectToSend(filtered, type);
                     if (obj != null)
                         return obj;
                 }
@@ -169,7 +164,7 @@ namespace Meryel.UnityCodeAssist.Editor
                 Serilog.Log.Warning(ex, "FindObjectOfType failed for {Type}, mb:{isMB}, so:{isSO}", type.ToString(), isMonoBehaviour, isScriptableObject);
             }
 
-            obj = getObjectToSend(obj, type);
+            obj = GetObjectToSend(obj, type);
             if (obj != null)
                 return obj;
 
@@ -192,7 +187,7 @@ namespace Meryel.UnityCodeAssist.Editor
                 //**--sort
                 foreach (var item in arr)
                 {
-                    obj = getObjectToSend(item, type);
+                    obj = GetObjectToSend(item, type);
                     if (obj != null)
                         return obj;
                 }
@@ -202,7 +197,7 @@ namespace Meryel.UnityCodeAssist.Editor
             return obj;
 
 
-            static UnityEngine.Object? getObjectToSend(UnityEngine.Object? obj, Type type)
+            static UnityEngine.Object? GetObjectToSend(UnityEngine.Object? obj, Type type)
             {
                 if (obj == null || !obj)
                     return null;
@@ -211,7 +206,7 @@ namespace Meryel.UnityCodeAssist.Editor
                 {
                     if (!go)
                         return null;
-                    if (isTypeComponent(type) && go.GetComponent(type) != null)
+                    if (IsTypeComponent(type) && go.GetComponent(type) != null)
                         return go;
                 }
                 else if (obj is Transform transform)
@@ -219,7 +214,7 @@ namespace Meryel.UnityCodeAssist.Editor
                     go = transform.gameObject;
                     if (!go)
                         return null;
-                    if (isTypeComponent(type) && go.GetComponent(type) != null)
+                    if (IsTypeComponent(type) && go.GetComponent(type) != null)
                         return go;
                 }
                 else if (obj is Component comp)
@@ -241,7 +236,7 @@ namespace Meryel.UnityCodeAssist.Editor
                 return null;
             }
 
-            static bool isTypeComponent(Type type)
+            static bool IsTypeComponent(Type type)
             {
                 var componentType = typeof(Component);//**--cache these types
                 if (type == componentType || type.IsSubclassOf(componentType))
@@ -258,14 +253,14 @@ namespace Meryel.UnityCodeAssist.Editor
             }
         }
 
-        public static void DENEMEEEE()
+        public static void Denemeeee()
         {
             //UnityEditor.SceneManagement.EditorSceneManager.all
             //AssetDatabase.get
 
-            foreach (var sceneGUID in AssetDatabase.FindAssets("t:Scene", new string[] { "Assets" }))
+            foreach (var sceneGuid in AssetDatabase.FindAssets("t:Scene", new string[] { "Assets" }))
             {
-                var scenePath = AssetDatabase.GUIDToAssetPath(sceneGUID);
+                var scenePath = AssetDatabase.GUIDToAssetPath(sceneGuid);
                 Debug.Log("scenePath: " + scenePath);
 
                 //EditorSceneManager.OpenScene(scenePath);
