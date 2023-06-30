@@ -1,8 +1,7 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public interface ICollectable
+namespace Interface.Collect
 {
-    void DoCollect();
+    public interface ICollectable
+    {
+        void DoCollect();
+    }
 }

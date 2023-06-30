@@ -5818,8 +5818,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f88f1386dd63147198d003daff00d37d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  screenResolution: {x: 616, y: 347}
-  internalResolution: {x: 426, y: 240}
+  screenResolution: {x: 584, y: 328}
+  internalResolution: {x: 427, y: 240}
   upscaledResolution: {x: 0, y: 0}
   smooth: 0
   forceSquarePixels: 0
@@ -5896,7 +5896,7 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 32
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 320.03897, y: 240}
+  m_ReferenceResolution: {x: 320.2376, y: 240}
   m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -6432,13 +6432,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1099291487}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 1193921177}
-  m_RootOrder: -1
+  m_Father: {fileID: 0}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1099291489
 MonoBehaviour:
@@ -6833,7 +6833,6 @@ Transform:
   - {fileID: 1898933207}
   - {fileID: 1386257307}
   - {fileID: 626545059}
-  - {fileID: 1099291488}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

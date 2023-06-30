@@ -1,14 +1,12 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-using UnityEditor;
-
-
 #nullable enable
 
 
-namespace Meryel.UnityCodeAssist.Editor
+using System.Collections;
+using System.Linq;
+using UnityEditor;
+using UnityEngine;
+
+namespace Plugins.CodeAssist.Editor
 {
     public class Assister
     {

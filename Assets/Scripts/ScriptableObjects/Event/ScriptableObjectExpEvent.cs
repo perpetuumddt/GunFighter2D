@@ -1,20 +1,24 @@
-using System.Collections;
-using System.Collections.Generic;
+using ScriptableObjects.Data.Character;
+using ScriptableObjects.Data.Character.Enemies;
 using UnityEngine;
 using UnityEngine.Events;
+using CharacterController = Entity.Character.Controller.CharacterController;
 
-[CreateAssetMenu(menuName = "Data/Event/Exp Event Channel")]
-public class ScriptableObjectExpEvent : ScriptableObject
+namespace ScriptableObjects.Event
 {
-    public UnityAction<int> OnEventRaised;
-
-    public void RaiseEvent(GameObject obj)
+    [CreateAssetMenu(menuName = "Data/Event/Exp Event Channel")]
+    public class ScriptableObjectExpEvent : ScriptableObject
     {
-        CharacterData charData = obj.GetComponent<CharacterController>().CharacterData;
-        int exp = ((EnemyData)charData).BaseXpReward;
-        if (OnEventRaised != null)
+        public UnityAction<int> OnEventRaised;
+
+        public void RaiseEvent(GameObject obj)
         {
-            OnEventRaised.Invoke(exp);
+            CharacterData charData = obj.GetComponent<CharacterController>().CharacterData;
+            int exp = ((EnemyData)charData).BaseXpReward;
+            if (OnEventRaised != null)
+            {
+                OnEventRaised.Invoke(exp);
+            }
         }
     }
 }

@@ -1,50 +1,53 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using Entity.Character.Enemy.EnemySpawner;
+using ScriptableObjects.Event;
 using UnityEngine;
 
-public class EnemyManager : MonoBehaviour
+namespace General
 {
-    [SerializeField]
-    EnemySpawner spawner;
+    public class EnemyManager : MonoBehaviour
+    {
+        [SerializeField]
+        EnemySpawner spawner;
 
-    [SerializeField]
-    private int _aliveEnemies = 0;
-    [SerializeField]
-    private int _deadEnemies = 0;
+        [SerializeField]
+        private int _aliveEnemies = 0;
+        [SerializeField]
+        private int _deadEnemies = 0;
 
-    [SerializeField] private ScriptableObjectExpEvent _expChannel;
+        [SerializeField] private ScriptableObjectExpEvent _expChannel;
 
-    public event Action<GameObject> OnEnemyDied;
+        public event Action<GameObject> OnEnemyDied;
     
 
-    private void OnEnable()
-    {
-        spawner.OnSpawn += EnemySpawned;
-        OnEnemyDied += EnemyDied;
-        OnEnemyDied += _expChannel.RaiseEvent;
-    }
+        private void OnEnable()
+        {
+            spawner.OnSpawn += EnemySpawned;
+            OnEnemyDied += EnemyDied;
+            OnEnemyDied += _expChannel.RaiseEvent;
+        }
 
-    private void OnDisable()
-    {
-        spawner.OnSpawn -= EnemySpawned;
-        OnEnemyDied -= EnemyDied;
-        OnEnemyDied -= _expChannel.RaiseEvent;
-    }
+        private void OnDisable()
+        {
+            spawner.OnSpawn -= EnemySpawned;
+            OnEnemyDied -= EnemyDied;
+            OnEnemyDied -= _expChannel.RaiseEvent;
+        }
 
-    private void EnemySpawned(GameObject obj)
-    {
-        _aliveEnemies+=1;
-    }
+        private void EnemySpawned(GameObject obj)
+        {
+            _aliveEnemies+=1;
+        }
 
-    private void EnemyDied(GameObject obj)
-    {
-        _aliveEnemies -= 1;
-        _deadEnemies += 1;
-    }
+        private void EnemyDied(GameObject obj)
+        {
+            _aliveEnemies -= 1;
+            _deadEnemies += 1;
+        }
 
-    public void InvokeOnEnemyDied(GameObject obj)
-    {
-        OnEnemyDied?.Invoke(obj);
-    }    
+        public void InvokeOnEnemyDied(GameObject obj)
+        {
+            OnEnemyDied?.Invoke(obj);
+        }    
+    }
 }

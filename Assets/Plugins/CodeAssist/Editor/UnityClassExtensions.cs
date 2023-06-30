@@ -1,15 +1,14 @@
-﻿using System;
+﻿#nullable enable
+
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using UnityEngine;
 using UnityEditor;
+using UnityEngine;
 
-
-#nullable enable
-
-
-namespace Meryel.UnityCodeAssist.Editor
+namespace Plugins.CodeAssist.Editor
 {
     internal static class UnityClassExtensions
     {
@@ -35,12 +34,12 @@ namespace Meryel.UnityCodeAssist.Editor
             return objectGuid;
         }
 
-        internal static Synchronizer.Model.GameObject? ToSyncModel(this GameObject go, int priority = 0)
+        internal static Meryel.UnityCodeAssist.Synchronizer.Model.GameObject? ToSyncModel(this GameObject go, int priority = 0)
         {
             if (!go)
                 return null;
 
-            var data = new Synchronizer.Model.GameObject()
+            var data = new Meryel.UnityCodeAssist.Synchronizer.Model.GameObject()
             {
                 Id = GetId(go),
 
@@ -95,12 +94,12 @@ namespace Meryel.UnityCodeAssist.Editor
             }*/
         }
 
-        internal static Synchronizer.Model.GameObject[]? ToSyncModelOfHierarchy(this GameObject go)
+        internal static Meryel.UnityCodeAssist.Synchronizer.Model.GameObject[]? ToSyncModelOfHierarchy(this GameObject go)
         {
             if (!go)
                 return null;
 
-            var list = new List<Synchronizer.Model.GameObject>();
+            var list = new List<Meryel.UnityCodeAssist.Synchronizer.Model.GameObject>();
 
             var parent = GetParentGO(go);
             if (parent != null && parent)
@@ -129,7 +128,7 @@ namespace Meryel.UnityCodeAssist.Editor
             return list.ToArray();
         }
 
-        internal static Synchronizer.Model.ComponentData[]? ToSyncModelOfComponents(this GameObject go)
+        internal static Meryel.UnityCodeAssist.Synchronizer.Model.ComponentData[]? ToSyncModelOfComponents(this GameObject go)
         {
             if (!go)
                 return null;
@@ -160,7 +159,7 @@ namespace Meryel.UnityCodeAssist.Editor
             */
         }
 
-        internal static Synchronizer.Model.ComponentData? ToSyncModel(this Component component, GameObject go)
+        internal static Meryel.UnityCodeAssist.Synchronizer.Model.ComponentData? ToSyncModel(this Component component, GameObject go)
         {
             if (!component || !go)
                 return null;
@@ -169,17 +168,17 @@ namespace Meryel.UnityCodeAssist.Editor
             var list = new List<(string, string)>();
             ShowFieldInfo(type, component, list);
 
-            var data = new Synchronizer.Model.ComponentData()
+            var data = new Meryel.UnityCodeAssist.Synchronizer.Model.ComponentData()
             {
                 GameObjectId = GetId(go),
                 Component = component.GetType().FullName,
-                Type = Synchronizer.Model.ComponentData.DataType.Component,
+                Type = Meryel.UnityCodeAssist.Synchronizer.Model.ComponentData.DataType.Component,
                 Data = list.ToArray(),
             };
             return data;
         }
 
-        internal static Synchronizer.Model.ComponentData? ToSyncModel(this ScriptableObject so)
+        internal static Meryel.UnityCodeAssist.Synchronizer.Model.ComponentData? ToSyncModel(this ScriptableObject so)
         {
             if (!so)
                 return null;
@@ -188,11 +187,11 @@ namespace Meryel.UnityCodeAssist.Editor
             var list = new List<(string, string)>();
             ShowFieldInfo(type, so, list);
 
-            var data = new Synchronizer.Model.ComponentData()
+            var data = new Meryel.UnityCodeAssist.Synchronizer.Model.ComponentData()
             {
                 GameObjectId = GetId(so),
                 Component = so.GetType().FullName,
-                Type = Synchronizer.Model.ComponentData.DataType.ScriptableObject,
+                Type = Meryel.UnityCodeAssist.Synchronizer.Model.ComponentData.DataType.ScriptableObject,
                 Data = list.ToArray(),
             };
             return data;

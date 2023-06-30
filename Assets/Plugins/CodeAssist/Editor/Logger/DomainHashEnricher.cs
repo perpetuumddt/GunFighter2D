@@ -1,15 +1,10 @@
-using System;
-using System.Linq;
-using Serilog;
-using Serilog.Core;
-using Serilog.Events;
-using Serilog.Configuration;
-
-
 #nullable enable
 
 
-namespace Meryel.UnityCodeAssist.Editor.Logger
+using Serilog.Core;
+using Serilog.Events;
+
+namespace Plugins.CodeAssist.Editor.Logger
 {
     public class DomainHashEnricher : ILogEventEnricher
     {

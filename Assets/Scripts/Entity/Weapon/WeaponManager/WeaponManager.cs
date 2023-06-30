@@ -1,0 +1,59 @@
+﻿using ScriptableObjects.Data.Weapon;
+using UnityEngine;
+
+namespace Entity.Weapon.WeaponManager
+{
+    public class WeaponManager : MonoBehaviour
+    {
+        [Header("Weapon Controller")]
+        [SerializeField]
+        private WeaponController _weaponController;
+
+        [Header("Current Weapon")]
+        [SerializeField]
+        private Weapon _currentWeapon;
+        [SerializeField]
+        protected WeaponData _currentWeaponData;
+
+        [Header("Spare Weapon")]
+        [SerializeField]
+        private Weapon _spareWeapon;
+        [SerializeField]
+        protected WeaponData _spareWeaponData;
+
+        [Header("Weapons")]
+        [SerializeField]
+        private Weapon[] _weapons;
+
+        public Weapon CurrentWeapon => _currentWeapon;
+        public Weapon SpareWeapon => _spareWeapon;
+
+        private void Awake()
+        {
+            _weaponController.SetupWeapon(_currentWeapon,_currentWeaponData);
+        }
+
+        public virtual void SwapWeapon()
+        {
+            _currentWeapon.Finilize();
+            Weapon buffWeapon = _currentWeapon;
+            WeaponData buffData = _currentWeaponData;
+
+            _currentWeapon = _spareWeapon;
+            _currentWeaponData = _spareWeaponData;
+
+            _weaponController.SetupWeapon(_currentWeapon, _currentWeaponData);
+
+            _spareWeapon = buffWeapon;
+            _spareWeaponData = buffData;    
+        }
+
+        public void ChangeWeapon(Weapon weapon,WeaponData weaponData)
+        {
+            _currentWeapon.Finilize();
+            _currentWeapon = weapon;
+            _currentWeaponData = weaponData;
+            _weaponController.SetupWeapon(_currentWeapon, _currentWeaponData);
+        }
+    }
+}

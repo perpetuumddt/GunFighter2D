@@ -1,6 +1,9 @@
 using System;
+using General;
 using UnityEngine;
 
+namespace SaveSystem
+{
     [System.Serializable]
     [ExecuteInEditMode]
     public class UniqueID : MonoBehaviour
@@ -29,4 +32,5 @@ using UnityEngine;
             idDatabase.Add(_id, this.gameObject);
         }
     }
+}
 

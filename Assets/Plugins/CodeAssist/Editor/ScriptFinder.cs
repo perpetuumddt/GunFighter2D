@@ -1,17 +1,12 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Reflection;
-using System.Linq;
-using UnityEngine;
-using UnityEditor;
-using UnityEditor.SceneManagement;
-
-
 #nullable enable
 
 
-namespace Meryel.UnityCodeAssist.Editor
+using System;
+using System.Reflection;
+using UnityEditor;
+using UnityEngine;
+
+namespace Plugins.CodeAssist.Editor
 {
 
     public class ScriptFinder //: MonoBehaviour

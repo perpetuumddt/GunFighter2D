@@ -1,16 +1,19 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-[CreateAssetMenu(menuName = "Data/Event/Int Event Channel")]
-public class ScriptableObjectIntEvent : ScriptableObject
+namespace ScriptableObjects.Event
 {
-    public UnityAction<int> OnEventRaised;
-
-    public void RaiseEvent(int value)
+    [CreateAssetMenu(menuName = "Data/Event/Int Event Channel")]
+    public class ScriptableObjectIntEvent : ScriptableObject
     {
-        if (OnEventRaised != null)
+        public UnityAction<int> OnEventRaised;
+
+        public void RaiseEvent(int value)
         {
-            OnEventRaised.Invoke(value);
+            if (OnEventRaised != null)
+            {
+                OnEventRaised.Invoke(value);
+            }
         }
     }
 }

@@ -1,9 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+using SaveSystem;
 
-public interface IDataPersistence
+namespace Interface.SaveSystem
 {
-    public void Save(ref GameSaveData gameSaveData);
-    public void Load(GameSaveData gameSaveData);
+    public interface IDataPersistence
+    {
+        public void Save(ref GameSaveData gameSaveData);
+        public void Load(GameSaveData gameSaveData);
+    }
 }

@@ -10,7 +10,7 @@ using UnityEditor;
 using UnityEngine;
 
 //namespace Unity.EditorCoroutines.Editor
-namespace Meryel.UnityCodeAssist.Editor.EditorCoroutines
+namespace Plugins.CodeAssist.Editor.EditorCoroutines
 {
     /// <summary>
     /// A handle to an EditorCoroutine, can be passed to <see cref="EditorCoroutineUtility">EditorCoroutineUtility</see> methods to control lifetime.

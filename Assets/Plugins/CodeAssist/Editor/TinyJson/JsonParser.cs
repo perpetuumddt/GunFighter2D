@@ -9,7 +9,7 @@ using System.Runtime.Serialization;
 using System.Text;
 
 //namespace TinyJson
-namespace Meryel.UnityCodeAssist.Editor.TinyJson
+namespace Plugins.CodeAssist.Editor.TinyJson
 {
     // Really simple JSON parser in ~300 lines
     // - Attempts to parse JSON files with minimal GC allocation

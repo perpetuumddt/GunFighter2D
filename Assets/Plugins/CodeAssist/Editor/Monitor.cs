@@ -1,16 +1,15 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using UnityEngine;
-using UnityEditor;
-using UnityEditor.SceneManagement;
-using UnityEngine.SceneManagement;
-
-
 #nullable enable
 
 
-namespace Meryel.UnityCodeAssist.Editor
+using System.Collections.Generic;
+using System.Linq;
+using Plugins.CodeAssist.Editor.Logger;
+using UnityEditor;
+using UnityEditor.SceneManagement;
+using UnityEngine;
+using UnityEngine.SceneManagement;
+
+namespace Plugins.CodeAssist.Editor
 {
 
     [InitializeOnLoad]

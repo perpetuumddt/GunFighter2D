@@ -1,22 +1,24 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
-[CreateAssetMenu(fileName = "Bool Variable", menuName = "Data/Variables/New Bool Variable")]
-
-public class ScriptableObjectBoolVariable : ScriptableObject
+namespace ScriptableObjects
 {
-    public event Action<bool> OnVariableChanged;
+    [CreateAssetMenu(fileName = "Bool Variable", menuName = "Data/Variables/New Bool Variable")]
 
-    [SerializeField]
-    private bool _variable;
-
-    public bool Variable => _variable;
-
-    public void ChangeVariable(bool variable)
+    public class ScriptableObjectBoolVariable : ScriptableObject
     {
-        _variable = variable;
-        OnVariableChanged?.Invoke(variable);
+        public event Action<bool> OnVariableChanged;
+
+        [FormerlySerializedAs("_variable")] [SerializeField]
+        private bool variable;
+
+        public bool Variable => variable;
+
+        public void ChangeVariable(bool variable)
+        {
+            this.variable = variable;
+            OnVariableChanged?.Invoke(variable);
+        }
     }
 }

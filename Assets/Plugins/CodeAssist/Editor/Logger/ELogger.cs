@@ -1,13 +1,12 @@
-using Serilog;
-using Serilog.Core;
-using UnityEngine;
-using UnityEditor;
-
-
 #nullable enable
 
 
-namespace Meryel.UnityCodeAssist.Editor.Logger
+using Serilog;
+using Serilog.Core;
+using UnityEditor;
+using UnityEngine;
+
+namespace Plugins.CodeAssist.Editor.Logger
 {
 
     [InitializeOnLoad]
@@ -73,7 +72,7 @@ namespace Meryel.UnityCodeAssist.Editor.Logger
         {
             var os = System.Runtime.InteropServices.RuntimeInformation.OSDescription;
             var assisterVersion = Assister.Version;
-            var syncModel = Synchronizer.Model.Utilities.Version;
+            var syncModel = Meryel.UnityCodeAssist.Synchronizer.Model.Utilities.Version;
             var hash = CommonTools.GetHashOfPath(solutionDir);
             Serilog.Log.Debug(
                 "Beginning logging {OS}, Unity {U}, Unity Code Assist {A}, Communication Protocol {SM}, Project: '{Dir}', Project Hash: {Hash}",

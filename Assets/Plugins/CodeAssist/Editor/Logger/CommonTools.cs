@@ -1,14 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Text;
 using static System.IO.Path;
 
 
 #nullable enable
 
 
-namespace Meryel.UnityCodeAssist.Editor
+namespace Plugins.CodeAssist.Editor.Logger
 {
     public static class CommonTools
     {

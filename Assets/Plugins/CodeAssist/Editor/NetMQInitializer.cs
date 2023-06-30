@@ -1,12 +1,10 @@
-﻿using System;
-using UnityEngine;
+﻿#nullable enable
+
+
+using System;
 using UnityEditor;
 
-
-#nullable enable
-
-
-namespace Meryel.UnityCodeAssist.Editor
+namespace Plugins.CodeAssist.Editor
 {
     [InitializeOnLoad]
     public static class NetMQInitializer

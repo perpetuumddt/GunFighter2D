@@ -1,25 +1,26 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
+using ScriptableObjects;
 using UnityEngine;
 
-public class GameController : MonoBehaviour
+namespace General
 {
-    [SerializeField]
-    private ScriptableObjectBoolVariable _isPause;
-
-    private void OnEnable()
+    public class GameController : MonoBehaviour
     {
-        _isPause.OnVariableChanged += PauseGame;
-    }
+        [SerializeField]
+        private ScriptableObjectBoolVariable _isPause;
 
-    private void OnDisable()
-    {
-        _isPause.OnVariableChanged -= PauseGame;
-    }
+        private void OnEnable()
+        {
+            _isPause.OnVariableChanged += PauseGame;
+        }
 
-    private void PauseGame(bool isPause)
-    {
-        Time.timeScale = isPause ? 0f : 1f;
+        private void OnDisable()
+        {
+            _isPause.OnVariableChanged -= PauseGame;
+        }
+
+        private void PauseGame(bool isPause)
+        {
+            Time.timeScale = isPause ? 0f : 1f;
+        }
     }
 }

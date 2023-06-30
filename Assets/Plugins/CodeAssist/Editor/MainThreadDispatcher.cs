@@ -1,14 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Collections.Concurrent;
-using UnityEngine;
-using UnityEditor;
-
-
 #nullable enable
 
 
-namespace Meryel.UnityCodeAssist.Editor
+using System.Collections.Concurrent;
+using UnityEditor;
+
+namespace Plugins.CodeAssist.Editor
 {
 
     [InitializeOnLoad]

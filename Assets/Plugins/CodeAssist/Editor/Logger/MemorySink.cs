@@ -1,16 +1,14 @@
+#nullable enable
+
+
 using System;
 using System.Collections.Concurrent;
 using System.IO;
 using System.Text;
 using Serilog.Core;
 using Serilog.Events;
-using Serilog.Formatting;
 
-
-#nullable enable
-
-
-namespace Meryel.UnityCodeAssist.Editor.Logger
+namespace Plugins.CodeAssist.Editor.Logger
 {
     //**--
     // remove this in unity???
