@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AmmoUIController : MonoBehaviour
+public class AmmoDisplayUIController : MonoBehaviour
 {
     [SerializeField]
     private GameObject _ammoUnitPrefab;
@@ -13,11 +13,11 @@ public class AmmoUIController : MonoBehaviour
     [SerializeField]
     private WeaponController _weaponController;
 
-    private AmmoController _ammoController;
+    private AmmoDisplayController _ammoDisplayController;
 
     private void Awake()
     {
-        _ammoController = new AmmoController(_ammoUnitPrefab, _containerElement);
+        _ammoDisplayController = new AmmoDisplayController(_ammoUnitPrefab, this.gameObject, _containerElement);
         SetupAmmo(((WeaponRanged)_weaponController.CurrentWeapon).AmmoLeftInClip);
     }
 
@@ -35,11 +35,11 @@ public class AmmoUIController : MonoBehaviour
 
     private void UpdateAmmo(int value)
     {
-        _ammoController.UpdateAmmoController(value);
+        _ammoDisplayController.UpdateDisplay(value);
     }
 
     private void SetupAmmo(int value)
     {
-        _ammoController.SetupAmmoController(value, this.gameObject);
+        _ammoDisplayController.SetupDisplay(value);
     }
 }

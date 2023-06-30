@@ -9,7 +9,6 @@ public class PlayerLevelContorllerTests
     public class AddExperience
     {
         private PlayerLevelController _lvlController;
-        private int lvl = 0;
 
         [SetUp]
         public void SetUp()

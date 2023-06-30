@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using UnityEngine;
 
 namespace Assets.Scripts.Enemy.EnemyController
@@ -10,25 +11,29 @@ namespace Assets.Scripts.Enemy.EnemyController
 
         private EnemyManager _enemyManager;
 
-        
+        private void Awake()
+        {
+            ChangeMaxHealth(_enemyData.DefaultMaxHealth);
+            CurrentHealth = _enemyData.DefaultMaxHealth;
+        }
+
         private void Start()
         {
             _enemyManager = GameObject.FindGameObjectWithTag("EnemyManager").GetComponent<EnemyManager>();
-            _currentHealth = _enemyData.Health;
-            UpdateHealth(_currentHealth);
+            
         }
 
         public override void TakeDamage(int damage)
         {
-            if(_currentHealth >0)
+            if (damage < 0) throw new ArgumentOutOfRangeException();
+            if(CurrentHealth >0)
             {
-                _currentHealth -= damage;
+                CurrentHealth -= damage;
                 if (_currentHealth <= 0)
                 {
                     InvokeOnHealthZero();
                     _enemyManager.InvokeOnEnemyDied(this.gameObject);
                 }
-                UpdateHealth(_currentHealth);
             }
         }
 
