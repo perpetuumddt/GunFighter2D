@@ -8,7 +8,7 @@ public class CharacterStatsController : MonoBehaviour
     private CharacterData _characterData;
     public CharacterData CharacterData => _characterData;
 
-    public float Health => _characterData.Health;
+    public float Health => _characterData.DefaultMaxHealth;
     public float MovementSpeed => _characterData.MovementSpeed;
 
 
