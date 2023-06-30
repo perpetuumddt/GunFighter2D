@@ -16,7 +16,7 @@ public class HealthBarUIController : MonoBehaviour
     private HealthBarController _healthBarController;
     private void Awake()
     {
-        _healthBarController = new HealthBarController(_heartPrefab);
+        _healthBarController = new HealthBarController(_heartPrefab,this.gameObject);
     }
 
     private void OnEnable()
@@ -32,7 +32,7 @@ public class HealthBarUIController : MonoBehaviour
 
     public void UpdateHealthBar(int _currentHealth)
     {
-        _healthBarController.SetupDisplay(_playerHealthController.MaxHealth,this.gameObject);
+        _healthBarController.SetupDisplay(_playerHealthController.MaxHealth);
         _healthBarController.UpdateDisplay(_currentHealth);
     }
 }

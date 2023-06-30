@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class HealthBarController : TilableDisplayController
 {
 
-    public HealthBarController(GameObject heartPrefab): base(heartPrefab)
+    public HealthBarController(GameObject heartPrefab, GameObject parentGameObj): base(heartPrefab, parentGameObj)
     {
 
     }

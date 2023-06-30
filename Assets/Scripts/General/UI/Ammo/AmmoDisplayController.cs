@@ -7,7 +7,7 @@ public class AmmoDisplayController : TilableDisplayController
 {
     
     protected GameObject _containerElement;
-    public AmmoDisplayController(GameObject unitPrefab, GameObject containerElement) : base(unitPrefab)
+    public AmmoDisplayController(GameObject unitPrefab, GameObject parentGameObject, GameObject containerElement) : base(unitPrefab, parentGameObject)
     {
         _containerElement = containerElement;
     }

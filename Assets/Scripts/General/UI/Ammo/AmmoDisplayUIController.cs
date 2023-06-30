@@ -17,7 +17,7 @@ public class AmmoDisplayUIController : MonoBehaviour
 
     private void Awake()
     {
-        _ammoDisplayController = new AmmoDisplayController(_ammoUnitPrefab, _containerElement);
+        _ammoDisplayController = new AmmoDisplayController(_ammoUnitPrefab, this.gameObject, _containerElement);
         SetupAmmo(((WeaponRanged)_weaponController.CurrentWeapon).AmmoLeftInClip);
     }
 
@@ -40,6 +40,6 @@ public class AmmoDisplayUIController : MonoBehaviour
 
     private void SetupAmmo(int value)
     {
-        _ammoDisplayController.SetupDisplay(value, this.gameObject);
+        _ammoDisplayController.SetupDisplay(value);
     }
 }
