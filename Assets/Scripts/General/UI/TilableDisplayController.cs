@@ -13,6 +13,8 @@ public class TilableDisplayController
         _unitPrefab = unitPrefab;
     }
 
+    public int GetAmmountOfUnits => _units.Length;
+
     public void UpdateDisplay(int value)
     {
         for(int i = _units.Length-1; i >= 0; i--) 
@@ -58,6 +60,7 @@ public class TilableDisplayController
 
             SetupUnit(i);
         }
+        
     }
 
     protected virtual void SetupUnit(int i)

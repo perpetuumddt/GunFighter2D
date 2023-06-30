@@ -9,8 +9,8 @@ public class CharacterData : ScriptableObject
     public string Name => _name;
 
     [SerializeField]
-    private int _health;
-    public int Health => _health;
+    private int _defaultMaxHealth;
+    public int DefaultMaxHealth => _defaultMaxHealth;
 
     [SerializeField]
     private float _movementSpeed;

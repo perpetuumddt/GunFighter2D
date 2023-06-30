@@ -21,7 +21,7 @@ public class HealthBarUIController : MonoBehaviour
 
     private void OnEnable()
     {
-        UpdateHealthBar(_playerHealthController._playerData.Health);
+        UpdateHealthBar(_playerHealthController._playerData.DefaultMaxHealth);
         _playerHealthController.OnUpdateHealth += UpdateHealthBar;
     }
 
@@ -32,6 +32,7 @@ public class HealthBarUIController : MonoBehaviour
 
     public void UpdateHealthBar(int _currentHealth)
     {
-        _healthBarController.UpdateHealthBar(_currentHealth,this.gameObject);
+        _healthBarController.SetupDisplay(_playerHealthController.MaxHealth,this.gameObject);
+        _healthBarController.UpdateDisplay(_currentHealth);
     }
 }

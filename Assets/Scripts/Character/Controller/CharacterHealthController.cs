@@ -12,13 +12,14 @@ public class CharacterHealthController : MonoBehaviour, IDamageable, ICharacterH
         get => _currentHealth;
         set
         {
-            if(value < 0)throw new ArgumentOutOfRangeException();
+            if(value < 0) _currentHealth = 0;
+            else if (value > MaxHealth) _currentHealth = MaxHealth;
             _currentHealth = value;
-            OnUpdateHealth?.Invoke(_currentHealth);
+            UpdateHealth(_currentHealth);
         }
     }
 
-    protected int MaxHealth => _maxHealth;
+    public int MaxHealth => _maxHealth;
 
     public event Action<bool> OnHealthZero;
     public event Action<int> OnUpdateHealth;
@@ -32,8 +33,8 @@ public class CharacterHealthController : MonoBehaviour, IDamageable, ICharacterH
     {
         if (newMaxHealth < 0) throw new ArgumentOutOfRangeException();
         _maxHealth = newMaxHealth;
-        if (CurrentHealth > _maxHealth) CurrentHealth = _maxHealth;
         OnMaxHealthChange?.Invoke(_maxHealth);
+        if (CurrentHealth > _maxHealth) CurrentHealth = _maxHealth;
     }
 
     public virtual void DestroyOnDeath()

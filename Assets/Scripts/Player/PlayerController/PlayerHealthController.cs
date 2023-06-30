@@ -14,10 +14,10 @@ public class PlayerHealthController : CharacterHealthController
     public PlayerData _playerData;
 
 
-    private void Start()
+    private void Awake()
     {
-        _currentHealth = (int)_playerData.Health;
-        UpdateHealth(CurrentHealth);
+        ChangeMaxHealth(_playerData.DefaultMaxHealth);
+        CurrentHealth = _playerData.DefaultMaxHealth;
     }
 
 
