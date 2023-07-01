@@ -8,37 +8,14 @@ namespace Gunfighter.Entity.Character.Controller
 {
     public class CharacterController : MonoBehaviour
     {
-        [FormerlySerializedAs("_characterAnimationController")] [SerializeField]
-        private CharacterAnimationController characterAnimationController;
-        public CharacterAnimationController CharacterAnimationController => characterAnimationController;
-
-        [FormerlySerializedAs("_characterMovementController")] [SerializeField]
-        private CharacterMovementController characterMovementController;
-        public CharacterMovementController CharacterMovementController => characterMovementController;
-
-        [FormerlySerializedAs("_characterInputHandler")] [SerializeField]
-        private CharacterInputHandler characterInputHandler;
-        public CharacterInputHandler CharacterInputHandler => characterInputHandler;
-
-        [FormerlySerializedAs("_characterAttackController")] [SerializeField]
-        private CharacterAttackController characterAttackController;
-        public CharacterAttackController CharacterAttackController => characterAttackController;
-
-        [FormerlySerializedAs("_characterRotationController")] [SerializeField]
-        private CharacterRotationController characterRotationController;
-        public CharacterRotationController CharacterRotationController => characterRotationController;
-
-        [FormerlySerializedAs("_characterHealthController")] [SerializeField]
-        private CharacterHealthController characterHealthController;
-        public CharacterHealthController CharacterHealthController => characterHealthController;
-
-        [FormerlySerializedAs("_characterDropController")] [SerializeField]
-        private CharacterDropController characterDropController;
-        public CharacterDropController CharacterDropController => characterDropController;
-
-        [FormerlySerializedAs("_characterCollectorController")] [SerializeField]
-        private CharacterCollectorController characterCollectorController;
-        public CharacterCollectorController CharacterCollectorController => characterCollectorController;
+        public CharacterAnimationController CharacterAnimationController { get; private set; }
+        public CharacterAttackController CharacterAttackController { get; private set; }
+        public CharacterCollectorController CharacterCollectorController { get; private set; }
+        public CharacterDropController CharacterDropController { get; private set; }
+        public CharacterHealthController CharacterHealthController { get; private set; }
+        public CharacterInputHandler CharacterInputHandler { get; private set; }
+        public CharacterMovementController CharacterMovementController { get; private set; }
+        public CharacterRotationController CharacterRotationController { get; private set; }
 
 
         [SerializeField] 
@@ -50,7 +27,14 @@ namespace Gunfighter.Entity.Character.Controller
 
         protected virtual void Awake()
         {
-            
+            CharacterAnimationController = GetComponent<CharacterAnimationController>();
+            CharacterAttackController = GetComponent<CharacterAttackController>();
+            CharacterCollectorController = GetComponent<CharacterCollectorController>();
+            CharacterDropController = GetComponent<CharacterDropController>();
+            CharacterHealthController = GetComponent<CharacterHealthController>();
+            CharacterInputHandler = GetComponent<CharacterInputHandler>();
+            CharacterMovementController = GetComponent<CharacterMovementController>();
+            CharacterRotationController = GetComponent<CharacterRotationController>();
         }
     }
 }

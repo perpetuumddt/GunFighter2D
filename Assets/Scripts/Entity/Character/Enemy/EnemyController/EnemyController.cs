@@ -8,8 +8,9 @@ namespace Gunfighter.Entity.Character.Enemy.EnemyController
     public class EnemyController : CharacterController
     {
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             StateMachine = new StateMachine<CharacterController>();
             StateMachine.CurrentState = new EnemyWalkState(this, StateMachine);
             
