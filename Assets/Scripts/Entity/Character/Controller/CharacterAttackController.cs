@@ -5,8 +5,11 @@ namespace Gunfighter.Entity.Character.Controller
 {
     public class CharacterAttackController : MonoBehaviour
     {
-        private void Awake()
+        protected CharacterController characterController;
+        
+        protected virtual void Awake()
         {
+            characterController = GetComponent<CharacterController>();
             Initialize();
         }
 

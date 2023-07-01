@@ -9,19 +9,18 @@ namespace Gunfighter.Entity.Character.Enemy.EnemyController
 {
     public class EnemyHealthController : CharacterHealthController
     {
-        [FormerlySerializedAs("_enemyData")] [SerializeField]
-        private EnemyData enemyData;
+        
+        private EnemyData _enemyData;
 
         private EnemyManager _enemyManager;
 
-        private void Awake()
-        {
-            ChangeMaxHealth(enemyData.DefaultMaxHealth);
-            CurrentHealth = enemyData.DefaultMaxHealth;
-        }
+        
 
         private void Start()
         {
+            _enemyData = (EnemyData)characterController.CharacterData;
+            ChangeMaxHealth(_enemyData.DefaultMaxHealth);
+            CurrentHealth = _enemyData.DefaultMaxHealth;
             _enemyManager = GameObject.FindGameObjectWithTag("EnemyManager").GetComponent<EnemyManager>();
             
         }

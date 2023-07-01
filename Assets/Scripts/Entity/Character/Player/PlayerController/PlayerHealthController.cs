@@ -4,6 +4,7 @@ using Gunfighter.Entity.Character.Controller;
 using Gunfighter.ScriptableObjects.Data.Character.Player;
 using UnityEngine;
 using UnityEngine.Serialization;
+using CharacterController = Gunfighter.Entity.Character.Controller.CharacterController;
 
 namespace Gunfighter.Entity.Character.Player.PlayerController
 {
@@ -12,15 +13,13 @@ namespace Gunfighter.Entity.Character.Player.PlayerController
         private float _invincibilityDurationSeconds = 1.5f;
         private float _invincibilityDeltaTime = 0.15f;
         private bool _isInvincible;
-    
-        [FormerlySerializedAs("_playerData")] [SerializeField]
-        public PlayerData playerData;
+        
 
 
-        private void Awake()
+        private void Start()
         {
-            ChangeMaxHealth(playerData.DefaultMaxHealth);
-            CurrentHealth = playerData.DefaultMaxHealth;
+            ChangeMaxHealth(characterController.CharacterData.DefaultMaxHealth);
+            CurrentHealth = MaxHealth;
         }
 
 

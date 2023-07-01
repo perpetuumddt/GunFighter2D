@@ -10,7 +10,7 @@ namespace Gunfighter.Entity.Character.Player.PlayerController
         public override void SetActiveBoolAnim(string parameter, bool isActive)
         {
             base.SetActiveBoolAnim(parameter, isActive);
-            animator.SetBool(parameter, isActive);
+            _animator.SetBool(parameter, isActive);
         }
     }
 }

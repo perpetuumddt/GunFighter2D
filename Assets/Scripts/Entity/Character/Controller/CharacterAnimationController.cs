@@ -1,13 +1,18 @@
+using System;
 using UnityEngine;
 
 namespace Gunfighter.Entity.Character.Controller
 {
     public class CharacterAnimationController : MonoBehaviour
     {
-        [SerializeField]
-        protected Animator animator;
+        protected Animator _animator;
 
-        public Animator Animator => animator;
+        private void Awake()
+        {
+            _animator = GetComponent<Animator>();
+        }
+
+        public Animator Animator => _animator;
 
         public virtual void SetActiveBoolAnim(string parameter, bool isActive)
         {

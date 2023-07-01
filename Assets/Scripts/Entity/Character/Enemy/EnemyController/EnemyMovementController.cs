@@ -12,7 +12,7 @@ namespace Gunfighter.Entity.Character.Enemy.EnemyController
         [SerializeField]
         private Transform targetPositionTransform;
 
-        [FormerlySerializedAs("_enemyData")] [SerializeField]
+        
         private EnemyData enemyData;
 
         private NavMeshAgent _agent;
@@ -20,6 +20,7 @@ namespace Gunfighter.Entity.Character.Enemy.EnemyController
         private bool _isMoving;
         private void Start()
         {
+            enemyData = (EnemyData)characterController.CharacterData;
             _agent = GetComponent<NavMeshAgent>();
             _agent.updateRotation = false;
             _agent.updateUpAxis = false;

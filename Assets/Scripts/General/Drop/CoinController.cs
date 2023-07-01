@@ -46,7 +46,8 @@ namespace Gunfighter.General.Drop
             spriteRenderer.enabled = false;
             collectedPS.Play();
             await Task.Delay(1000);
-            this.gameObject.SetActive(false);
+            if(this != null)
+                this.gameObject.SetActive(false);
         }
 
         private void MoveTowardsDetector(Vector2 moveDestination)

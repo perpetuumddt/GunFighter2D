@@ -9,6 +9,7 @@ namespace Gunfighter.Entity.Character.Enemy.States
 {
     public class EnemyDeathState : CharacterDeathState
     {
+        private readonly float _waitAfterAnimationFinishedTime = 0.3f;
         public EnemyDeathState(CharacterController data, StateMachine<CharacterController> machine) : base(data, machine)
         {
         }
@@ -34,7 +35,7 @@ namespace Gunfighter.Entity.Character.Enemy.States
             // Wait for death animation to finish
             yield return new WaitForAnimationToFinish(Data.CharacterAnimationController.Animator);
             // Wait for a little time before exiting state, to see dead enemy
-            yield return new WaitForSeconds(0.3f);
+            yield return new WaitForSeconds(_waitAfterAnimationFinishedTime);
             StopExecution();
         }
 

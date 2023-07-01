@@ -1,3 +1,4 @@
+using System;
 using Gunfighter.Entity.Character.StateMachine;
 using Gunfighter.ScriptableObjects.Data.Character;
 using UnityEngine;
@@ -40,13 +41,16 @@ namespace Gunfighter.Entity.Character.Controller
         public CharacterCollectorController CharacterCollectorController => characterCollectorController;
 
 
-        [FormerlySerializedAs("_characterData")] [SerializeField] 
+        [SerializeField] 
         private CharacterData characterData;
 
         public CharacterData CharacterData => characterData;
     
         protected StateMachine<CharacterController> StateMachine;
 
-    
+        protected virtual void Awake()
+        {
+            
+        }
     }
 }
