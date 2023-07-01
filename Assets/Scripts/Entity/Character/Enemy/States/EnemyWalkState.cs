@@ -1,5 +1,6 @@
 using Gunfighter.Entity.Character.StateMachine;
 using Gunfighter.Entity.Character.StateMachine.States;
+using UnityEngine;
 using CharacterController = Gunfighter.Entity.Character.Controller.CharacterController;
 
 namespace Gunfighter.Entity.Character.Enemy.States
@@ -12,12 +13,12 @@ namespace Gunfighter.Entity.Character.Enemy.States
         public override void Initialize(params object[] param)
         {
             base.Initialize(param);
+            StateMachine.CurrentState.Data.CharacterMovementController.DoMove(true);
             StateMachine.CurrentState.Data.CharacterHealthController.OnHealthZero += SwitchStateDeath;
         }
         public override void Execute()
         {
             base.Execute();
-            StateMachine.CurrentState.Data.CharacterMovementController.DoMove(true);
         }
 
         public override void StopExecution()

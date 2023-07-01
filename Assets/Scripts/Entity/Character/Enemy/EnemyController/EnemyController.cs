@@ -13,6 +13,11 @@ namespace Gunfighter.Entity.Character.Enemy.EnemyController
             StateMachine = new StateMachine<CharacterController>();
             StateMachine.CurrentState = new EnemyWalkState(this, StateMachine);
             StateMachine.CurrentState.Initialize();
+        }
+
+        private void Update()
+        {
+            
             StateMachine.CurrentState.Execute();
         }
     }
