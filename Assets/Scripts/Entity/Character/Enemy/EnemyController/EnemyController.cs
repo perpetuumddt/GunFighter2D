@@ -1,17 +1,29 @@
+using System;
 using Gunfighter.Entity.Character.Enemy.States;
 using Gunfighter.Entity.Character.StateMachine;
-using CharacterController = Gunfighter.Entity.Character.Controller.CharacterController;
+using Gunfighter.Entity.Character.Controller;
 
 namespace Gunfighter.Entity.Character.Enemy.EnemyController
 {
-    public class EnemyController : Controller.CharacterController
+    public class EnemyController : CharacterController
     {
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             StateMachine = new StateMachine<CharacterController>();
             StateMachine.CurrentState = new EnemyWalkState(this, StateMachine);
+            
+        }
+
+        private void Start()
+        {
             StateMachine.CurrentState.Initialize();
+        }
+
+        private void Update()
+        {
+            
             StateMachine.CurrentState.Execute();
         }
     }

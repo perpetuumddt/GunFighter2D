@@ -2,6 +2,7 @@ using Gunfighter.Entity.Character.Player.Input;
 using Gunfighter.Entity.Character.StateMachine;
 using Gunfighter.Entity.Character.StateMachine.States;
 using Gunfighter.Entity.Weapon;
+using UnityEngine;
 using CharacterController = Gunfighter.Entity.Character.Controller.CharacterController;
 
 namespace Gunfighter.Entity.Character.Player.States
@@ -32,6 +33,7 @@ namespace Gunfighter.Entity.Character.Player.States
 
         public override void Initialize(params object[] param)
         {
+            
             base.Initialize(param);
             StateMachine.CurrentState.Data.CharacterInputHandler.OnRoll += SwichStateRoll;
             StateMachine.CurrentState.Data.CharacterInputHandler.OnMove += SwichStateIdle;

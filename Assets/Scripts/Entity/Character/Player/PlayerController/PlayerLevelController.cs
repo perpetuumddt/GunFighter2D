@@ -1,11 +1,18 @@
 using System;
 using Gunfighter.ScriptableObjects.Data.Character.Player;
+using Gunfighter.ScriptableObjects.Event;
 using UnityEngine;
+using CharacterController = Gunfighter.Entity.Character.Controller.CharacterController;
 
 namespace Gunfighter.Entity.Character.Player.PlayerController
 {
-    public class PlayerLevelController
+    public class PlayerLevelController: MonoBehaviour
     {
+        [SerializeField] private ScriptableObjectExpEvent expIncomingChannel;
+        [SerializeField] private ScriptableObjectTwoIntEvent onExpChangedChannel; 
+        [SerializeField] private ScriptableObjectIntEvent onLevelUpChannel;
+
+        private CharacterController _characterController;
         private PlayerData _playerData;
         private int _level;
         private int _experience;
@@ -14,12 +21,31 @@ namespace Gunfighter.Entity.Character.Player.PlayerController
         public int Level => _level;
         public int Experience => _experience;
 
-        public PlayerLevelController(PlayerData playerData, int level, int exp)
+        private void Awake()
         {
-            _playerData = playerData;
-            _level = level;
-            _experience = exp;
+            _characterController = GetComponent<CharacterController>();
+            
             OnLevelUp += PrintLvl;
+        }
+
+        private void Start()
+        {
+            _playerData = (PlayerData)_characterController.CharacterData;
+            SetLevelAndExperience(1,0);
+        }
+
+        private void OnEnable()
+        {
+            expIncomingChannel.EventRaised += AddExperience;
+            OnExperienceChange += onExpChangedChannel.RaiseEvent;
+            OnLevelUp += onLevelUpChannel.RaiseEvent;
+        }
+
+        private void OnDisable()
+        {
+            expIncomingChannel.EventRaised -= AddExperience;
+            OnExperienceChange -= onExpChangedChannel.RaiseEvent;
+            OnLevelUp -= onLevelUpChannel.RaiseEvent;
         }
 
         public void PrintLvl(int lvl)
@@ -66,6 +92,11 @@ namespace Gunfighter.Entity.Character.Player.PlayerController
                 int absoluteExperienceToNextLvl = (int)_playerData.ExperienceLevelDistribution.Evaluate(Level + 1);
                 return absoluteExperienceToNextLvl - (absoluteExperienceToCurrentLvl + _experience);
             }
+        }
+
+        public void SetPlayerData(PlayerData playerData)
+        {
+            _playerData = playerData;
         }
     }
 }

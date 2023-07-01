@@ -5724,7 +5724,7 @@ GameObject:
   - component: {fileID: 519420031}
   - component: {fileID: 519420029}
   - component: {fileID: 519420034}
-  - component: {fileID: 519420035}
+  - component: {fileID: 519420033}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -5806,6 +5806,31 @@ Transform:
   m_Father: {fileID: 1193921177}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &519420033
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 519420028}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f88f1386dd63147198d003daff00d37d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  screenResolution: {x: 582, y: 328}
+  internalResolution: {x: 426, y: 240}
+  upscaledResolution: {x: 0, y: 0}
+  smooth: 0
+  forceSquarePixels: 0
+  pixels: {x: 320, y: 240}
+  pixelsPerUnit: 32
+  requireStencilBuffer: 0
+  useUpscaleShader: 1
+  upscaleMaterial: {fileID: 2100000, guid: 6de3dd6a2ea7941c6aa915f6353a2a98, type: 2}
+  finalBlitStretch: {x: 1, y: 1}
+  mainCamera: {fileID: 519420031}
+  mainCanvas: {fileID: 600053580}
 --- !u!114 &519420034
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5820,31 +5845,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   target: {fileID: 2009276173}
   smoothing: 5
---- !u!114 &519420035
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519420028}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f88f1386dd63147198d003daff00d37d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  screenResolution: {x: 1920, y: 1080}
-  internalResolution: {x: 427, y: 240}
-  upscaledResolution: {x: 0, y: 0}
-  smooth: 0
-  forceSquarePixels: 0
-  pixels: {x: 320, y: 240}
-  pixelsPerUnit: 32
-  requireStencilBuffer: 0
-  useUpscaleShader: 1
-  upscaleMaterial: {fileID: 1650350462}
-  finalBlitStretch: {x: 1, y: 1}
-  mainCamera: {fileID: 519420031}
-  mainCanvas: {fileID: 600053580}
 --- !u!1 &600053577
 GameObject:
   m_ObjectHideFlags: 0
@@ -5896,7 +5896,7 @@ MonoBehaviour:
   m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 32
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 319.75018, y: 240}
+  m_ReferenceResolution: {x: 319.89008, y: 240}
   m_ScreenMatchMode: 1
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -8780,38 +8780,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1604218337}
   m_CullTransparentMesh: 1
---- !u!21 &1650350462
-Material:
-  serializedVersion: 8
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Hidden/BilinearSharp
-  m_Shader: {fileID: 4800000, guid: 625a99092834446fdb9bf0c7bc7703f0, type: 3}
-  m_Parent: {fileID: 0}
-  m_ModifiedSerializedProperties: 0
-  m_ValidKeywords: []
-  m_InvalidKeywords: []
-  m_LightmapFlags: 4
-  m_EnableInstancingVariants: 0
-  m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
-  stringTagMap: {}
-  disabledShaderPasses: []
-  m_LockedProperties: 
-  m_SavedProperties:
-    serializedVersion: 3
-    m_TexEnvs:
-    - _MainTex:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Ints: []
-    m_Floats: []
-    m_Colors:
-    - _DestinationResolution: {r: 1920, g: 1080, b: 0, a: 0}
-  m_BuildTextureStacks: []
 --- !u!1 &1668812999
 GameObject:
   m_ObjectHideFlags: 0
@@ -20576,6 +20544,7 @@ GameObject:
   - component: {fileID: 2009276184}
   - component: {fileID: 2009276186}
   - component: {fileID: 2009276187}
+  - component: {fileID: 2009276190}
   - component: {fileID: 2009276165}
   - component: {fileID: 2009276189}
   m_Layer: 7
@@ -20627,18 +20596,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1574f83884123a34b91aca6d53782262, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  characterAnimationController: {fileID: 2009276181}
-  characterMovementController: {fileID: 2009276179}
-  characterInputHandler: {fileID: 2009276175}
-  characterAttackController: {fileID: 2009276180}
-  characterRotationController: {fileID: 2009276188}
-  characterHealthController: {fileID: 2009276184}
-  characterDropController: {fileID: 2009276186}
-  characterCollectorController: {fileID: 2009276187}
   characterData: {fileID: 11400000, guid: 52be9dd7a7c510144beb9a24e4d390f7, type: 2}
-  expIncomingChannel: {fileID: 11400000, guid: 7fd3f70bff14c774d9a3930c581528d4, type: 2}
-  onExpChangedChannel: {fileID: 11400000, guid: 39fb71883bb380944ae4db57c3bebdeb, type: 2}
-  onLevelUpChannel: {fileID: 11400000, guid: 505354cb34f8d174db26d58c9a28897a, type: 2}
 --- !u!61 &2009276170
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -20845,7 +20803,6 @@ MonoBehaviour:
   weaponManager: {fileID: 102438076}
   weaponController: {fileID: 1898126820}
   weaponEvent: {fileID: 11400000, guid: d5db86a8d47bce24480220e5d8e0982c, type: 2}
-  inputHandler: {fileID: 2009276175}
 --- !u!114 &2009276181
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20858,7 +20815,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8297f0e478250134f9d88644a39a750f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animator: {fileID: 2009276172}
 --- !u!114 &2009276184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20871,7 +20827,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d219a42f2aabd5049a67e1a8df3c3b53, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerData: {fileID: 11400000, guid: 52be9dd7a7c510144beb9a24e4d390f7, type: 2}
 --- !u!114 &2009276186
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20920,7 +20875,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53c40d3fec3c1fd4baf994e91b1868a8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playerController: {fileID: 2009276169}
+--- !u!114 &2009276190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2009276164}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 57fdd2c61e6d51a44b6b7a9075ab029d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  expIncomingChannel: {fileID: 11400000, guid: 7fd3f70bff14c774d9a3930c581528d4, type: 2}
+  onExpChangedChannel: {fileID: 11400000, guid: 39fb71883bb380944ae4db57c3bebdeb, type: 2}
+  onLevelUpChannel: {fileID: 11400000, guid: 505354cb34f8d174db26d58c9a28897a, type: 2}
 --- !u!1 &2023052814
 GameObject:
   m_ObjectHideFlags: 0

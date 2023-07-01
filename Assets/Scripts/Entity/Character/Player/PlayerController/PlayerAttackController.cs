@@ -12,26 +12,31 @@ namespace Gunfighter.Entity.Character.Player.PlayerController
 {
     public class PlayerAttackController : CharacterAttackController
     {
-        [FormerlySerializedAs("_reloadUIAnimator")] [SerializeField]
+        [SerializeField]
         private Animator reloadUIAnimator;
 
-        [FormerlySerializedAs("_weaponManager")] [SerializeField]
+        [SerializeField]
         protected WeaponManager weaponManager;
 
-        [FormerlySerializedAs("_weaponController")] [SerializeField]
+        [SerializeField]
         protected WeaponController weaponController;
 
-        [FormerlySerializedAs("_weaponEvent")] [SerializeField]
+        [SerializeField]
         private SpriptableObjectWeaponEvent weaponEvent;
-
-        [FormerlySerializedAs("_inputHandler")] [SerializeField]
-        private CharacterInputHandler inputHandler;
+        
+        private CharacterInputHandler _inputHandler;
 
         private WeaponWorldViewController _weaponWorldViewController;
 
         public event Action<WeaponData> OnWeaponChanged;
         public event Action OnAttack;
-    
+
+        protected override void Awake()
+        {
+            base.Awake();
+            _inputHandler = GetComponent<CharacterInputHandler>();
+        }
+
         private void OnEnable()
         {
             weaponEvent.OnSetActivePickupWeapon += SetActiveChangeWeapon;
@@ -77,11 +82,11 @@ namespace Gunfighter.Entity.Character.Player.PlayerController
             if(isActive)
             {
                 _weaponWorldViewController = weaponWorldViewController;
-                inputHandler.OnInteract += ChangeWeapon;
+                _inputHandler.OnInteract += ChangeWeapon;
             }
             else
             {
-                inputHandler.OnInteract -= ChangeWeapon;
+                _inputHandler.OnInteract -= ChangeWeapon;
                 _weaponWorldViewController = null;
             }
         }

@@ -5,7 +5,7 @@ using Object = UnityEngine.Object;
 
 namespace Gunfighter.UI
 {
-    public class TilableDisplayController
+    public abstract class TilableDisplayController
     {
         protected GameObject UnitPrefab;
         protected GameObject ParentGameObj;
@@ -73,9 +73,6 @@ namespace Gunfighter.UI
             UpdateDisplay(displayLenght); // Update all tiles to draw them using DrawActiveTile.
         }
 
-        protected virtual void SetupUnit(int i)
-        {
-            throw new NotImplementedException();
-        }
+        protected abstract void SetupUnit(int i);
     }
 }

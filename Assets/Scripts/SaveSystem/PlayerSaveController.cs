@@ -1,3 +1,4 @@
+using System;
 using Gunfighter.Entity.Character.Player.PlayerController;
 using Gunfighter.Interface.SaveSystem;
 using UnityEngine;
@@ -7,23 +8,27 @@ namespace Gunfighter.SaveSystem
 {
     public class PlayerSaveController : MonoBehaviour, IDataPersistence
     {
-        [FormerlySerializedAs("_playerController")] [SerializeField] private PlayerController playerController;
-    
-    
+        private PlayerController _playerController;
+
+        private void Awake()
+        {
+            _playerController = GetComponent<PlayerController>();
+        }
+
         public void Save(ref GameSaveData gameSaveData)
         {
-            gameSaveData.PlayerSaveData.PlayerLevel = playerController.PlayerLevelController.Level;
-            gameSaveData.PlayerSaveData.PlayerExperience = playerController.PlayerLevelController.Experience;
-            gameSaveData.PlayerSaveData.PlayerCurrentHp = playerController.CharacterHealthController.CurrentHealth;
-            gameSaveData.PlayerSaveData.PlayerMaxHp = playerController.CharacterHealthController.MaxHealth;
+            gameSaveData.PlayerSaveData.PlayerLevel = _playerController.PlayerLevelController.Level;
+            gameSaveData.PlayerSaveData.PlayerExperience = _playerController.PlayerLevelController.Experience;
+            gameSaveData.PlayerSaveData.PlayerCurrentHp = _playerController.CharacterHealthController.CurrentHealth;
+            gameSaveData.PlayerSaveData.PlayerMaxHp = _playerController.CharacterHealthController.MaxHealth;
 
         }
 
         public void Load(GameSaveData gameSaveData)
         {
-            playerController.PlayerLevelController.SetLevelAndExperience(gameSaveData.PlayerSaveData.PlayerLevel,gameSaveData.PlayerSaveData.PlayerExperience);
-            playerController.CharacterHealthController.ChangeMaxHealth(gameSaveData.PlayerSaveData.PlayerMaxHp);
-            playerController.CharacterHealthController.CurrentHealth = gameSaveData.PlayerSaveData.PlayerCurrentHp;
+            _playerController.PlayerLevelController.SetLevelAndExperience(gameSaveData.PlayerSaveData.PlayerLevel,gameSaveData.PlayerSaveData.PlayerExperience);
+            _playerController.CharacterHealthController.ChangeMaxHealth(gameSaveData.PlayerSaveData.PlayerMaxHp);
+            _playerController.CharacterHealthController.CurrentHealth = gameSaveData.PlayerSaveData.PlayerCurrentHp;
         }
     }
 }

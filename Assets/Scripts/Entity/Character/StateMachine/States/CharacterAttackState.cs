@@ -14,7 +14,6 @@ namespace Gunfighter.Entity.Character.StateMachine.States
         public override void Execute()
         {
             base.Execute();
-            StateMachine.CurrentState.Data.CharacterAnimationController.SetActiveBoolAnim(_animParameter, true);
         }
         public override void StopExecution()
         {
@@ -24,6 +23,7 @@ namespace Gunfighter.Entity.Character.StateMachine.States
         public override void Initialize(params object[] param)
         {
             base.Initialize(param);
+            StateMachine.CurrentState.Data.CharacterAnimationController.SetActiveBoolAnim(_animParameter, true);
         }
     }
 }
