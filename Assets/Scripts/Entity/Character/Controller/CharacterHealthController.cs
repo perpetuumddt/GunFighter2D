@@ -21,6 +21,12 @@ namespace Gunfighter.Entity.Character.Controller
                 UpdateHealth(_currentHealth);
             }
         }
+        protected CharacterController characterController;
+
+        protected virtual void Awake()
+        {
+            characterController = GetComponent<CharacterController>();
+        }
 
         public int MaxHealth => _maxHealth;
 

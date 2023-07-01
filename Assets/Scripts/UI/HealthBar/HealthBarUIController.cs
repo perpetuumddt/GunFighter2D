@@ -20,7 +20,6 @@ namespace Gunfighter.UI.HealthBar
 
         private void OnEnable()
         {
-            UpdateHealthBar(playerHealthController.playerData.DefaultMaxHealth);
             playerHealthController.OnUpdateHealth += UpdateHealthBar;
         }
 

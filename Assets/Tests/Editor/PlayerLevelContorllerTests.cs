@@ -17,7 +17,10 @@ namespace Tests.Editor
             {
                 Keyframe[] keyframes = new[] { new Keyframe(1, 0),new Keyframe(2, 25),new Keyframe(3, 75),new Keyframe(4, 100) };
                 PlayerData playerData = PlayerData.CreateInstance(new AnimationCurve(keyframes));
-                _lvlController = new PlayerLevelController(playerData,1,0);
+                GameObject player = new GameObject();
+                _lvlController = player.AddComponent<PlayerLevelController>();
+                _lvlController.SetPlayerData(playerData);
+                _lvlController.SetLevelAndExperience(1,0);
             }
         
             [Test]
