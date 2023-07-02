@@ -15,8 +15,9 @@ MonoBehaviour:
   name: Frogg
   defaultMaxHealth: 12
   movementSpeed: 3
-  rollSpeed: 5
+  rollSpeed: 8
   rollCooldown: 5
+  rollDuration: 0.5
   experienceLevelDistribution:
     serializedVersion: 2
     m_Curve:
