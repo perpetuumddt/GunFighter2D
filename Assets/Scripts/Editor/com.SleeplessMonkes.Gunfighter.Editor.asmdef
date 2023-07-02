@@ -1,0 +1,18 @@
+{
+    "name": "com.SleeplessMonkes.Gunfighter.Editor",
+    "rootNamespace": "Gunfighter",
+    "references": [
+        "GUID:fa89dc61141eaa14ab24f5193b35644a"
+    ],
+    "includePlatforms": [
+        "Editor"
+    ],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}

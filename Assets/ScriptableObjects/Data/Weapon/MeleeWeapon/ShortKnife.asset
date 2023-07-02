@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 178902afb7dc84d4583c6c134aef62aa, type: 3}
   m_Name: ShortKnife
   m_EditorClassIdentifier: 
-  _damage: 1
-  _attackSpeed: 0.3
-  _sprite: {fileID: 21300000, guid: 4140dce7421fb2c4ab23f4b33ada8e7a, type: 3}
-  _range: 1
+  name: Short Knife
+  damage: 1
+  attackSpeed: 0.3
+  sprite: {fileID: 21300000, guid: 4140dce7421fb2c4ab23f4b33ada8e7a, type: 3}
+  range: 1

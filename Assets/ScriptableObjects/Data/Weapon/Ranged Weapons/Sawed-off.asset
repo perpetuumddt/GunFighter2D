@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a46766743de3994eadc611a08d7f7e9, type: 3}
   m_Name: Sawed-off
   m_EditorClassIdentifier: 
-  _name: Sawed - Off
-  _damage: 1
-  _attackSpeed: 1
-  _sprite: {fileID: 21300000, guid: 8a489bdee3ac54e4f9cf1b420ca86d1e, type: 3}
-  _reloadTime: 2
-  _ammoCountInClip: 2
-  _ammoMaxCount: 20
-  _spreadAngle: 25
-  _bulletsInOneShot: 8
+  name: Sawed-off Shotgun
+  damage: 1
+  attackSpeed: 1
+  sprite: {fileID: 21300000, guid: 8a489bdee3ac54e4f9cf1b420ca86d1e, type: 3}
+  reloadTime: 2
+  ammoCountInClip: 2
+  ammoMaxCount: 20
+  spreadAngle: 25
+  bulletsInOneShot: 8

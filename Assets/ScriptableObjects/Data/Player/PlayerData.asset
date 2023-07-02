@@ -12,11 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 54f09fe337e649c4f9de35b4d964d1a4, type: 3}
   m_Name: PlayerData
   m_EditorClassIdentifier: 
-  _name: Frogg
-  _defaultMaxHealth: 12
-  _movementSpeed: 3
-  _rollSpeed: 5
-  _rollCooldown: 0
+  name: Frogg
+  defaultMaxHealth: 12
+  movementSpeed: 3
+  rollSpeed: 5
+  rollCooldown: 5
   experienceLevelDistribution:
     serializedVersion: 2
     m_Curve:

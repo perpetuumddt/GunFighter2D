@@ -12,12 +12,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1a46766743de3994eadc611a08d7f7e9, type: 3}
   m_Name: RustyRevolver
   m_EditorClassIdentifier: 
-  _name: Rusty Revolver
-  _damage: 1
-  _attackSpeed: 0.4
-  _sprite: {fileID: 21300000, guid: 1ce9153c44ccd4542a53be5997a7500c, type: 3}
-  _reloadTime: 3
-  _ammoCountInClip: 6
-  _ammoMaxCount: 36
-  _spreadAngle: 5
-  _bulletsInOneShot: 1
+  name: Rusty Revolver
+  damage: 1
+  attackSpeed: 0.4
+  sprite: {fileID: 21300000, guid: 1ce9153c44ccd4542a53be5997a7500c, type: 3}
+  reloadTime: 3
+  ammoCountInClip: 6
+  ammoMaxCount: 36
+  spreadAngle: 5
+  bulletsInOneShot: 1
