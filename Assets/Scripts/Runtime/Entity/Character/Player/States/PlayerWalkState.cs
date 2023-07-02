@@ -1,4 +1,5 @@
 using Gunfighter.Runtime.Entity.Character.Player.Input;
+using Gunfighter.Runtime.Entity.Character.Player.PlayerController;
 using Gunfighter.Runtime.Entity.Character.StateMachine;
 using Gunfighter.Runtime.Entity.Character.StateMachine.States;
 using Gunfighter.Runtime.Entity.Weapon;
@@ -71,10 +72,13 @@ namespace Gunfighter.Runtime.Entity.Character.Player.States
 
         private void SwichStateRoll()
         {
-            StopExecution();
-            StateMachine.CurrentState = new PlayerRollState(StateMachine.CurrentState.Data, StateMachine);
-            StateMachine.CurrentState.Initialize();
-            StateMachine.CurrentState.Execute();
+            if ((Data.CharacterMovementController as PlayerMovementController).CanRoll)
+            {
+                StopExecution();
+                StateMachine.CurrentState = new PlayerRollState(StateMachine.CurrentState.Data, StateMachine);
+                StateMachine.CurrentState.Initialize();
+                StateMachine.CurrentState.Execute();
+            }
 
         }
         private void Movement(PlayerInputHandler inputHandler)

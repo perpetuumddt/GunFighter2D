@@ -9,11 +9,15 @@ namespace Gunfighter.Runtime.ScriptableObjects.Data.Character.Player
         [SerializeField]
         private float rollSpeed;
         public float RollSpeed => rollSpeed;
-
+        
         [SerializeField]
         private float rollCooldown;
         public float RollCooldown => rollCooldown;
 
+        [SerializeField] private float rollDuration;
+        public float RollDuration => rollDuration;
+        
+        
         [SerializeField] private AnimationCurve experienceLevelDistribution;
 
         public AnimationCurve ExperienceLevelDistribution
