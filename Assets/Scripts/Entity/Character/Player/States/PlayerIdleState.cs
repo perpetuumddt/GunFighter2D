@@ -18,6 +18,18 @@ namespace Gunfighter.Entity.Character.Player.States
             StateMachine.CurrentState.Data.CharacterInputHandler.OnAttack += Attack;
             StateMachine.CurrentState.Data.CharacterInputHandler.OnReload += Reload;
             StateMachine.CurrentState.Data.CharacterInputHandler.OnSwapWeapon += SwapWeapon;
+            StateMachine.CurrentState.Data.CharacterHealthController.OnHealthZero += SwichDeathState;
+        }
+
+        private void SwichDeathState(bool isDead)
+        {
+            if (isDead)
+            {
+                StopExecution();
+                StateMachine.CurrentState = new PlayerDeathState(StateMachine.CurrentState.Data, StateMachine);
+                StateMachine.CurrentState.Initialize();
+                StateMachine.CurrentState.Execute();
+            }
         }
 
         public override void Execute()
@@ -35,6 +47,7 @@ namespace Gunfighter.Entity.Character.Player.States
             StateMachine.CurrentState.Data.CharacterInputHandler.OnAttack -= Attack;
             StateMachine.CurrentState.Data.CharacterInputHandler.OnReload -= Reload;
             StateMachine.CurrentState.Data.CharacterInputHandler.OnSwapWeapon -= SwapWeapon;
+            StateMachine.CurrentState.Data.CharacterHealthController.OnHealthZero -= SwichDeathState;
         }
 
         public void Attack(bool isAttacking)

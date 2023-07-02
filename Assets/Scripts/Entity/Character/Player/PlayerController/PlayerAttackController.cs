@@ -63,6 +63,10 @@ namespace Gunfighter.Entity.Character.Player.PlayerController
                 ((WeaponRanged)weaponController.CurrentWeapon).HandleReload(manual:true);
         }
 
+        public override void SetWeaponVisible(bool isVisible)
+        {
+            weaponController.SpriteRenderer.gameObject.SetActive(isVisible);
+        }
 
         public override void ChangeWeapon()
         {
@@ -76,6 +80,8 @@ namespace Gunfighter.Entity.Character.Player.PlayerController
             weaponManager.SwapWeapon();
             InvokeOnWeaponChanged(weaponManager.CurrentWeapon.WeaponData);
         }
+        
+        
 
         public void SetActiveChangeWeapon(bool isActive, WeaponWorldViewController weaponWorldViewController)
         {

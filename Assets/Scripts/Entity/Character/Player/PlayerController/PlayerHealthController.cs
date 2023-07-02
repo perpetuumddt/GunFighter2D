@@ -13,7 +13,13 @@ namespace Gunfighter.Entity.Character.Player.PlayerController
         private float _invincibilityDurationSeconds = 1.5f;
         private float _invincibilityDeltaTime = 0.15f;
         private bool _isInvincible;
-        
+        private bool _canBeInvincible = true;
+
+        public bool CanBeInvincible
+        {
+            get => _canBeInvincible;
+            set => _canBeInvincible = value;
+        }
 
 
         private void Start()
@@ -39,7 +45,10 @@ namespace Gunfighter.Entity.Character.Player.PlayerController
             if (!_isInvincible)
             {
                 _currentHealth = CurrentHealth - damage;
-                StartCoroutine(BecomeTemporarilyInvincible());
+                if (CanBeInvincible && _currentHealth != 0)
+                {
+                    StartCoroutine(BecomeTemporarilyInvincible());
+                }
                 UpdateHealth(CurrentHealth);
             }
         }

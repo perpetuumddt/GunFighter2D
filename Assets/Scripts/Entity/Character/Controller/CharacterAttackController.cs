@@ -37,5 +37,10 @@ namespace Gunfighter.Entity.Character.Controller
         {
         
         }
+
+        public virtual void SetWeaponVisible(bool isVisible)
+        {
+            
+        }
     }
 }

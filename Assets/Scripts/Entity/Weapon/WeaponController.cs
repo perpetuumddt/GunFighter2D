@@ -1,5 +1,6 @@
 using System;
 using Gunfighter.Entity.Weapon.RangedWeapons;
+using Gunfighter.General;
 using Gunfighter.ScriptableObjects.Data.Weapon;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -8,14 +9,15 @@ namespace Gunfighter.Entity.Weapon
 {
     public class WeaponController : MonoBehaviour
     {
-        [FormerlySerializedAs("_weapon")] [SerializeField]
+        [SerializeField, ReadOnly]
         private Weapon weapon;
-        [FormerlySerializedAs("_weaponData")] [SerializeField]
+        [SerializeField, ReadOnly]
         private WeaponData weaponData;
-        [FormerlySerializedAs("_spriteRenderer")] [SerializeField]
+        [SerializeField]
         private SpriteRenderer spriteRenderer;
 
         public Weapon CurrentWeapon => weapon;
+        public SpriteRenderer SpriteRenderer => spriteRenderer;
 
         public event Action<int> OnAmmoLeftChanged;
 

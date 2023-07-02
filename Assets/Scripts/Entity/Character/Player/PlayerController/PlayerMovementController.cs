@@ -20,5 +20,11 @@ namespace Gunfighter.Entity.Character.Player.PlayerController
             _currentVelocity.Set(velocityX, velocityY);
             rigidbody.velocity = _currentVelocity;
         }
+
+        public void StopMovement()
+        {
+            _currentVelocity.Set(0,0);
+            rigidbody.velocity = _currentVelocity;
+        }
     }
 }
