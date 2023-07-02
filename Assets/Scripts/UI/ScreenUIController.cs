@@ -5,7 +5,7 @@ namespace Gunfighter.UI
 {
     public class ScreenUIController : MonoBehaviour
     {
-        [FormerlySerializedAs("_canvasGroup")] [SerializeField]
+        [SerializeField]
         private CanvasGroup canvasGroup;
 
         public void SetActive(bool isActive)

@@ -7,9 +7,9 @@ namespace Gunfighter.UI.Screens
 {
     public class PauseScreen : ScreenUIController
     {
-        [FormerlySerializedAs("_exitPauseButton")] [SerializeField]
+        [SerializeField]
         private Button exitPauseButton;
-        [FormerlySerializedAs("_isPause")] [SerializeField]
+        [SerializeField]
         private ScriptableObjectBoolVariable isPause;
 
         public void OnEnable()

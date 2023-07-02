@@ -1,5 +1,6 @@
 using System.Threading.Tasks;
 using Gunfighter.Entity.Character.Player.Input;
+using Gunfighter.Entity.Character.Player.PlayerController;
 using Gunfighter.Entity.Character.StateMachine;
 using Gunfighter.Entity.Character.StateMachine.States;
 using UnityEngine;
@@ -26,11 +27,13 @@ namespace Gunfighter.Entity.Character.Player.States
 
         public override void StopExecution()
         {
+            ((PlayerAttackController)Data.CharacterAttackController).SetWeaponVisible(true);
             base.StopExecution();
         }
 
         public override void Initialize(params object[] param)
         {
+            ((PlayerAttackController)Data.CharacterAttackController).SetWeaponVisible(false);
             base.Initialize(param);
         }
 

@@ -16,7 +16,7 @@ MonoBehaviour:
   defaultMaxHealth: 3
   movementSpeed: 3
   rollSpeed: 5
-  rollCooldown: 0
+  rollCooldown: 5
   experienceLevelDistribution:
     serializedVersion: 2
     m_Curve:
