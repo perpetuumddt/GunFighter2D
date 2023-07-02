@@ -12,17 +12,17 @@ namespace Gunfighter.Runtime.ScriptableObjects.Data.Wave
         [Serializable]
         public struct Enemies
         {
-            [FormerlySerializedAs("_enemyPrefab")] public GameObject enemyPrefab;
-            [FormerlySerializedAs("_enemyCount")] public int enemyCount;
-            [FormerlySerializedAs("_spawnRate")] public float spawnRate;
+            public GameObject enemyPrefab;
+            public int enemyCount;
+            public float spawnRate;
         }
 
         [Serializable]
         public struct Waves
         {
-            [FormerlySerializedAs("_counter")] public int counter;
-            [FormerlySerializedAs("_enemies")] public Enemies[] enemies;
-            [FormerlySerializedAs("_waveDuration")] public float waveDuration;
+            public int counter;
+            public Enemies[] enemies;
+            public float waveDuration;
         }
 
         [FormerlySerializedAs("_wave")] public Waves[] wave;

@@ -5,19 +5,19 @@ namespace Gunfighter.Runtime.ScriptableObjects.Data.Weapon
 {
     public class WeaponData : ScriptableObject
     {
-        [FormerlySerializedAs("_name")] [SerializeField]
+        [SerializeField]
         private string name;
         public string Name => name;
 
-        [FormerlySerializedAs("_damage")] [SerializeField]
+        [SerializeField]
         private int damage;
         public int Damage => damage;
 
-        [FormerlySerializedAs("_attackSpeed")] [SerializeField]
+        [SerializeField]
         private float attackSpeed;
         public float AttackSpeed => attackSpeed;
 
-        [FormerlySerializedAs("_sprite")] [SerializeField]
+        [SerializeField]
         private Sprite sprite;
         public Sprite Sprite => sprite;
     }

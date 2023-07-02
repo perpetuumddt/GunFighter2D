@@ -6,15 +6,15 @@ namespace Gunfighter.Runtime.ScriptableObjects.Data.Character
 {
     public class CharacterData : ScriptableObject
     {
-        [FormerlySerializedAs("_name")] [SerializeField]
+        [SerializeField]
         private string name;
         public string Name => name;
 
-        [FormerlySerializedAs("_defaultMaxHealth")] [SerializeField]
+        [SerializeField]
         private int defaultMaxHealth;
         public int DefaultMaxHealth => defaultMaxHealth;
 
-        [FormerlySerializedAs("_movementSpeed")] [SerializeField]
+        [SerializeField]
         private float movementSpeed;
         public float MovementSpeed => movementSpeed;
     

@@ -9,14 +9,14 @@ namespace Gunfighter.Runtime.General
     public class EnemyManager : MonoBehaviour
     {
         [SerializeField]
-        EnemySpawner spawner;
+        private EnemySpawner spawner;
 
-        [FormerlySerializedAs("_aliveEnemies")] [SerializeField]
+        [SerializeField, ReadOnly]
         private int aliveEnemies = 0;
-        [FormerlySerializedAs("_deadEnemies")] [SerializeField]
+        [SerializeField, ReadOnly]
         private int deadEnemies = 0;
 
-        [FormerlySerializedAs("_expChannel")] [SerializeField] private ScriptableObjectExpEvent expChannel;
+        [SerializeField] private ScriptableObjectExpEvent expChannel;
 
         public event Action<GameObject> OnEnemyDied;
     

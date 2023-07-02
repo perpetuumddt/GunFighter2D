@@ -6,11 +6,11 @@ namespace Gunfighter.Runtime.ScriptableObjects.Data.Character.Player
     [CreateAssetMenu(fileName = "PlayerData", menuName = "Data/Character Data/New Player Data")]
     public class PlayerData : CharacterData
     {
-        [FormerlySerializedAs("_rollSpeed")] [SerializeField]
+        [SerializeField]
         private float rollSpeed;
         public float RollSpeed => rollSpeed;
 
-        [FormerlySerializedAs("_rollCooldown")] [SerializeField]
+        [SerializeField]
         private float rollCooldown;
         public float RollCooldown => rollCooldown;
 

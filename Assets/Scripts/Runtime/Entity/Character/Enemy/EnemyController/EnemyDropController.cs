@@ -8,7 +8,7 @@ namespace Gunfighter.Runtime.Entity.Character.Enemy.EnemyController
 {
     public class EnemyDropController : CharacterDropController
     {
-        [FormerlySerializedAs("_coinToDrop")] [SerializeField]
+        [SerializeField]
         private CoinController coinToDrop;
 
         private Transform _coinPool;

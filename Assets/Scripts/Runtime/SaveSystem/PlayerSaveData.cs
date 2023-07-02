@@ -6,11 +6,11 @@ namespace Gunfighter.Runtime.SaveSystem
     [System.Serializable]
     public class PlayerSaveData
     {
-        [FormerlySerializedAs("_playerLevel")] [SerializeField] private int playerLevel;
-        [FormerlySerializedAs("_playerExperience")] [SerializeField] private int playerExperience;
-        [FormerlySerializedAs("_playerMaxHP")] [SerializeField] private int playerMaxHp;
-        [FormerlySerializedAs("_playerCurrentHP")] [SerializeField] private int playerCurrentHp;
-        [FormerlySerializedAs("_playerCoins")] [SerializeField] private int playerCoins;
+        [SerializeField] private int playerLevel;
+        [SerializeField] private int playerExperience;
+        [SerializeField] private int playerMaxHp;
+        [SerializeField] private int playerCurrentHp;
+        [SerializeField] private int playerCoins;
 
         public PlayerSaveData()
         {

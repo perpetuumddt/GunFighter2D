@@ -6,7 +6,7 @@ namespace Gunfighter.Runtime.SaveSystem
     [System.Serializable]
     public class GameSaveData
     {
-        [FormerlySerializedAs("_playerSaveData")] [SerializeField]
+        [SerializeField]
         private  PlayerSaveData playerSaveData;
         public PlayerSaveData PlayerSaveData => playerSaveData;
 
