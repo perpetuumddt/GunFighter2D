@@ -10,16 +10,13 @@ namespace Gunfighter.Runtime.Entity.Character.Enemy.EnemyController
     {
         [SerializeField]
         private Transform targetPositionTransform;
-
         
-        private EnemyData enemyData;
-
+        private EnemyData _enemyData;
         private NavMeshAgent _agent;
-
         private bool _isMoving;
         private void Start()
         {
-            enemyData = (EnemyData)characterController.CharacterData;
+            _enemyData = (EnemyData)characterController.CharacterData;
             _agent = GetComponent<NavMeshAgent>();
             _agent.updateRotation = false;
             _agent.updateUpAxis = false;
@@ -27,14 +24,14 @@ namespace Gunfighter.Runtime.Entity.Character.Enemy.EnemyController
 
         private void OnEnable()
         {
-            targetPositionTransform = GameObject.FindObjectOfType<PlayerController>().transform;
+            targetPositionTransform = FindObjectOfType<PlayerController>().transform;
         }
 
         private void Update()
         {
             if(_isMoving)
             {
-                _agent.speed = enemyData.MovementSpeed;
+                _agent.speed = _enemyData.MovementSpeed;
                 _agent.destination = targetPositionTransform.position;
             }
             else
