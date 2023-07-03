@@ -1,7 +1,7 @@
 ﻿using System;
 using Gunfighter.Runtime.Entity.Character.Controller;
 using Gunfighter.Runtime.General;
-using Gunfighter.Runtime.ScriptableObjects.Data.Character.Enemies;
+using Gunfighter.Runtime.ScriptableObjects.Data.Entity.Character.Enemies;
 using UnityEngine;
 
 namespace Gunfighter.Runtime.Entity.Character.Enemy.EnemyController
@@ -17,7 +17,7 @@ namespace Gunfighter.Runtime.Entity.Character.Enemy.EnemyController
 
         private void Start()
         {
-            _enemyData = (EnemyData)characterController.CharacterData;
+            _enemyData = (EnemyData)entityController.EntityData;
             ChangeMaxHealth(_enemyData.DefaultMaxHealth);
             CurrentHealth = _enemyData.DefaultMaxHealth;
             _enemyManager = GameObject.FindGameObjectWithTag("EnemyManager").GetComponent<EnemyManager>();

@@ -1,7 +1,6 @@
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace Gunfighter.Runtime.ScriptableObjects.Data.Character.Player
+namespace Gunfighter.Runtime.ScriptableObjects.Data.Entity.Character.Player
 {
     [CreateAssetMenu(fileName = "PlayerData", menuName = "Data/Character Data/New Player Data")]
     public class PlayerData : CharacterData

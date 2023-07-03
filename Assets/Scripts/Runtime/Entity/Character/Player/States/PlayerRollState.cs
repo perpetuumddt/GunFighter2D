@@ -3,7 +3,7 @@ using Gunfighter.Runtime.Entity.Character.Player.Components;
 using Gunfighter.Runtime.Entity.Character.Player.PlayerController;
 using Gunfighter.Runtime.Entity.Character.StateMachine;
 using Gunfighter.Runtime.Entity.Character.StateMachine.States;
-using Gunfighter.Runtime.ScriptableObjects.Data.Character.Player;
+using Gunfighter.Runtime.ScriptableObjects.Data.Entity.Character.Player;
 using UnityEngine;
 using CharacterController = Gunfighter.Runtime.Entity.Character.Controller.CharacterController;
 

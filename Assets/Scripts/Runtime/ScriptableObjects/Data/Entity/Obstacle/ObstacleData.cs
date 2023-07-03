@@ -1,10 +1,10 @@
 using UnityEngine;
 
-namespace Gunfighter.Runtime.ScriptableObjects.Data.Character.Obstacle
+namespace Gunfighter.Runtime.ScriptableObjects.Data.Entity.Obstacle
 {
     
     [CreateAssetMenu(fileName = "ObstacleData", menuName = "Data/Character Data/New Obstacle Data")]
-    public class ObstacleData : CharacterData
+    public class ObstacleData : EntityData
     {
         
     }

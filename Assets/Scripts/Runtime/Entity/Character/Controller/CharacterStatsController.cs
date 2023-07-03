@@ -1,4 +1,4 @@
-using Gunfighter.Runtime.ScriptableObjects.Data.Character;
+using Gunfighter.Runtime.ScriptableObjects.Data.Entity.Character;
 using UnityEngine;
 using UnityEngine.Serialization;
 

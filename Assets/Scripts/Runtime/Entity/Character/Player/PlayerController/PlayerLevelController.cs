@@ -1,5 +1,5 @@
 using System;
-using Gunfighter.Runtime.ScriptableObjects.Data.Character.Player;
+using Gunfighter.Runtime.ScriptableObjects.Data.Entity.Character.Player;
 using Gunfighter.Runtime.ScriptableObjects.Event;
 using UnityEngine;
 using CharacterController = Gunfighter.Runtime.Entity.Character.Controller.CharacterController;

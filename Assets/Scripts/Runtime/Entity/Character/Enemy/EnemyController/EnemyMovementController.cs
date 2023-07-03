@@ -1,6 +1,6 @@
 using Gunfighter.Runtime.Entity.Character.Controller;
 using Gunfighter.Runtime.Entity.Character.Player.PlayerController;
-using Gunfighter.Runtime.ScriptableObjects.Data.Character.Enemies;
+using Gunfighter.Runtime.ScriptableObjects.Data.Entity.Character.Enemies;
 using UnityEngine;
 using UnityEngine.AI;
 

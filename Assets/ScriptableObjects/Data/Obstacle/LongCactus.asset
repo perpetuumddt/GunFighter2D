@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: LongCactus
   m_EditorClassIdentifier: 
   description: 
-  name: Long Cactus
+  name: Short Cactus
   defaultMaxHealth: 3
-  movementSpeed: 0
+  isIndestructible: 0
+  collisionDamage: 0

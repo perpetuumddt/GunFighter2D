@@ -21,14 +21,14 @@ namespace Gunfighter.Runtime.Entity.Character.Player.PlayerController
 
         private void Start()
         {
-            ChangeMaxHealth(characterController.CharacterData.DefaultMaxHealth);
+            ChangeMaxHealth(entityController.EntityData.DefaultMaxHealth);
             CurrentHealth = MaxHealth;
         }
 
 
-        public override void UpdateHealth(int currentHealth)
+        public override void InvokeUpdateHealth(int currentHealth)
         {
-            base.UpdateHealth(this.CurrentHealth);
+            base.InvokeUpdateHealth(this.CurrentHealth);
 
             if(currentHealth <= 0)
             {
@@ -46,7 +46,7 @@ namespace Gunfighter.Runtime.Entity.Character.Player.PlayerController
                 {
                     StartCoroutine(BecomeTemporarilyInvincible());
                 }
-                UpdateHealth(CurrentHealth);
+                InvokeUpdateHealth(CurrentHealth);
             }
         }
 
@@ -55,7 +55,7 @@ namespace Gunfighter.Runtime.Entity.Character.Player.PlayerController
             if (health < 0) throw new ArgumentOutOfRangeException();
         
             _currentHealth = CurrentHealth + health;
-            UpdateHealth(CurrentHealth);
+            InvokeUpdateHealth(CurrentHealth);
         }
     
         private IEnumerator BecomeTemporarilyInvincible()

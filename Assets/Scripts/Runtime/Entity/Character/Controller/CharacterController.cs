@@ -1,10 +1,11 @@
 using Gunfighter.Runtime.Entity.Character.StateMachine;
-using Gunfighter.Runtime.ScriptableObjects.Data.Character;
+using Gunfighter.Runtime.Entity.Controller;
+using Gunfighter.Runtime.ScriptableObjects.Data.Entity.Character;
 using UnityEngine;
 
 namespace Gunfighter.Runtime.Entity.Character.Controller
 {
-    public class CharacterController : MonoBehaviour
+    public class CharacterController : EntityController
     {
         public CharacterAnimationController CharacterAnimationController { get; private set; }
         public CharacterAttackController CharacterAttackController { get; private set; }
@@ -15,16 +16,13 @@ namespace Gunfighter.Runtime.Entity.Character.Controller
         public CharacterMovementController CharacterMovementController { get; private set; }
         public CharacterRotationController CharacterRotationController { get; private set; }
 
-
-        [SerializeField] 
-        private CharacterData characterData;
-
-        public CharacterData CharacterData => characterData;
+        public CharacterData CharacterData => EntityData as CharacterData;
     
         protected StateMachine<CharacterController> StateMachine;
 
         protected virtual void Awake()
         {
+            base.Awake();
             CharacterAnimationController = GetComponent<CharacterAnimationController>();
             CharacterAttackController = GetComponent<CharacterAttackController>();
             CharacterCollectorController = GetComponent<CharacterCollectorController>();
