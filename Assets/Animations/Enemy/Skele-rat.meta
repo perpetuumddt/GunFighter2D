@@ -1,0 +1,12 @@
+fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Animations/Enemy/Skele-rat.meta
+guid: f9a57926723d0ba408e0555c0327894a
+========
+guid: 319e15e9d5d944b4da882d5e77a69fe6
+>>>>>>>> 6cb3f74fc459e0b883e0bfe834e37a8381bc2f15:Assets/Scripts/Editor/AutoSave.meta
+folderAsset: yes
+DefaultImporter:
+  externalObjects: {}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
