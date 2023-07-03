@@ -2,6 +2,7 @@ using Gunfighter.Runtime.Interface.Detect;
 using Gunfighter.Runtime.Interface.Interact;
 using Gunfighter.Runtime.ScriptableObjects;
 using Gunfighter.Runtime.ScriptableObjects.Data.Weapon;
+using Gunfighter.Runtime.ScriptableObjects.Event;
 using UnityEngine;
 using UnityEngine.Serialization;
 

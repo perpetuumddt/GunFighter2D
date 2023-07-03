@@ -1,5 +1,9 @@
 fileFormatVersion: 2
+<<<<<<<< HEAD:Assets/Sprites/Objects.meta
 guid: 80b7a712a526a654ba4d12ebe1299413
+========
+guid: 4aa635ffefee35b4db0b2773a7a67e83
+>>>>>>>> 6cb3f74fc459e0b883e0bfe834e37a8381bc2f15:Assets/ScriptableObjects/Data/Obstacle.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}

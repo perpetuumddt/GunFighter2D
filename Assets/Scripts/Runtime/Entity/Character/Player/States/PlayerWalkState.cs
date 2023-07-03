@@ -1,4 +1,5 @@
-using Gunfighter.Runtime.Entity.Character.Player.Input;
+using Gunfighter.Runtime.Entity.Character.Player.Components;
+using Gunfighter.Runtime.Entity.Character.Player.PlayerController;
 using Gunfighter.Runtime.Entity.Character.StateMachine;
 using Gunfighter.Runtime.Entity.Character.StateMachine.States;
 using Gunfighter.Runtime.Entity.Weapon;
@@ -26,9 +27,11 @@ namespace Gunfighter.Runtime.Entity.Character.Player.States
             StateMachine.CurrentState.Data.CharacterInputHandler.OnMove -= SwichStateIdle;
             StateMachine.CurrentState.Data.CharacterInputHandler.OnRoll -= SwichStateRoll;
             StateMachine.CurrentState.Data.CharacterInputHandler.OnAttack -= Attack;
+            StateMachine.CurrentState.Data.CharacterInputHandler.OnAttackCanceled -= AttackCanceled;
             StateMachine.CurrentState.Data.CharacterInputHandler.OnReload -= Reload;
             StateMachine.CurrentState.Data.CharacterInputHandler.OnSwapWeapon -= SwapWeapon;
             StateMachine.CurrentState.Data.CharacterHealthController.OnHealthZero -= SwichDeathState;
+            StateMachine.CurrentState.Data.CharacterAttackController.StopAttacking();
         }
 
         public override void Initialize(params object[] param)
@@ -38,6 +41,7 @@ namespace Gunfighter.Runtime.Entity.Character.Player.States
             StateMachine.CurrentState.Data.CharacterInputHandler.OnRoll += SwichStateRoll;
             StateMachine.CurrentState.Data.CharacterInputHandler.OnMove += SwichStateIdle;
             StateMachine.CurrentState.Data.CharacterInputHandler.OnAttack += Attack;
+            StateMachine.CurrentState.Data.CharacterInputHandler.OnAttackCanceled += AttackCanceled;
             StateMachine.CurrentState.Data.CharacterInputHandler.OnReload += Reload;
             StateMachine.CurrentState.Data.CharacterInputHandler.OnSwapWeapon += SwapWeapon;
             StateMachine.CurrentState.Data.CharacterHealthController.OnHealthZero += SwichDeathState;
@@ -71,10 +75,13 @@ namespace Gunfighter.Runtime.Entity.Character.Player.States
 
         private void SwichStateRoll()
         {
-            StopExecution();
-            StateMachine.CurrentState = new PlayerRollState(StateMachine.CurrentState.Data, StateMachine);
-            StateMachine.CurrentState.Initialize();
-            StateMachine.CurrentState.Execute();
+            if ((Data.CharacterMovementController as PlayerMovementController).CanRoll)
+            {
+                StopExecution();
+                StateMachine.CurrentState = new PlayerRollState(StateMachine.CurrentState.Data, StateMachine);
+                StateMachine.CurrentState.Initialize();
+                StateMachine.CurrentState.Execute();
+            }
 
         }
         private void Movement(PlayerInputHandler inputHandler)
@@ -83,9 +90,14 @@ namespace Gunfighter.Runtime.Entity.Character.Player.States
             StateMachine.CurrentState.Data.CharacterMovementController.DoMove(inputHandler.MovementInputVector.x * _velocity, inputHandler.MovementInputVector.y * _velocity);
         }
 
-        public void Attack(bool isAttacking)
+        public void Attack()
         {
-            StateMachine.CurrentState.Data.CharacterAttackController.DoAttack(AttackType.Single);
+            StateMachine.CurrentState.Data.CharacterAttackController.DoAttack();
+        }
+        
+        public void AttackCanceled()
+        {
+            StateMachine.CurrentState.Data.CharacterAttackController.StopAttacking();
         }
 
         public void Reload()

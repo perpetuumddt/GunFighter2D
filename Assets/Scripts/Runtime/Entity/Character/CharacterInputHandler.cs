@@ -8,7 +8,8 @@ namespace Gunfighter.Runtime.Entity.Character
         public event Action<bool> OnMove;
         public event Action OnRoll;
         public event Action OnReload;
-        public event Action<bool> OnAttack;
+        public event Action OnAttack;
+        public event Action OnAttackCanceled;
         public event Action OnSwapWeapon;
         public event Action OnInteract;
 
@@ -28,12 +29,12 @@ namespace Gunfighter.Runtime.Entity.Character
 
         protected void InvokeOnAttack()
         {
-            OnAttack?.Invoke(true);
+            OnAttack?.Invoke();
         }
 
-        protected void UnInvokeOnAttack()
+        protected void InvokeOnAttackCanceled()
         {
-            OnAttack?.Invoke(false);
+            OnAttackCanceled?.Invoke();
         }
 
         protected void InvokeOnReload()

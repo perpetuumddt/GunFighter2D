@@ -26,5 +26,16 @@ namespace Gunfighter.Runtime.ScriptableObjects.Data.Weapon
         private int bulletsInOneShot;
         public int BulletsInOneShot => bulletsInOneShot;
 
+
+        [SerializeField] 
+        private WeaponRangedAutoShotType autoShotType;
+        public WeaponRangedAutoShotType AutoShotType => autoShotType;
+
+    }
+
+    public enum WeaponRangedAutoShotType
+    {
+        Automatic,
+        Manual,
     }
 }

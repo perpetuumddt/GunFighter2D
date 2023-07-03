@@ -5,6 +5,7 @@ using Gunfighter.Runtime.Entity.Weapon.RangedWeapons;
 using Gunfighter.Runtime.Entity.Weapon.WeaponManager;
 using Gunfighter.Runtime.ScriptableObjects;
 using Gunfighter.Runtime.ScriptableObjects.Data.Weapon;
+using Gunfighter.Runtime.ScriptableObjects.Event;
 using UnityEngine;
 
 namespace Gunfighter.Runtime.Entity.Character.Player.PlayerController
@@ -27,6 +28,8 @@ namespace Gunfighter.Runtime.Entity.Character.Player.PlayerController
 
         private WeaponWorldViewController _weaponWorldViewController;
 
+        private bool _shootContinuously;
+
         public event Action<WeaponData> OnWeaponChanged;
         public event Action OnAttack;
 
@@ -40,6 +43,7 @@ namespace Gunfighter.Runtime.Entity.Character.Player.PlayerController
         {
             weaponEvent.OnSetActivePickupWeapon += SetActiveChangeWeapon;
             weaponController.OnReload += PlayReloadUIAnimation;
+            weaponController.OnShootingCooldownOver += ShootContinuously;
         }
 
         private void OnDisable()
@@ -48,18 +52,35 @@ namespace Gunfighter.Runtime.Entity.Character.Player.PlayerController
             weaponController.OnReload -= PlayReloadUIAnimation;
         }
 
-        public override void DoAttack(AttackType attackType)
+        public override void DoAttack()
         {
-            base.DoAttack(attackType);
-            weaponController.CurrentWeapon.DoAttack(attackType);
+            base.DoAttack();
+            if (weaponController.CurrentWeapon is WeaponRanged weaponRanged &&
+                weaponRanged.WeaponRangedData.AutoShotType == WeaponRangedAutoShotType.Automatic)
+            {
+                _shootContinuously = true;
+            }
+            weaponController.CurrentWeapon.DoAttack();
             InvokeOnAttack();
+        }
+
+        private void ShootContinuously()
+        {
+            if(_shootContinuously)
+                DoAttack();
+                
+        }
+
+        public override void StopAttacking()
+        {
+            _shootContinuously = false;
         }
 
         public override void Reload()
         {
             base.Reload();
-            if(weaponController.CurrentWeapon is WeaponRanged)
-                ((WeaponRanged)weaponController.CurrentWeapon).HandleReload(manual:true);
+            if(weaponController.CurrentWeapon is WeaponRanged weaponRanged)
+                weaponRanged.HandleReload(manual:true);
         }
 
         public override void SetWeaponVisible(bool isVisible)
