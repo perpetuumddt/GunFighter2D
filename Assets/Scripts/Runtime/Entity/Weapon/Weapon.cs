@@ -6,7 +6,7 @@ namespace Gunfighter.Runtime.Entity.Weapon
 {
     public class Weapon : MonoBehaviour
     {
-        [FormerlySerializedAs("_weaponData")] [SerializeField]
+        [SerializeField]
         protected WeaponData weaponData;
 
         public float Damage => weaponData.Damage;

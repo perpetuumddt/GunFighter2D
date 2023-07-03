@@ -34,12 +34,14 @@ namespace Gunfighter.Runtime.Input
 
         private void OnEnable()
         {
-            Debug.Log("On enable");
-            if (_gameInput != null) return;
-            _gameInput = new PlayerInputAction();
+            if (_gameInput == null)
+            {
+                _gameInput = new PlayerInputAction();
 
-            _gameInput.Menus.SetCallbacks(this);
-            _gameInput.Gameplay.SetCallbacks(this);
+                _gameInput.Menus.SetCallbacks(this);
+                _gameInput.Gameplay.SetCallbacks(this);
+            }
+            EnableGameplayInput();
         }
 
         private void OnDisable()

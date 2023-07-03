@@ -27,9 +27,11 @@ namespace Gunfighter.Runtime.Entity.Character.Player.States
             StateMachine.CurrentState.Data.CharacterInputHandler.OnMove -= SwichStateIdle;
             StateMachine.CurrentState.Data.CharacterInputHandler.OnRoll -= SwichStateRoll;
             StateMachine.CurrentState.Data.CharacterInputHandler.OnAttack -= Attack;
+            StateMachine.CurrentState.Data.CharacterInputHandler.OnAttackCanceled -= AttackCanceled;
             StateMachine.CurrentState.Data.CharacterInputHandler.OnReload -= Reload;
             StateMachine.CurrentState.Data.CharacterInputHandler.OnSwapWeapon -= SwapWeapon;
             StateMachine.CurrentState.Data.CharacterHealthController.OnHealthZero -= SwichDeathState;
+            StateMachine.CurrentState.Data.CharacterAttackController.StopAttacking();
         }
 
         public override void Initialize(params object[] param)
@@ -39,6 +41,7 @@ namespace Gunfighter.Runtime.Entity.Character.Player.States
             StateMachine.CurrentState.Data.CharacterInputHandler.OnRoll += SwichStateRoll;
             StateMachine.CurrentState.Data.CharacterInputHandler.OnMove += SwichStateIdle;
             StateMachine.CurrentState.Data.CharacterInputHandler.OnAttack += Attack;
+            StateMachine.CurrentState.Data.CharacterInputHandler.OnAttackCanceled += AttackCanceled;
             StateMachine.CurrentState.Data.CharacterInputHandler.OnReload += Reload;
             StateMachine.CurrentState.Data.CharacterInputHandler.OnSwapWeapon += SwapWeapon;
             StateMachine.CurrentState.Data.CharacterHealthController.OnHealthZero += SwichDeathState;
@@ -87,9 +90,14 @@ namespace Gunfighter.Runtime.Entity.Character.Player.States
             StateMachine.CurrentState.Data.CharacterMovementController.DoMove(inputHandler.MovementInputVector.x * _velocity, inputHandler.MovementInputVector.y * _velocity);
         }
 
-        public void Attack(bool isAttacking)
+        public void Attack()
         {
             StateMachine.CurrentState.Data.CharacterAttackController.DoAttack(AttackType.Single);
+        }
+        
+        public void AttackCanceled()
+        {
+            StateMachine.CurrentState.Data.CharacterAttackController.StopAttacking();
         }
 
         public void Reload()

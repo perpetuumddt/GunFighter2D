@@ -24,25 +24,34 @@ namespace Gunfighter.Runtime.Entity.Weapon
 
         public event Action<bool> OnReload;
 
+        public event Action OnShootingCooldownOver;
+
         public void SetupWeapon(Weapon weapon, WeaponData weaponData)
         {
-            if (CurrentWeapon is WeaponRanged)
+            if (CurrentWeapon is WeaponRanged rangedPrev)
             {
-                ((WeaponRanged)CurrentWeapon).OnAmmoLeftChanged -= InvokeOnAmmoLeftChanged;
-                ((WeaponRanged)CurrentWeapon).OnWeaponSetup -= InvokeOnWeaponSetup;
-                ((WeaponRanged)CurrentWeapon).OnReloadPerforming -= InvokeOnReload;
+                rangedPrev.OnAmmoLeftChanged -= InvokeOnAmmoLeftChanged;
+                rangedPrev.OnWeaponSetup -= InvokeOnWeaponSetup;
+                rangedPrev.OnReloadPerforming -= InvokeOnReload;
+                rangedPrev.OnShootingCooldownOver -= InvokeOnShootingCooldownOver;
             }
             this.weapon = weapon;
             this.weaponData = weaponData;
             this.weapon.Initialize(spriteRenderer);
-            if (CurrentWeapon is WeaponRanged)
+            if (CurrentWeapon is WeaponRanged rangedCurrent)
             {
-                ((WeaponRanged)CurrentWeapon).OnWeaponSetup += InvokeOnWeaponSetup;
-                ((WeaponRanged)CurrentWeapon).OnAmmoLeftChanged += InvokeOnAmmoLeftChanged;
-                ((WeaponRanged)CurrentWeapon).OnReloadPerforming += InvokeOnReload;
+                rangedCurrent.OnWeaponSetup += InvokeOnWeaponSetup;
+                rangedCurrent.OnAmmoLeftChanged += InvokeOnAmmoLeftChanged;
+                rangedCurrent.OnReloadPerforming += InvokeOnReload;
+                rangedCurrent.OnShootingCooldownOver += InvokeOnShootingCooldownOver;
                 InvokeOnWeaponSetup(((WeaponRanged)CurrentWeapon).ClipSize);
                 InvokeOnAmmoLeftChanged(((WeaponRanged)CurrentWeapon).AmmoLeftInClip);
             }
+        }
+
+        private void InvokeOnShootingCooldownOver()
+        {
+            OnShootingCooldownOver?.Invoke();
         }
 
         private void InvokeOnReload(bool value)

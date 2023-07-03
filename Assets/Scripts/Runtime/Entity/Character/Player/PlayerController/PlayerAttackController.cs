@@ -28,6 +28,8 @@ namespace Gunfighter.Runtime.Entity.Character.Player.PlayerController
 
         private WeaponWorldViewController _weaponWorldViewController;
 
+        private bool _shootContinuously;
+
         public event Action<WeaponData> OnWeaponChanged;
         public event Action OnAttack;
 
@@ -41,6 +43,7 @@ namespace Gunfighter.Runtime.Entity.Character.Player.PlayerController
         {
             weaponEvent.OnSetActivePickupWeapon += SetActiveChangeWeapon;
             weaponController.OnReload += PlayReloadUIAnimation;
+            weaponController.OnShootingCooldownOver += ShootContinuously;
         }
 
         private void OnDisable()
@@ -52,15 +55,32 @@ namespace Gunfighter.Runtime.Entity.Character.Player.PlayerController
         public override void DoAttack(AttackType attackType)
         {
             base.DoAttack(attackType);
+            if (weaponController.CurrentWeapon is WeaponRanged weaponRanged &&
+                weaponRanged.WeaponRangedData.AutoShotType == WeaponRangedAutoShotType.Automatic)
+            {
+                _shootContinuously = true;
+            }
             weaponController.CurrentWeapon.DoAttack(attackType);
             InvokeOnAttack();
+        }
+
+        private void ShootContinuously()
+        {
+            if(_shootContinuously)
+                DoAttack(AttackType.Single);
+                
+        }
+
+        public override void StopAttacking()
+        {
+            _shootContinuously = false;
         }
 
         public override void Reload()
         {
             base.Reload();
-            if(weaponController.CurrentWeapon is WeaponRanged)
-                ((WeaponRanged)weaponController.CurrentWeapon).HandleReload(manual:true);
+            if(weaponController.CurrentWeapon is WeaponRanged weaponRanged)
+                weaponRanged.HandleReload(manual:true);
         }
 
         public override void SetWeaponVisible(bool isVisible)

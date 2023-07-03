@@ -5,6 +5,7 @@ using Gunfighter.Runtime.General.Objects_Pool;
 using Gunfighter.Runtime.ScriptableObjects.Data.Weapon;
 using UnityEngine;
 using UnityEngine.Serialization;
+using Action = Unity.Plastic.Antlr3.Runtime.Misc.Action;
 using Random = UnityEngine.Random;
 
 namespace Gunfighter.Runtime.Entity.Weapon.RangedWeapons
@@ -41,14 +42,16 @@ namespace Gunfighter.Runtime.Entity.Weapon.RangedWeapons
         public int AmmoLeftInClip { get => ammoLeftInClip; private set { ammoLeftInClip = value; InvokeOnAmmoLeftChanged(value); } }
         public int ClipSize { get => clipSize; private set { clipSize = value; InvokeOnWeaponSetup(value); } }
         public bool ReloadPerforming { get => Reloading; private set { Reloading = value; InvokeOnReloadPerforming(value); } }
-
+        
+        
         public event Action<int> OnAmmoLeftChanged;
         public event Action<int> OnWeaponSetup;
         public event Action<bool> OnReloadPerforming;
+        public event Action OnShootingCooldownOver;
 
-        protected WeaponRangedData WeaponRangedData;
+        public WeaponRangedData WeaponRangedData { get; protected set; }
     
-
+        
         private void Awake()
         {
             this.WeaponRangedData = (WeaponRangedData)weaponData;
@@ -97,7 +100,13 @@ namespace Gunfighter.Runtime.Entity.Weapon.RangedWeapons
 
             AmmoLeftInClip--;
             yield return new WaitForSeconds(WeaponRangedData.AttackSpeed);
+            ShootingCooldownOver();
+        }
+
+        private void ShootingCooldownOver()
+        {
             IsOnShootingCooldown = false;
+            OnShootingCooldownOver?.Invoke();
         }
 
         public override void DoAttack(AttackType attackType)

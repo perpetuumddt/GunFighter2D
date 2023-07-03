@@ -16,10 +16,13 @@ namespace Gunfighter.Runtime.Entity.Character.Player.States
             base.Initialize(param);
             StateMachine.CurrentState.Data.CharacterInputHandler.OnMove += SwitchState;
             StateMachine.CurrentState.Data.CharacterInputHandler.OnAttack += Attack;
+            StateMachine.CurrentState.Data.CharacterInputHandler.OnAttackCanceled += AttackCanceled;
             StateMachine.CurrentState.Data.CharacterInputHandler.OnReload += Reload;
             StateMachine.CurrentState.Data.CharacterInputHandler.OnSwapWeapon += SwapWeapon;
             StateMachine.CurrentState.Data.CharacterHealthController.OnHealthZero += SwichDeathState;
         }
+
+        
 
         private void SwichDeathState(bool isDead)
         {
@@ -45,14 +48,21 @@ namespace Gunfighter.Runtime.Entity.Character.Player.States
             base.StopExecution();
             StateMachine.CurrentState.Data.CharacterInputHandler.OnMove -= SwitchState;
             StateMachine.CurrentState.Data.CharacterInputHandler.OnAttack -= Attack;
+            StateMachine.CurrentState.Data.CharacterInputHandler.OnAttackCanceled -= AttackCanceled;
             StateMachine.CurrentState.Data.CharacterInputHandler.OnReload -= Reload;
             StateMachine.CurrentState.Data.CharacterInputHandler.OnSwapWeapon -= SwapWeapon;
             StateMachine.CurrentState.Data.CharacterHealthController.OnHealthZero -= SwichDeathState;
+            StateMachine.CurrentState.Data.CharacterAttackController.StopAttacking();
         }
 
-        public void Attack(bool isAttacking)
+        public void Attack()
         {
             StateMachine.CurrentState.Data.CharacterAttackController.DoAttack(AttackType.Single);
+        }
+        
+        private void AttackCanceled()
+        {
+            StateMachine.CurrentState.Data.CharacterAttackController.StopAttacking();
         }
 
         public void Reload()

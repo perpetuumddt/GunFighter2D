@@ -22,6 +22,11 @@ namespace Gunfighter.Runtime.Entity.Character.Controller
         {
         
         }
+        
+        public virtual void StopAttacking()
+        {
+            
+        }
 
         public virtual void Reload()
         {

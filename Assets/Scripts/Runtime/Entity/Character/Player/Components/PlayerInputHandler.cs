@@ -19,7 +19,7 @@ namespace Gunfighter.Runtime.Entity.Character.Player.Components
             inputReader.OnRollEvent += InvokeOnRoll;
 
             inputReader.OnAttackEvent += InvokeOnAttack;
-            inputReader.OnAttackCanceledEvent += UnInvokeOnAttack;    
+            inputReader.OnAttackCanceledEvent += InvokeOnAttackCanceled;    
 
             inputReader.OnReloadEvent += InvokeOnReload;
 
@@ -36,7 +36,7 @@ namespace Gunfighter.Runtime.Entity.Character.Player.Components
             inputReader.OnRollEvent -= InvokeOnRoll;
 
             inputReader.OnAttackEvent -= InvokeOnAttack;
-            inputReader.OnAttackCanceledEvent -= UnInvokeOnAttack;    
+            inputReader.OnAttackCanceledEvent -= InvokeOnAttackCanceled;    
 
             inputReader.OnReloadEvent -= InvokeOnReload;
 
@@ -44,49 +44,8 @@ namespace Gunfighter.Runtime.Entity.Character.Player.Components
 
             inputReader.OnInteractEvent -= InvokeOnInteract;
         }
-
         
-
-        //public void UseRollInput() => RollInput = false;
-
-        public void OnReloadInput(InputAction.CallbackContext context)
-        {
-            if (context.started)
-            {
-                InvokeOnReload();
-            }
-        }
-
-        //public void UseReloadInput() => ReloadInput = false;
-
-        public void OnAttackInput(InputAction.CallbackContext context)
-        {
-            if (context.started)
-            {
-                InvokeOnAttack();
-            }
-
-            if (context.canceled)
-            {
-                UnInvokeOnAttack();
-            }
-        }
-
-        public void OnSwitchWeaponInput(InputAction.CallbackContext context)
-        {
-            if(context.started) 
-            {
-                InvokeOnSwapWeapon();
-            }
-        }
-
-        public void OnInteractInput(InputAction.CallbackContext context)
-        {
-            if(context.started)
-            {
-                InvokeOnInteract();
-            }
-        }
+        
 
         public void SetMovementVector(Vector2 inputVector)
         {

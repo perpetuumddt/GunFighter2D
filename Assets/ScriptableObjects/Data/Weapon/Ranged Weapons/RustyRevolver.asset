@@ -21,3 +21,4 @@ MonoBehaviour:
   ammoMaxCount: 36
   spreadAngle: 5
   bulletsInOneShot: 1
+  autoShotType: 0
