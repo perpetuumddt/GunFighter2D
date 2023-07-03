@@ -27,7 +27,6 @@ namespace Gunfighter.Runtime.UI.Screens
 
         private void TitleScreen()
         {
-            
             SceneManager.LoadScene(0);
         }
 
