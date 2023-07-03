@@ -18,9 +18,14 @@ namespace Gunfighter.Runtime.Entity.Character.Controller
         
         }
 
-        public virtual void DoAttack(AttackType attackType)
+        public virtual void DoAttack()
         {
         
+        }
+        
+        public virtual void StopAttacking()
+        {
+            
         }
 
         public virtual void Reload()

@@ -1,8 +1,9 @@
 using System.Threading.Tasks;
-using Gunfighter.Runtime.Entity.Character.Player.Input;
+using Gunfighter.Runtime.Entity.Character.Player.Components;
 using Gunfighter.Runtime.Entity.Character.Player.PlayerController;
 using Gunfighter.Runtime.Entity.Character.StateMachine;
 using Gunfighter.Runtime.Entity.Character.StateMachine.States;
+using Gunfighter.Runtime.ScriptableObjects.Data.Character.Player;
 using UnityEngine;
 using CharacterController = Gunfighter.Runtime.Entity.Character.Controller.CharacterController;
 
@@ -10,10 +11,9 @@ namespace Gunfighter.Runtime.Entity.Character.Player.States
 {
     public class PlayerRollState : CharacterRollState
     {
-        private float _velocity = 6f;
-        private float _duration = 0.4f;
+        private float _durationLeft;
 
-        private bool _rollLeft;
+        private PlayerData _playerData;
 
         public PlayerRollState(CharacterController data, StateMachine<CharacterController> stateMachine) : base(data, stateMachine)
         {
@@ -34,6 +34,8 @@ namespace Gunfighter.Runtime.Entity.Character.Player.States
         public override void Initialize(params object[] param)
         {
             ((PlayerAttackController)Data.CharacterAttackController).SetWeaponVisible(false);
+            _playerData = (Data.CharacterData as PlayerData);
+            _durationLeft = _playerData.RollDuration;
             base.Initialize(param);
         }
 
@@ -52,10 +54,14 @@ namespace Gunfighter.Runtime.Entity.Character.Player.States
         {
             var rollDirection = inputHandler.MovementInputVector;
             StateMachine.CurrentState.Data.CharacterRotationController.CheckRollingDirection();
-            while (_duration > 0f)
+            while (_durationLeft > 0f)
             {
-                StateMachine.CurrentState.Data.CharacterMovementController.DoMove(rollDirection.x * _velocity, rollDirection.y * _velocity);
-                _duration -= Time.deltaTime;
+                Vector2 moveVector = new Vector2(rollDirection.x * _playerData.RollSpeed,
+                    rollDirection.y * _playerData.RollSpeed);
+                StateMachine.CurrentState.Data.CharacterMovementController.DoMove(moveVector.x,moveVector.y);
+                _durationLeft -= Time.deltaTime;
+                (Data.CharacterMovementController as PlayerMovementController).StartCooldownTimer(_playerData
+                    .RollCooldown);
                 await Task.Delay(1);
             }
             SwichState();
