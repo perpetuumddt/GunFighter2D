@@ -5,6 +5,7 @@ using Gunfighter.Runtime.Entity.Weapon.RangedWeapons;
 using Gunfighter.Runtime.Entity.Weapon.WeaponManager;
 using Gunfighter.Runtime.ScriptableObjects;
 using Gunfighter.Runtime.ScriptableObjects.Data.Weapon;
+using Gunfighter.Runtime.ScriptableObjects.Event;
 using UnityEngine;
 
 namespace Gunfighter.Runtime.Entity.Character.Player.PlayerController

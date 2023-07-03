@@ -1,5 +1,5 @@
 using System.Threading.Tasks;
-using Gunfighter.Runtime.Entity.Character.Player.Input;
+using Gunfighter.Runtime.Entity.Character.Player.Components;
 using Gunfighter.Runtime.Entity.Character.Player.PlayerController;
 using Gunfighter.Runtime.Entity.Character.StateMachine;
 using Gunfighter.Runtime.Entity.Character.StateMachine.States;
