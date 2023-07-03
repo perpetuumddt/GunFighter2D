@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 822283ed55a4f844b8cfab95b24014a8, type: 3}
-  m_Name: ShortCactoidData
+  m_Name: Skele-rat
   m_EditorClassIdentifier: 
-  name: Short Cactoid
-  defaultMaxHealth: 8
-  movementSpeed: 1.5
+  name: Skele-rat
+  defaultMaxHealth: 2
+  movementSpeed: 2
   damage: 1
-  baseXpReward: 5
+  baseXpReward: 2

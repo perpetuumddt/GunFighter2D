@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: PlayerData
   m_EditorClassIdentifier: 
   name: Frogg
-  defaultMaxHealth: 12
+  defaultMaxHealth: 3
   movementSpeed: 3
   rollSpeed: 5
   rollCooldown: 5
