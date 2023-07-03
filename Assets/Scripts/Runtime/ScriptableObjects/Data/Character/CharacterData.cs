@@ -1,10 +1,11 @@
 ﻿using System;
+using Gunfighter.Runtime.ScriptableObjects.Generic;
 using UnityEngine;
 using UnityEngine.Serialization;
 
 namespace Gunfighter.Runtime.ScriptableObjects.Data.Character
 {
-    public class CharacterData : ScriptableObject
+    public class CharacterData : DescriptionBaseSO
     {
         [SerializeField]
         private string name;

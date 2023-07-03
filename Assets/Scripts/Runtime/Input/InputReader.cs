@@ -78,7 +78,6 @@ namespace Gunfighter.Runtime.Input
         
         public void OnMovement(InputAction.CallbackContext context)
         {
-            Debug.Log(context.phase);
             switch (context.phase)
             {
                 case InputActionPhase.Performed:
