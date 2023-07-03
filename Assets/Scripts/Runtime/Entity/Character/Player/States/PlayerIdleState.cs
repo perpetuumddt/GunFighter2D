@@ -57,7 +57,7 @@ namespace Gunfighter.Runtime.Entity.Character.Player.States
 
         public void Attack()
         {
-            StateMachine.CurrentState.Data.CharacterAttackController.DoAttack(AttackType.Single);
+            StateMachine.CurrentState.Data.CharacterAttackController.DoAttack();
         }
         
         private void AttackCanceled()

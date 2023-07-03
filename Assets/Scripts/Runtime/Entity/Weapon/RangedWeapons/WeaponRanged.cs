@@ -109,12 +109,12 @@ namespace Gunfighter.Runtime.Entity.Weapon.RangedWeapons
             OnShootingCooldownOver?.Invoke();
         }
 
-        public override void DoAttack(AttackType attackType)
+        public override void DoAttack()
         {
             HandleReload();
             if (CanShoot)
             {
-                base.DoAttack(attackType);
+                base.DoAttack();
                 if (ShootCoroutine != null)
                 {
                     StopCoroutine(ShootCoroutine);

@@ -13,7 +13,7 @@ namespace Gunfighter.Runtime.Entity.Weapon
 
         public WeaponData WeaponData => weaponData;
 
-        public virtual void DoAttack(AttackType attackType)
+        public virtual void DoAttack()
         {
 
         }

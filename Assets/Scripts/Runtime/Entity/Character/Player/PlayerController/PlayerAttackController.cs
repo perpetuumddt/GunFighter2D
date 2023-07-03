@@ -52,22 +52,22 @@ namespace Gunfighter.Runtime.Entity.Character.Player.PlayerController
             weaponController.OnReload -= PlayReloadUIAnimation;
         }
 
-        public override void DoAttack(AttackType attackType)
+        public override void DoAttack()
         {
-            base.DoAttack(attackType);
+            base.DoAttack();
             if (weaponController.CurrentWeapon is WeaponRanged weaponRanged &&
                 weaponRanged.WeaponRangedData.AutoShotType == WeaponRangedAutoShotType.Automatic)
             {
                 _shootContinuously = true;
             }
-            weaponController.CurrentWeapon.DoAttack(attackType);
+            weaponController.CurrentWeapon.DoAttack();
             InvokeOnAttack();
         }
 
         private void ShootContinuously()
         {
             if(_shootContinuously)
-                DoAttack(AttackType.Single);
+                DoAttack();
                 
         }
 
