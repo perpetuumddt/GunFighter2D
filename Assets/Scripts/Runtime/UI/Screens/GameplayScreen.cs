@@ -1,3 +1,4 @@
+using System;
 using Gunfighter.Runtime.ScriptableObjects;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -7,10 +8,11 @@ namespace Gunfighter.Runtime.UI.Screens
 {
     public class GameplayScreen : ScreenUIController
     {
-        [FormerlySerializedAs("_pauseButton")] [SerializeField]
+        [SerializeField]
         private Button pauseButton;
-        [FormerlySerializedAs("_isPause")] [SerializeField]
+        [SerializeField]
         private ScriptableObjectBoolVariable isPause;
+        
 
         public void OnEnable()
         {
