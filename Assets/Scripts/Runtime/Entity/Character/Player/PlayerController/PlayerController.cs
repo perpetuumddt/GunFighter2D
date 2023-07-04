@@ -9,7 +9,8 @@ namespace Gunfighter.Runtime.Entity.Character.Player.PlayerController
     public class PlayerController : Controller.CharacterController
     {
         public PlayerLevelController PlayerLevelController { get; private set; }
-
+        
+        public PlayerRotationController PlayerRotationController { get; private set; }
 
         [SerializeField]
         private SOVoidEvent playerDeathEvent;
@@ -20,6 +21,7 @@ namespace Gunfighter.Runtime.Entity.Character.Player.PlayerController
         {
             base.Awake();
             PlayerLevelController = GetComponent<PlayerLevelController>();
+            PlayerRotationController = GetComponent<PlayerRotationController>();
             StateMachine = new StateMachine<CharacterController>();
             StateMachine.CurrentState = new PlayerIdleState(this, StateMachine);
             StateMachine.CurrentState.Initialize();

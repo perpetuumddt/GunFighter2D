@@ -41,13 +41,11 @@ namespace Gunfighter.Runtime.Entity.Character.Player.States
 
         private void SwichState()
         {
-            if (IsExecuted)
-            {
-                StopExecution();
-                StateMachine.CurrentState = new PlayerIdleState(StateMachine.CurrentState.Data, StateMachine);
-                StateMachine.CurrentState.Initialize();
-                StateMachine.CurrentState.Execute();
-            }
+            if (!IsExecuted) return;
+            StopExecution();
+            StateMachine.CurrentState = new PlayerIdleState(StateMachine.CurrentState.Data, StateMachine);
+            StateMachine.CurrentState.Initialize();
+            StateMachine.CurrentState.Execute();
         }
 
         private async void Roll(PlayerInputHandler inputHandler)

@@ -19,11 +19,10 @@ GameObject:
   - component: {fileID: 3362577381024735467}
   - component: {fileID: 3362577381024735474}
   - component: {fileID: 3362577381024735457}
-  - component: {fileID: 3362577381024735466}
   - component: {fileID: 3362577381024735460}
   - component: {fileID: 3362577381024735462}
   - component: {fileID: 3362577381024735456}
-  - component: {fileID: -304224300598681448}
+  - component: {fileID: 4742806625164078086}
   m_Layer: 0
   m_Name: Skele-rat
   m_TagString: Enemy
@@ -275,18 +274,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f23f5d50d2d21148810264715a4bc21, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &3362577381024735466
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3362577381024735476}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 80e153d09045c1a41b0b3011bb9aba89, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3362577381024735460
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -324,7 +311,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a1197ac8dcb47ea4c888bc76e37c2c5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-304224300598681448
+--- !u!114 &4742806625164078086
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -333,6 +320,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 3362577381024735476}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 63c83556f5acefd4b80eee507ed52b1f, type: 3}
+  m_Script: {fileID: 11500000, guid: beed619c3c3eae64e9614e4c2e918cbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
