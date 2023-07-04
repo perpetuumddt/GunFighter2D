@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace Gunfighter.Runtime.UI
 {
@@ -6,8 +7,8 @@ namespace Gunfighter.Runtime.UI
     {
         [SerializeField]
         private CanvasGroup canvasGroup;
-
-        public void SetActive(bool isActive)
+        
+        protected void SetActive(bool isActive)
         {
             canvasGroup.alpha = isActive ? 1 : 0;
             canvasGroup.interactable = isActive;

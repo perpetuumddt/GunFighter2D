@@ -16,9 +16,6 @@ MonoBehaviour:
   - counter: 1
     enemies:
     - enemyPrefab: {fileID: 3362577381024735476, guid: 206eeb26d2ae6e74286423db946ea5bb, type: 3}
-      enemyCount: 10
-      spawnRate: 1
-    - enemyPrefab: {fileID: 3362577381024735476, guid: 8b81efa0a3650c049ac843d90075005a, type: 3}
-      enemyCount: 2
-      spawnRate: 5
+      enemyCount: 5
+      spawnRate: 1.5
     waveDuration: 30

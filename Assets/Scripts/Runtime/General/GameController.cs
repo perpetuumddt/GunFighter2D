@@ -6,7 +6,7 @@ namespace Gunfighter.Runtime.General
 {
     public class GameController : MonoBehaviour
     {
-        [FormerlySerializedAs("_isPause")] [SerializeField]
+        [SerializeField]
         private ScriptableObjectBoolVariable isPause;
 
         private void OnEnable()
@@ -19,7 +19,7 @@ namespace Gunfighter.Runtime.General
             isPause.OnVariableChanged -= PauseGame;
         }
 
-        private void PauseGame(bool isPause)
+        private static void PauseGame(bool isPause)
         {
             Time.timeScale = isPause ? 0f : 1f;
         }
