@@ -10,15 +10,15 @@ namespace Gunfighter.Runtime.General.CustomYieldInstructions
     public class WaitForAnimationToFinish : CustomYieldInstruction
     {
 
-        private readonly string animationName;
+        private readonly string _animationName;
 
-        private readonly Animator animator;
-        private readonly int layerIndex;
+        private readonly Animator _animator;
+        private readonly int _layerIndex;
 
 
-        private AnimatorStateInfo StateInfo => animator.GetCurrentAnimatorStateInfo(layerIndex);
+        private AnimatorStateInfo StateInfo => _animator.GetCurrentAnimatorStateInfo(_layerIndex);
 
-        private bool CorrectAnimationIsPlaying => StateInfo.IsName(animationName);
+        private bool CorrectAnimationIsPlaying => StateInfo.IsName(_animationName);
 
         private bool AnimationIsDone => StateInfo.normalizedTime >= 1;
 
@@ -33,9 +33,9 @@ namespace Gunfighter.Runtime.General.CustomYieldInstructions
         /// <param name="layerIndex">The layer the animation is playing on</param>
         public WaitForAnimationToFinish(Animator animator,  int layerIndex = 0)
         {
-            this.animator = animator;
-            this.layerIndex = layerIndex;
-            this.animationName = animationName;
+            _animator = animator;
+            _layerIndex = layerIndex;
+            //this.animationName = animationName;
         }
 
     }

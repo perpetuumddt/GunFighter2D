@@ -8,7 +8,7 @@ namespace Gunfighter.Runtime.Entity.Character.Player.Controllers
     public class PlayerMovementController : CharacterMovementController
     {
         [SerializeField]
-        private Rigidbody2D rigidbody;
+        private new Rigidbody2D rigidbody;
         private Vector2 _currentVelocity;
         
         [SerializeField, ReadOnly]

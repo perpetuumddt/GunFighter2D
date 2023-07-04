@@ -6,7 +6,7 @@ namespace Gunfighter.Runtime.ScriptableObjects.Data.Weapon
     public class WeaponData : ScriptableObject
     {
         [SerializeField]
-        private string name;
+        private new string name;
         public string Name => name;
 
         [SerializeField]

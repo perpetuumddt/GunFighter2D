@@ -8,15 +8,17 @@ namespace Gunfighter.Runtime.Entity.Obstacle.Controllers
 {
     public class ObstacleController : EntityController
     {
-        //public new EntityAnimationController AnimationController => base. 
+        public new ObstacleAnimationController AnimationController => 
+            base.AnimationController as ObstacleAnimationController;
         public new ObstacleCollisionController CollisionController => 
             base.CollisionController as ObstacleCollisionController;
-        //public new EntityDropController DropController => base. 
+        public new ObstacleDropController DropController =>
+            base.DropController as ObstacleDropController;
         public new ObstacleHealthController HealthController => 
             base.HealthController as ObstacleHealthController;
         
         protected StateMachine<ObstacleController> StateMachine;
-        protected void Awake()
+        protected override void Awake()
         {
             base.Awake();
             StateMachine = new StateMachine<ObstacleController>();

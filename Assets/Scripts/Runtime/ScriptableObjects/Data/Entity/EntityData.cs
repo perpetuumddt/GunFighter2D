@@ -9,7 +9,7 @@ namespace Gunfighter.Runtime.ScriptableObjects.Data.Entity
         [Space]
         [Header("Entity Data")]
         [SerializeField]
-        private string name;
+        private new string name;
         public string Name => name;
         [Space]
         [SerializeField]
