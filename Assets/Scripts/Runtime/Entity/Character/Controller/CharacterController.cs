@@ -20,7 +20,7 @@ namespace Gunfighter.Runtime.Entity.Character.Controller
     
         protected StateMachine<CharacterController> StateMachine;
 
-        protected virtual void Awake()
+        protected override void Awake()
         {
             base.Awake();
             CharacterAnimationController = GetComponent<CharacterAnimationController>();

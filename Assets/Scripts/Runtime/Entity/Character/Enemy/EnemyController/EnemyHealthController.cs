@@ -30,7 +30,7 @@ namespace Gunfighter.Runtime.Entity.Character.Enemy.EnemyController
             if(CurrentHealth >0)
             {
                 CurrentHealth -= damage;
-                if (_currentHealth <= 0)
+                if (CurrentHealth <= 0)
                 {
                     InvokeOnHealthZero();
                     _enemyManager.InvokeOnEnemyDied(this.gameObject);

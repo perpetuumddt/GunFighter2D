@@ -25,28 +25,21 @@ namespace Gunfighter.Runtime.Entity.Character.Player.PlayerController
             CurrentHealth = MaxHealth;
         }
 
-
-        public override void InvokeUpdateHealth(int currentHealth)
-        {
-            base.InvokeUpdateHealth(this.CurrentHealth);
-
-            if(currentHealth <= 0)
-            {
-                InvokeOnHealthZero();
-            }
-        }
-
         public override void TakeDamage(int damage)
         {
             if (damage < 0) throw new ArgumentOutOfRangeException();
             if (!_isInvincible)
             {
-                _currentHealth = CurrentHealth - damage;
-                if (CanBeInvincible && _currentHealth != 0)
+                CurrentHealth -= damage; 
+                if (CanBeInvincible && CurrentHealth > 0)
                 {
                     StartCoroutine(BecomeTemporarilyInvincible());
                 }
-                InvokeUpdateHealth(CurrentHealth);
+                
+                if(CurrentHealth == 0)
+                {
+                    InvokeOnHealthZero();
+                }
             }
         }
 
@@ -54,8 +47,7 @@ namespace Gunfighter.Runtime.Entity.Character.Player.PlayerController
         {
             if (health < 0) throw new ArgumentOutOfRangeException();
         
-            _currentHealth = CurrentHealth + health;
-            InvokeUpdateHealth(CurrentHealth);
+            CurrentHealth += health;
         }
     
         private IEnumerator BecomeTemporarilyInvincible()

@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Gunfighter.Runtime.Entity.Character.Controller
 {
-    public abstract class CharacterHealthController : EntityHealthController, IDamageable
+    public abstract class CharacterHealthController : EntityHealthController
     {
         public event Action<int> OnMaxHealthChange;
         protected override void Awake()
@@ -15,10 +15,7 @@ namespace Gunfighter.Runtime.Entity.Character.Controller
         
         
         
-        public override void InvokeUpdateHealth(int currentHealth)
-        {
-            base.InvokeUpdateHealth(currentHealth);
-        }
+        
         
         public override void DestroyOnDeath()
         {
@@ -38,9 +35,9 @@ namespace Gunfighter.Runtime.Entity.Character.Controller
         public virtual void ChangeMaxHealth(int newMaxHealth)
         {
             if (newMaxHealth < 0) throw new ArgumentOutOfRangeException();
-            _maxHealth = newMaxHealth;
-            OnMaxHealthChange?.Invoke(_maxHealth);
-            if (CurrentHealth > _maxHealth) CurrentHealth = _maxHealth;
+            MaxHealth = newMaxHealth;
+            OnMaxHealthChange?.Invoke(MaxHealth);
+            if (CurrentHealth > MaxHealth) CurrentHealth = MaxHealth;
         }
 
         

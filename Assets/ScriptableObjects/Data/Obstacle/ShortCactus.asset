@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: d2b0efc883926ac4981ebf2ecd9173d3, type: 3}
-  m_Name: LongCactus
+  m_Name: ShortCactus
   m_EditorClassIdentifier: 
   description: 
   name: Short Cactus
   defaultMaxHealth: 3
   isIndestructible: 0
-  collisionDamage: 0
+  collisionDamage: 1
