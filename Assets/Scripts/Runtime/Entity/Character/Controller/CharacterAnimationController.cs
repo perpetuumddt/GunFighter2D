@@ -1,19 +1,11 @@
+using Gunfighter.Runtime.Entity.Controller;
 using UnityEngine;
 
 namespace Gunfighter.Runtime.Entity.Character.Controller
 {
-    public class CharacterAnimationController : MonoBehaviour
+    public class CharacterAnimationController : EntityAnimationController
     {
-        protected Animator _animator;
-
-        private void Awake()
-        {
-            _animator = GetComponent<Animator>();
-        }
-
-        public Animator Animator => _animator;
-
-        public virtual void SetActiveBoolAnim(string parameter, bool isActive)
+        public override void SetActiveBoolAnim(string parameter, bool isActive)
         {
         
         }

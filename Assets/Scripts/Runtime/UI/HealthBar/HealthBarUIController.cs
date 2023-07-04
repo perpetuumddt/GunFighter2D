@@ -1,4 +1,4 @@
-using Gunfighter.Runtime.Entity.Character.Player.PlayerController;
+using Gunfighter.Runtime.Entity.Character.Player.Controllers;
 using UnityEngine;
 using UnityEngine.Serialization;
 

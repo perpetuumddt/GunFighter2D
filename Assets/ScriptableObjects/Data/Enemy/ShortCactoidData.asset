@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 822283ed55a4f844b8cfab95b24014a8, type: 3}
   m_Name: ShortCactoidData
   m_EditorClassIdentifier: 
+  description: 
   name: Short Cactoid
   defaultMaxHealth: 8
+  isIndestructible: 0
+  collisionDamage: 1
   movementSpeed: 1.5
   damage: 1
   baseXpReward: 5
