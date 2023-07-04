@@ -31,7 +31,7 @@ namespace Gunfighter.Runtime.Entity.Controller
             protected set => maxHealth = value;
         }
 
-        public event Action<bool> OnHealthZero;
+        public event Action OnHealthZero;
         public event Action<int> OnUpdateHealth;
             
         protected virtual void Awake()
@@ -51,7 +51,7 @@ namespace Gunfighter.Runtime.Entity.Controller
 
         protected void InvokeOnHealthZero()
         {
-            OnHealthZero?.Invoke(true);
+            OnHealthZero?.Invoke();
         }
 
 

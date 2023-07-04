@@ -17,7 +17,8 @@ namespace Gunfighter.Runtime.Entity.Character.Controller
         public CharacterRotationController CharacterRotationController { get; private set; }
 
         public CharacterData CharacterData => EntityData as CharacterData;
-    
+        
+        
         protected StateMachine<CharacterController> StateMachine;
 
         protected override void Awake()

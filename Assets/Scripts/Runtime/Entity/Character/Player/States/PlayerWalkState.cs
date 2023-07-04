@@ -47,15 +47,12 @@ namespace Gunfighter.Runtime.Entity.Character.Player.States
             StateMachine.CurrentState.Data.CharacterHealthController.OnHealthZero += SwichDeathState;
         }
 
-        private void SwichDeathState(bool isDead)
+        private void SwichDeathState()
         {
-            if (isDead)
-            {
-                StopExecution();
-                StateMachine.CurrentState = new PlayerDeathState(StateMachine.CurrentState.Data, StateMachine);
-                StateMachine.CurrentState.Initialize();
-                StateMachine.CurrentState.Execute();
-            }
+            StopExecution();
+            StateMachine.CurrentState = new PlayerDeathState(StateMachine.CurrentState.Data, StateMachine);
+            StateMachine.CurrentState.Initialize();
+            StateMachine.CurrentState.Execute();
         }
 
         private void SwichStateIdle(bool isMove)

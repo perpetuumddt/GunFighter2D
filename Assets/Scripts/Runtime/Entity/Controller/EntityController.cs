@@ -1,4 +1,5 @@
 using System;
+using Gunfighter.Runtime.Entity.Character.StateMachine;
 using Gunfighter.Runtime.ScriptableObjects.Data.Entity;
 using UnityEngine;
 
@@ -13,6 +14,7 @@ namespace Gunfighter.Runtime.Entity.Controller
         
         [SerializeField] private EntityData entityData;
         public EntityData EntityData => entityData;
+
 
         protected virtual void Awake()
         {

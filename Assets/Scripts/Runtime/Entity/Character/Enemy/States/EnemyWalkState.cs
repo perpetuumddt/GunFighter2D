@@ -26,19 +26,13 @@ namespace Gunfighter.Runtime.Entity.Character.Enemy.States
             StateMachine.CurrentState.Data.CharacterHealthController.OnHealthZero -= SwitchStateDeath;
         }
 
-        private void SwitchStateDeath(bool onHealthZero)
+        private void SwitchStateDeath()
         {
-            if(onHealthZero)
-            {
-                StopExecution();
-                StateMachine.CurrentState = new EnemyDeathState(StateMachine.CurrentState.Data, StateMachine);
-                StateMachine.CurrentState.Initialize();
-                StateMachine.CurrentState.Execute();
-            }
-            else
-            {
-                Execute();
-            }
+            StopExecution();
+            StateMachine.CurrentState = new EnemyDeathState(StateMachine.CurrentState.Data, StateMachine);
+            StateMachine.CurrentState.Initialize();
+            StateMachine.CurrentState.Execute();
+           
         }
     }
 }

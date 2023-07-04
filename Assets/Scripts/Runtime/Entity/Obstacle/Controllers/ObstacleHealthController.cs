@@ -14,7 +14,6 @@ namespace Gunfighter.Runtime.Entity.Obstacle.Controllers
                 if (CurrentHealth <= 0)
                 {
                     InvokeOnHealthZero();
-                    DestroyOnDeath();
                 }
             }
         }

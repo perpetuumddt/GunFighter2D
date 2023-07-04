@@ -14,7 +14,8 @@ namespace Gunfighter.Runtime.Entity.Character.Player.PlayerController
         [SerializeField]
         private SOVoidEvent playerDeathEvent;
         public SOVoidEvent PlayerDeathEvent => playerDeathEvent;
-
+        
+        
         protected override void Awake()
         {
             base.Awake();

@@ -24,15 +24,12 @@ namespace Gunfighter.Runtime.Entity.Character.Player.States
 
         
 
-        private void SwichDeathState(bool isDead)
+        private void SwichDeathState()
         {
-            if (isDead)
-            {
-                StopExecution();
-                StateMachine.CurrentState = new PlayerDeathState(StateMachine.CurrentState.Data, StateMachine);
-                StateMachine.CurrentState.Initialize();
-                StateMachine.CurrentState.Execute();
-            }
+            StopExecution();
+            StateMachine.CurrentState = new PlayerDeathState(StateMachine.CurrentState.Data, StateMachine);
+            StateMachine.CurrentState.Initialize();
+            StateMachine.CurrentState.Execute();
         }
 
         public override void Execute()
