@@ -10,10 +10,15 @@ namespace Gunfighter.Runtime.Entity.Character.Player.PlayerController
         protected bool LookLeft, RollLeft;
         private Camera _mainCam;
         private PlayerInputHandler _playerInputHandler;
+
+        private bool isFlipped = false;
+        
+        private SpriteRenderer _playerSprite;
         
         private void Start()
         {
             _playerInputHandler = GetComponent<PlayerInputHandler>();
+            _playerSprite = GetComponent<SpriteRenderer>();
             _mainCam = FindObjectOfType<Camera>();
         }
 
@@ -51,9 +56,10 @@ namespace Gunfighter.Runtime.Entity.Character.Player.PlayerController
 
         protected override void Flip()
         {
+            isFlipped = !isFlipped;
             LookLeft = !LookLeft;
             RollLeft = !RollLeft;
-            transform.Rotate(0, 180, 0);
+            _playerSprite.flipX = isFlipped;
         }
     }
 }

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Gunfighter.Runtime.General.WaveSystem;
 using UnityEngine;
 using UnityEngine.Serialization;
@@ -122,29 +123,17 @@ namespace Gunfighter.Runtime.Entity.Character.Enemy.EnemySpawner
 
         private void DecrementEnemyAmountLeftToSpawn(int enemyID)
         {
-            foreach(Enemy enemy in _enemies) 
+            foreach (var enemy in _enemies.Where(enemy => enemy.EnemyID == enemyID))
             {
-                if(enemy.EnemyID == enemyID)
-                {
-                    enemy.EnemyCount--;
-                }
+                enemy.EnemyCount--;
             }
         }
 
         private bool CheckIfEnemyTypeIsEmpty(int enemyID)
         {
-            foreach (Enemy enemy in _enemies)
-            {
-                if (enemy.EnemyID == enemyID && enemy.EnemyCount == 0)
-                {
-                    //Debug.Log("Enemy of Type " + enemy.EnemyID + "is Empty");
-                    //enemies.Remove(enemy);
-                    return true;
-                }
-            }
-            return false;
+            return _enemies.Any(enemy => enemy.EnemyID == enemyID && enemy.EnemyCount == 0);
         }
-
+    
         private void SpawnEnemy(int waveID, int enemyID)
         {
             int positionIndex = Random.Range(0, 4);
@@ -164,18 +153,23 @@ namespace Gunfighter.Runtime.Entity.Character.Enemy.EnemySpawner
         private Vector3 CalculateSpawnPosition(int positionIndex)
         {
             float randPos = (float)Random.Range(0,101) / 100;
+            Vector2 newVector = new Vector2();
             switch (positionIndex) //0-Top 1-Right 2-Down 3-Left
             {
                 case 0:
-                    return Camera.main.ViewportToWorldPoint(new Vector3(randPos, 1.1f, 0f));
+                    newVector = Camera.main.ViewportToWorldPoint(new Vector3(randPos, 1.1f));
+                    break;
                 case 1:
-                    return Camera.main.ViewportToWorldPoint(new Vector3(1.1f, randPos, 0f));
+                    newVector = Camera.main.ViewportToWorldPoint(new Vector3(1.1f, randPos));
+                    break;
                 case 2:
-                    return Camera.main.ViewportToWorldPoint(new Vector3(randPos, -0.1f, 0f));
+                    newVector = Camera.main.ViewportToWorldPoint(new Vector3(randPos, -0.1f));
+                    break;
                 case 3:
-                    return Camera.main.ViewportToWorldPoint(new Vector3(-0.1f, randPos, 0f));
+                    newVector = Camera.main.ViewportToWorldPoint(new Vector3(-0.1f, randPos));
+                    break;
             }
-            return new Vector3(1.1f,1.1f,0);
+            return new Vector3(newVector.x,newVector.y,0);
         }
     }
 }

@@ -39,15 +39,13 @@ namespace Gunfighter.Runtime.Entity.Character.Player.PlayerController
         public override void TakeDamage(int damage)
         {
             if (damage < 0) throw new ArgumentOutOfRangeException();
-            if (!_isInvincible)
+            if (_isInvincible) return;
+            _currentHealth = CurrentHealth - damage;
+            if (CanBeInvincible && _currentHealth != 0)
             {
-                _currentHealth = CurrentHealth - damage;
-                if (CanBeInvincible && _currentHealth != 0)
-                {
-                    StartCoroutine(BecomeTemporarilyInvincible());
-                }
-                UpdateHealth(CurrentHealth);
+                StartCoroutine(BecomeTemporarilyInvincible());
             }
+            UpdateHealth(CurrentHealth);
         }
 
         public override void ReplenishHealth(int health)
@@ -64,14 +62,7 @@ namespace Gunfighter.Runtime.Entity.Character.Player.PlayerController
             for (float i = 0; i < _invincibilityDurationSeconds; i += _invincibilityDeltaTime)
             {
                 // 1.5/0.15 = 10 invulnerability frames 
-                if (this.transform.localScale == Vector3.one)
-                {
-                    ScaleModelTo(Vector3.zero);
-                }
-                else
-                {
-                    ScaleModelTo(Vector3.one);
-                }
+                ScaleModelTo(this.transform.localScale == Vector3.one ? Vector3.zero : Vector3.one);
                 yield return new WaitForSeconds(_invincibilityDeltaTime);
             }
             ScaleModelTo(Vector3.one);
