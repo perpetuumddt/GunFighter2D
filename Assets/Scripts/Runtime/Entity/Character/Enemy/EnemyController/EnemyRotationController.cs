@@ -1,22 +1,39 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Gunfighter.Runtime.Entity.Character.Controller;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Gunfighter.Runtime.Entity.Character.Enemy.EnemyController
 
 {
     public class EnemyRotationController : CharacterRotationController
     {
+        private NavMeshAgent _agent;
+        private bool _moveLeft;
+        private void Start()
+        {
+            _agent = GetComponent<NavMeshAgent>();
+        }
+
         public override void CheckLookingDirection()
         {
-            throw new System.NotImplementedException();
+            if (!_moveLeft && transform.position.x < _agent.destination.x)
+            {
+                Flip();
+            }
+            else if (_moveLeft && transform.position.x > _agent.destination.x)
+            {
+                Flip();
+            }
         }
 
         public override Vector2 CheckMovementDirection()
         {
-            throw new System.NotImplementedException();
+            return _agent.destination;
         }
+
 
         public override void CheckRollingDirection()
         {
@@ -25,7 +42,8 @@ namespace Gunfighter.Runtime.Entity.Character.Enemy.EnemyController
 
         protected override void Flip()
         {
-            throw new System.NotImplementedException();
+            _moveLeft = !_moveLeft;
+            transform.Rotate(0, 180, 0);
         }
     }
 }

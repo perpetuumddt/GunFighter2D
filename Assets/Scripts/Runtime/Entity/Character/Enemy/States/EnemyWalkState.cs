@@ -18,6 +18,7 @@ namespace Gunfighter.Runtime.Entity.Character.Enemy.States
         public override void Execute()
         {
             base.Execute();
+            StateMachine.CurrentState.Data.CharacterRotationController.CheckLookingDirection();
         }
 
         public override void StopExecution()
