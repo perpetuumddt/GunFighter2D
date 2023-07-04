@@ -9,16 +9,24 @@ namespace Gunfighter.Runtime.Entity.Character.Player.Controllers
 {
     public class PlayerController : CharacterController
     {
-        public new PlayerAnimationController AnimationController { get; private set; }
-        public new PlayerAttackController AttackController { get; private set; }
-        public new PlayerCollectorController CollectorController { get; private set; }
+        public new PlayerAnimationController AnimationController => 
+            base.AnimationController as PlayerAnimationController;
+        public new PlayerAttackController AttackController => 
+            base.AttackController as PlayerAttackController;
+        public new PlayerCollectorController CollectorController => 
+            base.CollectorController as PlayerCollectorController;
         
         // public new PlayerCollisionController CollisionController { get; private set; }
-        public new PlayerDropController DropController { get; private set; }
-        public new PlayerHealthController HealthController { get; private set; }
-        public new CharacterInputHandler InputHandler { get; private set; }
-        public new PlayerMovementController MovementController { get; private set; }
-        public new PlayerRotationController RotationController { get; private set; }
+        public new PlayerDropController DropController => 
+            base.DropController as PlayerDropController;
+        public new PlayerHealthController HealthController =>
+            base.HealthController as PlayerHealthController;
+        public new CharacterInputHandler InputHandler =>
+            base.InputHandler as PlayerInputHandler;
+        public new PlayerMovementController MovementController => 
+            base.MovementController as PlayerMovementController;
+        public new PlayerRotationController RotationController => 
+            base.RotationController as PlayerRotationController;
         
         public PlayerLevelController LevelController { get; private set; }
 
@@ -40,15 +48,6 @@ namespace Gunfighter.Runtime.Entity.Character.Player.Controllers
 
         private void SetControllerReferences()
         {
-            AnimationController = GetComponent<PlayerAnimationController>();
-            AttackController = GetComponent<PlayerAttackController>();
-            CollectorController = GetComponent<PlayerCollectorController>();
-            DropController = GetComponent<PlayerDropController>();
-            HealthController = GetComponent<PlayerHealthController>();
-            InputHandler = GetComponent<PlayerInputHandler>();
-            MovementController = GetComponent<PlayerMovementController>();
-            RotationController = GetComponent<PlayerRotationController>();
-            
             LevelController = GetComponent<PlayerLevelController>();
         }
 

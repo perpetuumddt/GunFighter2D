@@ -16,6 +16,7 @@ namespace Gunfighter.Runtime.Entity.Obstacle.State
         public override void Initialize(params object[] param)
         {
             base.Initialize(param);
+            
             Data.HealthController.OnHealthZero += SwitchDeathState;
         }
 

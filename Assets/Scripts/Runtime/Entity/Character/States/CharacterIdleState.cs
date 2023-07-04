@@ -4,7 +4,7 @@ using CharacterController = Gunfighter.Runtime.Entity.Character.Controller.Chara
 
 namespace Gunfighter.Runtime.Entity.Character.States
 {
-    public class CharacterIdleState<T> : EntityActiveState<T> where T: CharacterController
+    public abstract class CharacterIdleState<T> : EntityActiveState<T> where T: CharacterController
     {
         private string _animParameter = "isIdle";
 

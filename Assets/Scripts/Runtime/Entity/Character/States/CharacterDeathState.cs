@@ -4,7 +4,7 @@ using CharacterController = Gunfighter.Runtime.Entity.Character.Controller.Chara
 
 namespace Gunfighter.Runtime.Entity.Character.States
 {
-    public class CharacterDeathState<T> : EntityDeathState<T> where T: CharacterController
+    public abstract class CharacterDeathState<T> : EntityDeathState<T> where T: CharacterController
     {
         protected string AnimParameter = "isDeath";
 

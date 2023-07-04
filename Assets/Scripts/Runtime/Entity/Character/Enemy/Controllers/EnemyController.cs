@@ -6,13 +6,21 @@ namespace Gunfighter.Runtime.Entity.Character.Enemy.Controllers
 {
     public class EnemyController : CharacterController
     {
-        public new EnemyAnimationController AnimationController { get; private set; }
-        public new EnemyAttackController AttackController { get; private set; }
-        public new EnemyCollisionController CollisionController { get; private set; }
-        public new EnemyDropController DropController { get; private set; }
-        public new EnemyHealthController HealthController { get; private set; }
-        public new EnemyMovementController MovementController { get; private set; }
-        public new EnemyRotationController RotationController { get; private set; }
+        public new EnemyAnimationController AnimationController => 
+            base.AnimationController as EnemyAnimationController;
+        public new EnemyAttackController AttackController => 
+            base.AttackController as EnemyAttackController;
+        
+        public new EnemyCollisionController CollisionController =>
+            base.CollisionController as EnemyCollisionController;
+        public new EnemyDropController DropController => 
+            base.DropController as EnemyDropController;
+        public new EnemyHealthController HealthController =>
+            base.HealthController as EnemyHealthController;
+        public new EnemyMovementController MovementController => 
+            base.MovementController as EnemyMovementController;
+        public new EnemyRotationController RotationController => 
+            base.RotationController as EnemyRotationController;
         
         
         protected StateMachine<EnemyController> StateMachine;
@@ -39,13 +47,6 @@ namespace Gunfighter.Runtime.Entity.Character.Enemy.Controllers
         
         private void SetControllerReferences()
         {
-            AnimationController = GetComponent<EnemyAnimationController>();
-            AttackController = GetComponent<EnemyAttackController>();
-            CollisionController = GetComponent<EnemyCollisionController>();
-            DropController = GetComponent<EnemyDropController>();
-            HealthController = GetComponent<EnemyHealthController>();
-            MovementController = GetComponent<EnemyMovementController>();
-            RotationController = GetComponent<EnemyRotationController>();
             
         }
     }

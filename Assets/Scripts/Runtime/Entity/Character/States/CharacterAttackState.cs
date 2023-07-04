@@ -4,7 +4,7 @@ using CharacterController = Gunfighter.Runtime.Entity.Character.Controller.Chara
 
 namespace Gunfighter.Runtime.Entity.Character.States
 {
-    public class CharacterAttackState<T>  : EntityActiveState<T> where T: CharacterController
+    public abstract class CharacterAttackState<T>  : EntityActiveState<T> where T: CharacterController
     {
         private string _animParameter = "isWalk";
 

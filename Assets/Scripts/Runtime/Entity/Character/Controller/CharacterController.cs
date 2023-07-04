@@ -7,15 +7,15 @@ namespace Gunfighter.Runtime.Entity.Character.Controller
 {
     public class CharacterController : EntityController
     {
-        public new CharacterAnimationController AnimationController { get; private set; }
-        public new CharacterAttackController AttackController { get; private set; }
-        public new CharacterCollectorController CollectorController { get; private set; }
-        public new CharacterCollisionController CollisionController { get; private set; }
-        public new CharacterDropController DropController { get; private set; }
-        public new CharacterHealthController HealthController { get; private set; }
-        public new CharacterInputHandler InputHandler { get; private set; }
-        public new CharacterMovementController MovementController { get; private set; }
-        public new CharacterRotationController RotationController { get; private set; }
+        public new CharacterAnimationController AnimationController => base.AnimationController as CharacterAnimationController;
+        public CharacterAttackController AttackController { get; private set; }
+        public CharacterCollectorController CollectorController { get; private set; }
+        public new CharacterCollisionController CollisionController => base.CollisionController as CharacterCollisionController;
+        public new CharacterDropController DropController => base.DropController as CharacterDropController;
+        public new CharacterHealthController HealthController => base.HealthController as CharacterHealthController;
+        public CharacterInputHandler InputHandler { get; private set; }
+        public CharacterMovementController MovementController { get; private set; }
+        public CharacterRotationController RotationController { get; private set; }
 
         public CharacterData CharacterData => EntityData as CharacterData;
         
@@ -24,17 +24,14 @@ namespace Gunfighter.Runtime.Entity.Character.Controller
 
         protected override void Awake()
         {
+            base.Awake();
             SetControllerReferences();
         }
 
         private void SetControllerReferences()
         {
-            AnimationController = GetComponent<CharacterAnimationController>();
             AttackController = GetComponent<CharacterAttackController>();
             CollectorController = GetComponent<CharacterCollectorController>();
-            CollisionController = GetComponent<CharacterCollisionController>();
-            DropController = GetComponent<CharacterDropController>();
-            HealthController = GetComponent<CharacterHealthController>();
             InputHandler = GetComponent<CharacterInputHandler>();
             MovementController = GetComponent<CharacterMovementController>();
             RotationController = GetComponent<CharacterRotationController>();

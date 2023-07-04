@@ -3,7 +3,7 @@ using Gunfighter.Runtime.Entity.StateMachine;
 
 namespace Gunfighter.Runtime.Entity.Character.States
 {
-    public class CharacterWalkState<T> : State<T> where T: CharacterController
+    public abstract class CharacterWalkState<T> : State<T> where T: CharacterController
     {
         protected string AnimParameter = "isWalk";
 
