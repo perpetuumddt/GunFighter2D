@@ -14,6 +14,10 @@ namespace Gunfighter.Runtime.UI.Screens
 
         [SerializeField] private SOVoidEvent deathEvent;
 
+        [SerializeField] 
+        private Camera _camera;
+        [SerializeField] 
+        private Animator _screenShadeAnim;
         private void OnEnable()
         {
             deathEvent.EventRaised += ActivateDeathScreen;
@@ -25,7 +29,7 @@ namespace Gunfighter.Runtime.UI.Screens
             deathEvent.EventRaised -= ActivateDeathScreen;
         }
 
-        private void TitleScreen()
+        private static void TitleScreen()
         {
             SceneManager.LoadScene(0);
         }
@@ -33,6 +37,11 @@ namespace Gunfighter.Runtime.UI.Screens
         private void ActivateDeathScreen()
         {
             SetActive(true);
+        }
+
+        private async void ActivateDeathScene()
+        {
+            
         }
     }
 }
