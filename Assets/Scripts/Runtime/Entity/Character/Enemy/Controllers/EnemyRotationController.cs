@@ -1,11 +1,8 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using Gunfighter.Runtime.Entity.Character.Controller;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Gunfighter.Runtime.Entity.Character.Enemy.EnemyController
+namespace Gunfighter.Runtime.Entity.Character.Enemy.Controllers
 
 {
     public class EnemyRotationController : CharacterRotationController

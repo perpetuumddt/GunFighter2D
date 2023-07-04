@@ -2,9 +2,8 @@ using Gunfighter.Runtime.Entity.Character.Controller;
 using Gunfighter.Runtime.General.Drop;
 using Gunfighter.Runtime.General.Objects_Pool;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace Gunfighter.Runtime.Entity.Character.Enemy.EnemyController
+namespace Gunfighter.Runtime.Entity.Character.Enemy.Controllers
 {
     public class EnemyDropController : CharacterDropController
     {

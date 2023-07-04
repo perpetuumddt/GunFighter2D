@@ -1,8 +1,9 @@
-using Gunfighter.Runtime.Entity.Character.StateMachine;
+using Gunfighter.Runtime.Entity.Controller;
+using Gunfighter.Runtime.Entity.StateMachine;
 
 namespace Gunfighter.Runtime.Entity.State
 {
-    public abstract class EntityActiveState<T> : State<T>
+    public abstract class EntityActiveState<T> : State<T> where T: EntityController
     {
         public EntityActiveState(T data, StateMachine<T> machine) : base(data, machine)
         {

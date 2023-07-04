@@ -1,6 +1,6 @@
-using Gunfighter.Runtime.Entity.Character.StateMachine;
 using Gunfighter.Runtime.Entity.Obstacle.Controllers;
 using Gunfighter.Runtime.Entity.State;
+using Gunfighter.Runtime.Entity.StateMachine;
 
 namespace Gunfighter.Runtime.Entity.Obstacle.State
 {
@@ -15,7 +15,7 @@ namespace Gunfighter.Runtime.Entity.Obstacle.State
         {
             base.Initialize(param);
             
-            Data.EntityHealthController.DestroyOnDeath();
+            Data.HealthController.DestroyOnDeath();
         }
 
         public override void Execute()

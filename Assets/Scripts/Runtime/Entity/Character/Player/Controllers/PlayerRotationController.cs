@@ -3,7 +3,7 @@ using Gunfighter.Runtime.Entity.Character.Player.Components;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-namespace Gunfighter.Runtime.Entity.Character.Player.PlayerController
+namespace Gunfighter.Runtime.Entity.Character.Player.Controllers
 {
     public class PlayerRotationController : CharacterRotationController
     {

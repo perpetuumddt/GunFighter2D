@@ -1,6 +1,6 @@
 using Gunfighter.Runtime.Entity.Character.Controller;
 
-namespace Gunfighter.Runtime.Entity.Character.Enemy.EnemyController
+namespace Gunfighter.Runtime.Entity.Character.Enemy.Controllers
 {
     public class EnemyAnimationController : CharacterAnimationController
     {

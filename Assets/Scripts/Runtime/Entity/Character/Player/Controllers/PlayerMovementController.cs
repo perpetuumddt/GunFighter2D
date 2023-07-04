@@ -1,11 +1,9 @@
 using System.Collections;
-using System.Collections.Generic;
 using Gunfighter.Runtime.Entity.Character.Controller;
 using Gunfighter.Runtime.General;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace Gunfighter.Runtime.Entity.Character.Player.PlayerController
+namespace Gunfighter.Runtime.Entity.Character.Player.Controllers
 {
     public class PlayerMovementController : CharacterMovementController
     {

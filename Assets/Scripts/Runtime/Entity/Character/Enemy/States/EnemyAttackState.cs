@@ -1,19 +1,15 @@
+using Gunfighter.Runtime.Entity.Character.Enemy.Controllers;
+using Gunfighter.Runtime.Entity.Character.States;
+using Gunfighter.Runtime.Entity.StateMachine;
 using UnityEngine;
 
 namespace Gunfighter.Runtime.Entity.Character.Enemy.States
 {
-    public class EnemyAttackState : MonoBehaviour
+    public class EnemyAttackState : CharacterAttackState<EnemyController>
     {
-        // Start is called before the first frame update
-        void Start()
+        public EnemyAttackState(EnemyController data, StateMachine<EnemyController> stateMachine) : base(data, stateMachine)
         {
-        
-        }
-
-        // Update is called once per frame
-        void Update()
-        {
-        
+            
         }
     }
 }

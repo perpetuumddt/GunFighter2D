@@ -3,7 +3,7 @@ using Gunfighter.Runtime.Entity.Character.Controller;
 using Gunfighter.Runtime.Interface.Collect;
 using UnityEngine;
 
-namespace Gunfighter.Runtime.Entity.Character.Player.PlayerController
+namespace Gunfighter.Runtime.Entity.Character.Player.Controllers
 {
     public class PlayerCollectorController : CharacterCollectorController, ICollector
     {

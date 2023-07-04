@@ -1,4 +1,4 @@
-using Gunfighter.Runtime.Entity.Character.StateMachine;
+using Gunfighter.Runtime.Entity.StateMachine;
 
 namespace Gunfighter.Runtime.Entity.State
 {

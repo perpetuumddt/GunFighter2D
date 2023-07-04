@@ -4,7 +4,7 @@ using Gunfighter.Runtime.ScriptableObjects.Event;
 using UnityEngine;
 using CharacterController = Gunfighter.Runtime.Entity.Character.Controller.CharacterController;
 
-namespace Gunfighter.Runtime.Entity.Character.Player.PlayerController
+namespace Gunfighter.Runtime.Entity.Character.Player.Controllers
 {
     public class PlayerLevelController: MonoBehaviour
     {

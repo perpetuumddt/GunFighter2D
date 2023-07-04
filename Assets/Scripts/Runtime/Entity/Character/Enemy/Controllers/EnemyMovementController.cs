@@ -1,10 +1,10 @@
 using Gunfighter.Runtime.Entity.Character.Controller;
-using Gunfighter.Runtime.Entity.Character.Player.PlayerController;
+using Gunfighter.Runtime.Entity.Character.Player.Controllers;
 using Gunfighter.Runtime.ScriptableObjects.Data.Entity.Character.Enemies;
 using UnityEngine;
 using UnityEngine.AI;
 
-namespace Gunfighter.Runtime.Entity.Character.Enemy.EnemyController
+namespace Gunfighter.Runtime.Entity.Character.Enemy.Controllers
 {
     public class EnemyMovementController : CharacterMovementController
     {

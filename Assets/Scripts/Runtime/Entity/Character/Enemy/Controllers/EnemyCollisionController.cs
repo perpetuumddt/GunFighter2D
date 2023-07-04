@@ -1,9 +1,8 @@
-using System;
 using Gunfighter.Runtime.Entity.Character.Controller;
 using Gunfighter.Runtime.Interface.Damage;
 using UnityEngine;
 
-namespace Gunfighter.Runtime.Entity.Character.Enemy.EnemyController
+namespace Gunfighter.Runtime.Entity.Character.Enemy.Controllers
 {
     public class EnemyCollisionController : CharacterCollisionController
     {

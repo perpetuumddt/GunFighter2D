@@ -2,7 +2,7 @@ using Gunfighter.Runtime.Entity.Character.Controller;
 using Gunfighter.Runtime.Interface.Interact;
 using UnityEngine;
 
-namespace Gunfighter.Runtime.Entity.Character.Player.PlayerController
+namespace Gunfighter.Runtime.Entity.Character.Player.Controllers
 {
     public class PlayerInteractorController : CharacterInteractorController,IInteractor
     {

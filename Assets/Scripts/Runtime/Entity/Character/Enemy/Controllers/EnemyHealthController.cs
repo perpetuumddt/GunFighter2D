@@ -4,7 +4,7 @@ using Gunfighter.Runtime.General;
 using Gunfighter.Runtime.ScriptableObjects.Data.Entity.Character.Enemies;
 using UnityEngine;
 
-namespace Gunfighter.Runtime.Entity.Character.Enemy.EnemyController
+namespace Gunfighter.Runtime.Entity.Character.Enemy.Controllers
 {
     public class EnemyHealthController : CharacterHealthController
     {
