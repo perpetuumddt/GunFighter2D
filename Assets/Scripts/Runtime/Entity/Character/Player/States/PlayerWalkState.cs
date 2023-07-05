@@ -3,7 +3,7 @@ using Gunfighter.Runtime.Entity.Character.Player.Controllers;
 using Gunfighter.Runtime.Entity.Character.States;
 using Gunfighter.Runtime.Entity.StateMachine;
 using Gunfighter.Runtime.Entity.Weapon;
-using CharacterController = Gunfighter.Runtime.Entity.Character.Controller.CharacterController;
+using CharacterController = Gunfighter.Runtime.Entity.Character.Controllers.CharacterController;
 
 namespace Gunfighter.Runtime.Entity.Character.Player.States
 {

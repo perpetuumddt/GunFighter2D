@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Gunfighter.Runtime.Entity.Controller
+namespace Gunfighter.Runtime.Entity.Controllers
 {
     public abstract class EntityAnimationController : MonoBehaviour
     {

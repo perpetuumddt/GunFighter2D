@@ -1,7 +1,6 @@
-using Gunfighter.Runtime.Entity.Controller;
-using UnityEngine;
+using Gunfighter.Runtime.Entity.Controllers;
 
-namespace Gunfighter.Runtime.Entity.Character.Controller
+namespace Gunfighter.Runtime.Entity.Character.Controllers
 {
     public abstract class CharacterDropController : EntityDropController
     {

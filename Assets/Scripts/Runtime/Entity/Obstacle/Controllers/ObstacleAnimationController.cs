@@ -1,4 +1,4 @@
-using Gunfighter.Runtime.Entity.Controller;
+using Gunfighter.Runtime.Entity.Controllers;
 
 namespace Gunfighter.Runtime.Entity.Obstacle.Controllers
 {

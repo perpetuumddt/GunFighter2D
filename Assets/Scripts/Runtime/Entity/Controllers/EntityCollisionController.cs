@@ -1,9 +1,7 @@
 using System;
-using Gunfighter.Runtime.Interface.Damage;
-using Gunfighter.Runtime.ScriptableObjects.Data.Entity;
 using UnityEngine;
 
-namespace Gunfighter.Runtime.Entity.Controller
+namespace Gunfighter.Runtime.Entity.Controllers
 {
     public abstract class EntityCollisionController : MonoBehaviour
     {

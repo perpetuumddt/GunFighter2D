@@ -1,4 +1,4 @@
-using Gunfighter.Runtime.Entity.Character.Controller;
+using Gunfighter.Runtime.Entity.Character.Controllers;
 using Gunfighter.Runtime.General.Drop;
 using Gunfighter.Runtime.General.Objects_Pool;
 using UnityEngine;

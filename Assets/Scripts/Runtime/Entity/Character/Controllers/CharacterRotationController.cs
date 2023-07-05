@@ -1,8 +1,6 @@
-using Gunfighter.Runtime.Entity.Character.Player.Components;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
-namespace Gunfighter.Runtime.Entity.Character.Controller
+namespace Gunfighter.Runtime.Entity.Character.Controllers
 {
     public abstract class CharacterRotationController : MonoBehaviour
     {

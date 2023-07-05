@@ -1,9 +1,7 @@
 using System;
-using Gunfighter.Runtime.Entity.Controller;
-using Gunfighter.Runtime.Interface.Damage;
-using UnityEngine;
+using Gunfighter.Runtime.Entity.Controllers;
 
-namespace Gunfighter.Runtime.Entity.Character.Controller
+namespace Gunfighter.Runtime.Entity.Character.Controllers
 {
     public abstract class CharacterHealthController : EntityHealthController
     {

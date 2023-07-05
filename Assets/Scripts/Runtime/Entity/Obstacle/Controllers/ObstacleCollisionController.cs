@@ -1,4 +1,4 @@
-using Gunfighter.Runtime.Entity.Controller;
+using Gunfighter.Runtime.Entity.Controllers;
 using Gunfighter.Runtime.Interface.Damage;
 using UnityEngine;
 

@@ -1,7 +1,6 @@
-using Gunfighter.Runtime.Entity.Weapon;
 using UnityEngine;
 
-namespace Gunfighter.Runtime.Entity.Character.Controller
+namespace Gunfighter.Runtime.Entity.Character.Controllers
 {
     public class CharacterAttackController : MonoBehaviour
     {

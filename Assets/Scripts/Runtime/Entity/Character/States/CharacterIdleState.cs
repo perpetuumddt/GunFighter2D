@@ -1,6 +1,6 @@
-using Gunfighter.Runtime.Entity.State;
 using Gunfighter.Runtime.Entity.StateMachine;
-using CharacterController = Gunfighter.Runtime.Entity.Character.Controller.CharacterController;
+using Gunfighter.Runtime.Entity.States;
+using CharacterController = Gunfighter.Runtime.Entity.Character.Controllers.CharacterController;
 
 namespace Gunfighter.Runtime.Entity.Character.States
 {

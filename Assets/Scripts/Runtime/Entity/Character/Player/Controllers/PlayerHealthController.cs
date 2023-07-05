@@ -1,6 +1,6 @@
 using System;
 using System.Collections;
-using Gunfighter.Runtime.Entity.Character.Controller;
+using Gunfighter.Runtime.Entity.Character.Controllers;
 using UnityEngine;
 
 namespace Gunfighter.Runtime.Entity.Character.Player.Controllers

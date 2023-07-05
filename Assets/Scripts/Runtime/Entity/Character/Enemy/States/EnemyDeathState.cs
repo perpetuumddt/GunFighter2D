@@ -4,7 +4,7 @@ using Gunfighter.Runtime.Entity.Character.States;
 using Gunfighter.Runtime.Entity.StateMachine;
 using Gunfighter.Runtime.General.CustomYieldInstructions;
 using UnityEngine;
-using CharacterController = Gunfighter.Runtime.Entity.Character.Controller.CharacterController;
+using CharacterController = Gunfighter.Runtime.Entity.Character.Controllers.CharacterController;
 
 namespace Gunfighter.Runtime.Entity.Character.Enemy.States
 {

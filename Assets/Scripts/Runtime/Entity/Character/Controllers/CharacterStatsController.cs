@@ -2,7 +2,7 @@ using Gunfighter.Runtime.ScriptableObjects.Data.Entity.Character;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-namespace Gunfighter.Runtime.Entity.Character.Controller
+namespace Gunfighter.Runtime.Entity.Character.Controllers
 {
     public class CharacterStatsController : MonoBehaviour
     {
