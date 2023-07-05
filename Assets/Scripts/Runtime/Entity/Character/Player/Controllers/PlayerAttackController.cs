@@ -1,5 +1,5 @@
 ﻿using System;
-using Gunfighter.Runtime.Entity.Character.Controller;
+using Gunfighter.Runtime.Entity.Character.Controllers;
 using Gunfighter.Runtime.Entity.Weapon;
 using Gunfighter.Runtime.Entity.Weapon.RangedWeapons;
 using Gunfighter.Runtime.Entity.Weapon.WeaponManager;

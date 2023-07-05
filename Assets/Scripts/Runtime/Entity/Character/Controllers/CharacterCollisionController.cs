@@ -1,6 +1,6 @@
-using Gunfighter.Runtime.Entity.Controller;
+using Gunfighter.Runtime.Entity.Controllers;
 
-namespace Gunfighter.Runtime.Entity.Character.Controller
+namespace Gunfighter.Runtime.Entity.Character.Controllers
 {
     public abstract class CharacterCollisionController : EntityCollisionController
     {

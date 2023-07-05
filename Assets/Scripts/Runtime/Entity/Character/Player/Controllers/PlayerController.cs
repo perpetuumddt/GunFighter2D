@@ -3,11 +3,11 @@ using Gunfighter.Runtime.Entity.Character.Player.States;
 using Gunfighter.Runtime.Entity.StateMachine;
 using Gunfighter.Runtime.ScriptableObjects.Event;
 using UnityEngine;
-using CharacterController = Gunfighter.Runtime.Entity.Character.Controller.CharacterController;
+using CharacterController = Gunfighter.Runtime.Entity.Character.Controllers.CharacterController;
 
 namespace Gunfighter.Runtime.Entity.Character.Player.Controllers
 {
-    public class PlayerController : CharacterController
+    public class PlayerController : Character.Controllers.CharacterController
     {
         public new PlayerAnimationController AnimationController => 
             base.AnimationController as PlayerAnimationController;

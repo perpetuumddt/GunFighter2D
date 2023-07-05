@@ -1,6 +1,6 @@
 using System;
-using Gunfighter.Runtime.Entity.Controller;
-using Gunfighter.Runtime.Entity.Obstacle.State;
+using Gunfighter.Runtime.Entity.Controllers;
+using Gunfighter.Runtime.Entity.Obstacle.States;
 using Gunfighter.Runtime.Entity.StateMachine;
 using Serilog.Debugging;
 

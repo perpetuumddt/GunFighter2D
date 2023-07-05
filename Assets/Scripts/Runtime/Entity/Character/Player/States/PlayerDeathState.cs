@@ -4,7 +4,7 @@ using Gunfighter.Runtime.Entity.Character.States;
 using Gunfighter.Runtime.Entity.StateMachine;
 using Gunfighter.Runtime.General.CustomYieldInstructions;
 using UnityEngine;
-using CharacterController = Gunfighter.Runtime.Entity.Character.Controller.CharacterController;
+using CharacterController = Gunfighter.Runtime.Entity.Character.Controllers.CharacterController;
 
 namespace Gunfighter.Runtime.Entity.Character.Player.States
 {
@@ -32,7 +32,7 @@ namespace Gunfighter.Runtime.Entity.Character.Player.States
             // Wait for death animation to finish
             yield return new WaitForAnimationToFinish(Data.AnimationController.Animator);
             // Wait for a little time before exiting state, to see dead enemy
-            yield return new WaitForSeconds(0.3f);
+            //yield return new WaitForSeconds(0.3f);
             StateMachine.CurrentState.Data.PlayerDeathEvent.RaiseEvent();
         }
 

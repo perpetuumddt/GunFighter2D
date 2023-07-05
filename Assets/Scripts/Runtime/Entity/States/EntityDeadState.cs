@@ -1,14 +1,14 @@
-using Gunfighter.Runtime.Entity.Controller;
 using Gunfighter.Runtime.Entity.StateMachine;
 
-namespace Gunfighter.Runtime.Entity.State
+namespace Gunfighter.Runtime.Entity.States
 {
-    public abstract class EntityActiveState<T> : State<T> where T: EntityController
+    public abstract class EntityDeathState<T> : State<T>
     {
-        public EntityActiveState(T data, StateMachine<T> machine) : base(data, machine)
+        public EntityDeathState(T data, StateMachine<T> machine) : base(data, machine)
         {
+
         }
-        
+
         public override void Initialize(params object[] param)
         {
             base.Initialize(param);
@@ -24,6 +24,6 @@ namespace Gunfighter.Runtime.Entity.State
             base.StopExecution();
         }
 
-        public abstract void SwitchDeathState();
+        public abstract void SwitchAliveState();
     }
 }

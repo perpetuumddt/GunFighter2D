@@ -2,7 +2,7 @@ using System;
 using Gunfighter.Runtime.ScriptableObjects.Data.Entity.Character.Player;
 using Gunfighter.Runtime.ScriptableObjects.Event;
 using UnityEngine;
-using CharacterController = Gunfighter.Runtime.Entity.Character.Controller.CharacterController;
+using CharacterController = Gunfighter.Runtime.Entity.Character.Controllers.CharacterController;
 
 namespace Gunfighter.Runtime.Entity.Character.Player.Controllers
 {

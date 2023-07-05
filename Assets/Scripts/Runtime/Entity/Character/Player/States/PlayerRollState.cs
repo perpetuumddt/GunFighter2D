@@ -5,7 +5,7 @@ using Gunfighter.Runtime.Entity.Character.States;
 using Gunfighter.Runtime.Entity.StateMachine;
 using Gunfighter.Runtime.ScriptableObjects.Data.Entity.Character.Player;
 using UnityEngine;
-using CharacterController = Gunfighter.Runtime.Entity.Character.Controller.CharacterController;
+using CharacterController = Gunfighter.Runtime.Entity.Character.Controllers.CharacterController;
 
 namespace Gunfighter.Runtime.Entity.Character.Player.States
 {

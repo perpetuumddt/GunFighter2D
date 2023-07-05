@@ -1,4 +1,4 @@
-using Gunfighter.Runtime.Entity.Character.Controller;
+using Gunfighter.Runtime.Entity.Character.Controllers;
 using Gunfighter.Runtime.Entity.Character.Enemy.States;
 using Gunfighter.Runtime.Entity.StateMachine;
 

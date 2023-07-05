@@ -2,9 +2,8 @@ using System;
 using Gunfighter.Runtime.General;
 using Gunfighter.Runtime.Interface.Damage;
 using UnityEngine;
-using UnityEngine.Serialization;
 
-namespace Gunfighter.Runtime.Entity.Controller
+namespace Gunfighter.Runtime.Entity.Controllers
 {
     public abstract class EntityHealthController : MonoBehaviour, IDamageable
     {

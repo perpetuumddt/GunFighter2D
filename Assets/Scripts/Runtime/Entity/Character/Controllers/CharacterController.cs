@@ -1,9 +1,7 @@
-using Gunfighter.Runtime.Entity.Controller;
-using Gunfighter.Runtime.Entity.StateMachine;
+using Gunfighter.Runtime.Entity.Controllers;
 using Gunfighter.Runtime.ScriptableObjects.Data.Entity.Character;
-using UnityEngine;
 
-namespace Gunfighter.Runtime.Entity.Character.Controller
+namespace Gunfighter.Runtime.Entity.Character.Controllers
 {
     public class CharacterController : EntityController
     {

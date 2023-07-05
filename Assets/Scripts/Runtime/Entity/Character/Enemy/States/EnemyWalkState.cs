@@ -1,7 +1,6 @@
 using Gunfighter.Runtime.Entity.Character.Enemy.Controllers;
 using Gunfighter.Runtime.Entity.Character.States;
 using Gunfighter.Runtime.Entity.StateMachine;
-using CharacterController = Gunfighter.Runtime.Entity.Character.Controller.CharacterController;
 
 namespace Gunfighter.Runtime.Entity.Character.Enemy.States
 {

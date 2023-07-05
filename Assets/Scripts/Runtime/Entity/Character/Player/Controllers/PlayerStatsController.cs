@@ -10,7 +10,7 @@ namespace Gunfighter.Runtime.Entity.Character.Player.Controllers
         private ScriptableObjectIntVariable playerCoinCounter;
         void Awake()
         {
-            //_playerCoinCounter.RestoreValue(); //äëÿ èçóìðóäîâ
+            //_playerCoinCounter.RestoreValue(); //äëÿ èçóìðóäîâ - что за хуйня?
             playerCoinCounter.ChangeVariable(0);
         }
     }

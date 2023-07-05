@@ -6,12 +6,14 @@ namespace Gunfighter.Runtime.Entity.Weapon.RangedWeapons
 {
     public class WeaponRotation : MonoBehaviour
     {
-        [FormerlySerializedAs("_mainCam")] [SerializeField]
+        [SerializeField]
         private Camera mainCam;
-        [FormerlySerializedAs("_shotPoint")] [SerializeField]
+        [SerializeField]
         private Transform shotPoint;
-        [FormerlySerializedAs("_weaponSprite")] [SerializeField]
+        [SerializeField]
         private SpriteRenderer weaponSprite;
+
+        private bool isFlipped = false;
 
         private void Update()
         {
@@ -31,11 +33,17 @@ namespace Gunfighter.Runtime.Entity.Weapon.RangedWeapons
             if (rotation.x < 0.1)
             {
                 WeaponFlip();
+                weaponSprite.transform.localPosition = new Vector3(-.25f, -.17f);
+            }
+            else if (rotation.x > 0.1)
+            {
+                weaponSprite.transform.localPosition = new Vector3(.25f, -.17f);
             }
         }
 
         private void WeaponFlip()
         {
+            isFlipped = !isFlipped;
             weaponSprite.transform.Rotate(180, 0, 0);
         }
     }
