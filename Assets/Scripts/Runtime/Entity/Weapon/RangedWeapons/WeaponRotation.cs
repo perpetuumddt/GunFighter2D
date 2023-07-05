@@ -45,12 +45,6 @@ namespace Gunfighter.Runtime.Entity.Weapon.RangedWeapons
         {
             isFlipped = !isFlipped;
             weaponSprite.transform.Rotate(180, 0, 0);
-            /*
-            weaponSprite.transform.localPosition = isFlipped switch
-            {
-                false => new Vector3(.25f, -.17f),
-                true => new Vector3(-.25f, -.17f)
-            };*/
         }
     }
 }
