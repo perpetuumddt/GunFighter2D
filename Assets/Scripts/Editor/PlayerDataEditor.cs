@@ -1,4 +1,4 @@
-using Gunfighter.Runtime.ScriptableObjects.Data.Character.Player;
+using Gunfighter.Runtime.ScriptableObjects.Data.Entity.Character.Player;
 using UnityEditor;
 using UnityEngine;
 

@@ -1,10 +1,10 @@
-using Gunfighter.Runtime.Entity.Character.StateMachine;
-using Gunfighter.Runtime.Entity.Character.StateMachine.States;
-using CharacterController = Gunfighter.Runtime.Entity.Character.Controller.CharacterController;
+using Gunfighter.Runtime.Entity.Character.States;
+using Gunfighter.Runtime.Entity.Character.Player.Controllers;
+using Gunfighter.Runtime.Entity.StateMachine;
 
 namespace Gunfighter.Runtime.Entity.Character.Player.States
 {
-    public class PlayerAttackState : CharacterAttackState // Should be used for special attack cases
+    public class PlayerAttackState : CharacterAttackState<PlayerController> // Should be used for special attack cases
     {
         /*
     private float _velocity = 4f;
@@ -59,7 +59,7 @@ namespace Gunfighter.Runtime.Entity.Character.Player.States
     {
         StateMachine.CurrentState.Data.CharacterMovementController.DoMove(inputHandler.movementInputVector.x * _velocity, inputHandler.movementInputVector.y * _velocity);
     }*/
-        public PlayerAttackState(CharacterController data, StateMachine<CharacterController> stateMachine) : base(data, stateMachine)
+        public PlayerAttackState(PlayerController data, StateMachine<PlayerController> stateMachine) : base(data, stateMachine)
         {
         }
     }

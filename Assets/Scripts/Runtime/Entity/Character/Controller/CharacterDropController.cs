@@ -1,10 +1,11 @@
+using Gunfighter.Runtime.Entity.Controller;
 using UnityEngine;
 
 namespace Gunfighter.Runtime.Entity.Character.Controller
 {
-    public class CharacterDropController : MonoBehaviour
+    public abstract class CharacterDropController : EntityDropController
     {
-        public virtual void DropItem()
+        public override void DropItem()
         {
 
         }

@@ -10,12 +10,6 @@ namespace Gunfighter.Runtime.Entity.Character.Controller
         protected virtual void Awake()
         {
             characterController = GetComponent<CharacterController>();
-            Initialize();
-        }
-
-        public virtual void Initialize()
-        {
-        
         }
 
         public virtual void DoAttack()

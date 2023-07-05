@@ -1,6 +1,6 @@
 using System;
-using Gunfighter.Runtime.Entity.Character.Player.PlayerController;
-using Gunfighter.Runtime.ScriptableObjects.Data.Character.Player;
+using Gunfighter.Runtime.Entity.Character.Player.Controllers;
+using Gunfighter.Runtime.ScriptableObjects.Data.Entity.Character.Player;
 using NUnit.Framework;
 using UnityEngine;
 

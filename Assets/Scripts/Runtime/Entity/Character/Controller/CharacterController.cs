@@ -1,38 +1,40 @@
-using Gunfighter.Runtime.Entity.Character.StateMachine;
-using Gunfighter.Runtime.ScriptableObjects.Data.Character;
+using Gunfighter.Runtime.Entity.Controller;
+using Gunfighter.Runtime.Entity.StateMachine;
+using Gunfighter.Runtime.ScriptableObjects.Data.Entity.Character;
 using UnityEngine;
 
 namespace Gunfighter.Runtime.Entity.Character.Controller
 {
-    public class CharacterController : MonoBehaviour
+    public class CharacterController : EntityController
     {
-        public CharacterAnimationController CharacterAnimationController { get; private set; }
-        public CharacterAttackController CharacterAttackController { get; private set; }
-        public CharacterCollectorController CharacterCollectorController { get; private set; }
-        public CharacterDropController CharacterDropController { get; private set; }
-        public CharacterHealthController CharacterHealthController { get; private set; }
-        public CharacterInputHandler CharacterInputHandler { get; private set; }
-        public CharacterMovementController CharacterMovementController { get; private set; }
-        public CharacterRotationController CharacterRotationController { get; private set; }
+        public new CharacterAnimationController AnimationController => base.AnimationController as CharacterAnimationController;
+        public CharacterAttackController AttackController { get; private set; }
+        public CharacterCollectorController CollectorController { get; private set; }
+        public new CharacterCollisionController CollisionController => base.CollisionController as CharacterCollisionController;
+        public new CharacterDropController DropController => base.DropController as CharacterDropController;
+        public new CharacterHealthController HealthController => base.HealthController as CharacterHealthController;
+        public CharacterInputHandler InputHandler { get; private set; }
+        public CharacterMovementController MovementController { get; private set; }
+        public CharacterRotationController RotationController { get; private set; }
 
+        public CharacterData CharacterData => EntityData as CharacterData;
+        
+        
+        
 
-        [SerializeField] 
-        private CharacterData characterData;
-
-        public CharacterData CharacterData => characterData;
-    
-        protected StateMachine<CharacterController> StateMachine;
-
-        protected virtual void Awake()
+        protected override void Awake()
         {
-            CharacterAnimationController = GetComponent<CharacterAnimationController>();
-            CharacterAttackController = GetComponent<CharacterAttackController>();
-            CharacterCollectorController = GetComponent<CharacterCollectorController>();
-            CharacterDropController = GetComponent<CharacterDropController>();
-            CharacterHealthController = GetComponent<CharacterHealthController>();
-            CharacterInputHandler = GetComponent<CharacterInputHandler>();
-            CharacterMovementController = GetComponent<CharacterMovementController>();
-            CharacterRotationController = GetComponent<CharacterRotationController>();
+            base.Awake();
+            SetControllerReferences();
+        }
+
+        private void SetControllerReferences()
+        {
+            AttackController = GetComponent<CharacterAttackController>();
+            CollectorController = GetComponent<CharacterCollectorController>();
+            InputHandler = GetComponent<CharacterInputHandler>();
+            MovementController = GetComponent<CharacterMovementController>();
+            RotationController = GetComponent<CharacterRotationController>();
         }
     }
 }
