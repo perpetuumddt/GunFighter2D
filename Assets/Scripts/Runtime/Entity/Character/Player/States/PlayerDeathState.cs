@@ -32,7 +32,7 @@ namespace Gunfighter.Runtime.Entity.Character.Player.States
             // Wait for death animation to finish
             yield return new WaitForAnimationToFinish(Data.CharacterAnimationController.Animator);
             // Wait for a little time before exiting state, to see dead enemy
-            yield return new WaitForSeconds(0.3f);
+            //yield return new WaitForSeconds(0.3f);
             ((PlayerController.PlayerController)StateMachine.CurrentState.Data).PlayerDeathEvent.RaiseEvent();
         }
 
